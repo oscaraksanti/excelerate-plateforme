@@ -1,4 +1,5 @@
 import type { EmailOtpType } from "@supabase/supabase-js";
+import { cookies } from "next/headers";
 import { NextResponse, type NextRequest } from "next/server";
 import { clientServeur } from "@/lib/supabase/serveur";
 
@@ -32,7 +33,12 @@ export async function GET(requete: NextRequest) {
   const jeton = parametres.get("token_hash");
   const typeBrut = parametres.get("type");
   const code = parametres.get("code");
-  const suite = parametres.get("suite") ?? "/tableau-de-bord";
+  // La destination vient du cookie pose au moment de la demande ; le
+  // parametre d'URL reste accepte pour les anciens liens en circulation.
+  const magasin = await cookies();
+  const suite =
+    parametres.get("suite") ?? magasin.get("suite")?.value ?? "/tableau-de-bord";
+  magasin.delete("suite");
 
   // Chemin relatif uniquement : empeche une redirection vers un site tiers.
   const destination =
