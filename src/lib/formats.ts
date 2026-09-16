@@ -40,3 +40,25 @@ export function etatTp(tp: {
   if (tp.ferme_le && new Date(tp.ferme_le).getTime() < maintenant) return "ferme";
   return "ouvert";
 }
+
+/* ── Bareme de la correction entre pairs ───────────────────────────
+   Tout ce qui suit est pur : importable depuis un composant client.
+   Regle du projet : rien de ce qui touche a la base ne descend ici. */
+
+export type Critere = { cle: string; titre: string; aide: string };
+
+export const BAREME = [
+  { note: 0, mot: "absent" },
+  { note: 1, mot: "insuffisant" },
+  { note: 2, mot: "correct" },
+  { note: 3, mot: "bien" },
+  { note: 4, mot: "exemplaire" },
+];
+
+export function criteresDe(brut: unknown): Critere[] {
+  if (!Array.isArray(brut)) return [];
+  return brut.filter(
+    (c): c is Critere =>
+      typeof c === "object" && c !== null && "cle" in c && "titre" in c,
+  );
+}

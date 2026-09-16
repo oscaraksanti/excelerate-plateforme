@@ -8,6 +8,7 @@ import { adresseRessource, lireModule } from "@/lib/donnees";
 import { rendreMarkdown } from "@/lib/markdown";
 import { profilCourant } from "@/lib/profil";
 import { etatTp, formaterDate, lireTp, maCopie } from "@/lib/tp";
+import { corrections_recues, criteresDe, monAvancement, verrouLeve } from "@/lib/pairs";
 import { DepotCopie } from "./depot";
 
 type Params = { params: Promise<{ numero: string; tp: string }> };
@@ -35,6 +36,10 @@ export default async function PageTp({ params }: Params) {
 
   const copie = await maCopie(tp.id);
   const etat = etatTp(tp);
+  const avancement = copie ? await monAvancement(tp.id) : null;
+  const leve = copie ? await verrouLeve(tp.id) : false;
+  const recues = copie && leve ? await corrections_recues(copie.id) : [];
+  const criteres = criteresDe(tp.criteres);
   const chemin = `/modules/${module.numero}/tp/${tp.numero}`;
   const resultat = copie?.detail_machine as Resultat | null;
 
@@ -129,6 +134,125 @@ export default async function PageTp({ params }: Params) {
             />
           )}
         </section>
+
+        {/* ── La correction entre pairs ────────────────────── */}
+        {copie && avancement && (
+          <section className="mt-14 border-t-2 border-texte pt-6">
+            <h2 className="titre-l m-0 mb-1 text-[1.5rem]">La note de tes pairs</h2>
+
+            {!leve ? (
+              <>
+                <p className="mt-2 mb-6 max-w-[35rem] text-[0.98rem] text-texte-2">
+                  Elle s&apos;affichera ici quand tu auras corrigé{" "}
+                  <strong className="font-semibold text-texte">
+                    {avancement.requises} copies
+                  </strong>{" "}
+                  de tes pairs. Ce n&apos;est pas une punition : voir comment
+                  d&apos;autres ont résolu le même problème apprend souvent plus
+                  que sa propre note.
+                </p>
+
+                <div className="mb-6 flex items-center gap-4">
+                  <div className="h-2 w-full max-w-[22rem] overflow-hidden rounded-[2px] bg-fond-3">
+                    <div
+                      className="h-full rounded-[2px] bg-[color:var(--voltage-2)]"
+                      style={{
+                        width: `${Math.min(100, Math.round((avancement.faites / Math.max(1, avancement.requises)) * 100))}%`,
+                      }}
+                    />
+                  </div>
+                  <span className="font-mono text-[11.5px] tabular-nums whitespace-nowrap text-texte-2">
+                    {avancement.faites} / {avancement.requises}
+                  </span>
+                </div>
+
+                <Link href="/corrections" className="bouton">
+                  {avancement.faites === 0
+                    ? "Commencer à corriger"
+                    : "Continuer mes corrections"}
+                </Link>
+              </>
+            ) : (
+              <>
+                <div className="mt-6 grid grid-cols-1 items-start gap-6 sm:grid-cols-[auto_minmax(0,1fr)]">
+                  <div className="plage px-6 py-5">
+                    <span className="etiquette mb-2 block">Note finale</span>
+                    <span className="titre-xl block text-[3rem] tabular-nums">
+                      {copie.note_finale !== null
+                        ? String(copie.note_finale).replace(".", ",")
+                        : "—"}
+                      <span className="text-[1.3rem] text-texte-2">/20</span>
+                    </span>
+                    <span className="mt-[10px] block font-mono text-[11.5px] tabular-nums text-texte-2">
+                      60 % machine · 40 % pairs
+                    </span>
+                    <span className="poignee" aria-hidden="true" />
+                  </div>
+
+                  <div className="flex flex-col gap-3 font-mono text-[12.5px] tabular-nums text-texte-2">
+                    <span>
+                      machine :{" "}
+                      <span className="text-texte">
+                        {copie.note_machine !== null
+                          ? String(copie.note_machine).replace(".", ",")
+                          : "—"}{" "}
+                        / 20
+                      </span>
+                    </span>
+                    <span>
+                      pairs (médiane) :{" "}
+                      <span className="text-texte">
+                        {copie.note_pairs !== null
+                          ? String(copie.note_pairs).replace(".", ",")
+                          : "en attente d'une deuxième correction"}{" "}
+                        {copie.note_pairs !== null ? "/ 20" : ""}
+                      </span>
+                    </span>
+                    <span>
+                      corrections reçues :{" "}
+                      <span className="text-texte">{recues.length}</span>
+                    </span>
+                  </div>
+                </div>
+
+                {recues.length > 0 && (
+                  <ol className="m-0 mt-9 flex list-none flex-col gap-0 border-t border-bord p-0">
+                    {recues.map((c, i) => (
+                      <li key={c.id} className="border-b border-bord py-6">
+                        <div className="mb-3 flex items-baseline justify-between gap-3">
+                          <span className="etiquette">Correcteur {i + 1}</span>
+                          <span className="font-mono text-[12px] tabular-nums text-texte">
+                            {c.total} / 20
+                          </span>
+                        </div>
+                        {criteres.length > 0 && (
+                          <ul className="m-0 mb-4 flex list-none flex-wrap gap-x-5 gap-y-2 p-0">
+                            {criteres.map((cr) => (
+                              <li
+                                key={cr.cle}
+                                className="font-mono text-[11px] text-texte-2"
+                              >
+                                {cr.titre.replace(/^L[ae'] /i, "")} :{" "}
+                                <span className="text-texte">
+                                  {c.notes?.[cr.cle] ?? "—"}/4
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                        {c.commentaire && (
+                          <p className="m-0 max-w-[36rem] text-[0.96rem] whitespace-pre-wrap text-texte-2">
+                            {c.commentaire}
+                          </p>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </>
+            )}
+          </section>
+        )}
 
         {/* ── Le résultat ──────────────────────────────────── */}
         {copie && (
