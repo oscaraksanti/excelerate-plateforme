@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import {
   enregistrerTp,
@@ -143,6 +143,13 @@ export function FormulaireTp({ tp }: { tp: Tp }) {
 export function DepartTp({ tp }: { tp: Tp }) {
   const [etat, action] = useActionState(rattacherDepart, DEPART);
   const [chemin, setChemin] = useState("");
+  const formulaire = useRef<HTMLFormElement>(null);
+
+  // Rattachement automatique : un second clic « Confirmer » se perd, et
+  // le fichier reste alors dans le stockage sans jamais être relié au TP.
+  useEffect(() => {
+    if (chemin) formulaire.current?.requestSubmit();
+  }, [chemin]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -151,17 +158,20 @@ export function DepartTp({ tp }: { tp: Tp }) {
         prefixe={`tp/${tp.id}/depart`}
         discret={Boolean(tp.fichier_depart)}
         libelle={tp.fichier_depart ? "Remplacer le classeur de départ" : "Déposer le classeur de départ"}
+        libelleOccupe="Dépôt et rattachement…"
         onDepose={(r) => setChemin(r.chemin)}
       />
 
-      {chemin && !etat.ok && (
-        <form action={action} className="flex items-center gap-3">
-          <input type="hidden" name="id" value={tp.id} />
-          <input type="hidden" name="chemin" value={chemin} />
-          <Bouton texte="Confirmer ce classeur de départ" />
-        </form>
-      )}
+      <form ref={formulaire} action={action} className="hidden">
+        <input type="hidden" name="id" value={tp.id} />
+        <input type="hidden" name="chemin" value={chemin} />
+      </form>
 
+      {tp.fichier_depart && !etat.message && (
+        <p className="m-0 font-mono text-[0.85rem] text-texte-2">
+          Classeur en place.
+        </p>
+      )}
       <Message etat={etat} />
     </div>
   );
@@ -178,6 +188,11 @@ export function CorrigeTp({
 }) {
   const [etat, action] = useActionState(rattacherCorrige, DEPART);
   const [chemin, setChemin] = useState("");
+  const formulaire = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (chemin) formulaire.current?.requestSubmit();
+  }, [chemin]);
 
   const g = dejaPose?.grille as
     | { total?: number; cellules?: number; feuilles?: number; noms?: number }
@@ -207,16 +222,14 @@ export function CorrigeTp({
         prefixe={tp.id}
         discret={Boolean(g?.total)}
         libelle={g?.total ? "Remplacer le corrigé" : "Déposer le corrigé"}
+        libelleOccupe="Dépôt et analyse…"
         onDepose={(r) => setChemin(r.chemin)}
       />
 
-      {chemin && !etat.ok && (
-        <form action={action} className="flex items-center gap-3">
-          <input type="hidden" name="tp_id" value={tp.id} />
-          <input type="hidden" name="chemin" value={chemin} />
-          <Bouton texte="Analyser ce corrigé" />
-        </form>
-      )}
+      <form ref={formulaire} action={action} className="hidden">
+        <input type="hidden" name="tp_id" value={tp.id} />
+        <input type="hidden" name="chemin" value={chemin} />
+      </form>
 
       <Message etat={etat} />
     </div>
