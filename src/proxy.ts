@@ -1,8 +1,16 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-/** Chemins accessibles sans compte. */
-const OUVERTS = ["/", "/connexion", "/auth", "/c"];
+/**
+ * Chemins accessibles sans compte.
+ *
+ * `/api/chariow` en fait partie : c'est Chariow qui l'appelle, pas un
+ * navigateur connecte. Sans cette ligne, la notification de paiement
+ * recevrait une redirection vers la page de connexion, et aucun acces
+ * ne s'ouvrirait jamais. Ce point d'entree se defend tout seul, par
+ * signature.
+ */
+const OUVERTS = ["/", "/connexion", "/auth", "/c", "/api/chariow"];
 
 function estOuvert(chemin: string) {
   return OUVERTS.some((o) => chemin === o || chemin.startsWith(`${o}/`));

@@ -19,6 +19,9 @@ export function EnteteApp({ nom, admin }: { nom: string; admin: boolean }) {
           <Link href="/corrections" className="hover:text-texte">
             Corriger
           </Link>
+          <Link href="/offres" className="hover:text-texte">
+            Offres
+          </Link>
           {admin && (
             <Link href="/admin" className="hover:text-texte">
               Admin

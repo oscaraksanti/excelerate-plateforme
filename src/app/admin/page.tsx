@@ -37,6 +37,12 @@ export default async function PageAdmin() {
           ne part avant que tu ne le décides.
         </p>
 
+        <p className="mb-8">
+          <Link href="/admin/achats" className="bouton-2">
+            Voir les ventes et les offres →
+          </Link>
+        </p>
+
         <ol className="m-0 flex list-none flex-col gap-0 border-t border-bord p-0">
           {lignes.map(({ m, total, publiees }) => (
             <li key={m.id} className="border-b border-bord">
