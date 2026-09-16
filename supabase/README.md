@@ -48,17 +48,23 @@ externe. Par défaut, ça bloque au bout de quelques dizaines d'envois :
 le soir du lancement, des centaines de personnes cliqueraient sans
 jamais rien recevoir.
 
-## 5. Le gabarit du lien de connexion
+## 5. Les DEUX gabarits d'email
 
-Authentication → Emails → **Magic Link** → remplacer le contenu par
-`templates/lien-magique.html`.
+Authentication → Emails. Il faut remplacer **deux** gabarits, pas un.
 
-Objet : `Ton lien de connexion — Excelerate IA`
+| Gabarit Supabase | Fichier | Objet |
+|---|---|---|
+| **Magic Link** | `templates/lien-magique.html` | Ton lien de connexion — Excelerate IA |
+| **Confirm signup** | `templates/inscription.html` | Active ton accès — Excelerate IA |
 
-Ce gabarit utilise `{{ .TokenHash }}` et non `{{ .ConfirmationURL }}`.
-C'est le seul montage qui marche quand quelqu'un demande le lien sur son
-ordinateur et l'ouvre sur son téléphone. Ne pas revenir au gabarit par
-défaut.
+Pourquoi les deux : Supabase envoie « Magic Link » aux comptes qui
+existent déjà, et « Confirm signup » à ceux qui n'existent pas encore.
+Ne remplacer que le premier laisse tous les nouveaux venus recevoir un
+email en anglais dont le lien ne ramène pas sur la plateforme.
+
+Les deux utilisent `{{ .TokenHash }}` et non `{{ .ConfirmationURL }}` :
+c'est le seul montage qui marche quand quelqu'un demande le lien sur son
+ordinateur et l'ouvre sur son téléphone.
 
 ## 6. Le feu vert
 

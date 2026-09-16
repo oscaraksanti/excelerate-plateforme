@@ -1,0 +1,71 @@
+<!-- ══════════════════════════════════════════════════════════════
+     Gabarit « Confirm signup » — Supabase → Authentication → Emails
+     Objet a mettre : Active ton acces — Excelerate IA
+
+     CE GABARIT EST OBLIGATOIRE, au meme titre que celui du lien magique.
+     C'est lui — et non « Magic Link » — que Supabase envoie a quelqu'un
+     dont le compte n'existe pas encore. Laisse le gabarit par defaut et
+     ces personnes recoivent un email en anglais dont le lien ne ramene
+     pas sur la plateforme.
+
+     Comme pour le lien magique : {{ .TokenHash }}, jamais
+     {{ .ConfirmationURL }}.
+
+     HTML volontairement simple : les messageries filtrent moins les
+     emails sobres, et on en envoie 1 700.
+     ══════════════════════════════════════════════════════════════ -->
+
+<div style="margin:0;padding:24px;background:#f7f9fa;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;">
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:520px;margin:0 auto;background:#ffffff;border:1px solid #d7dde3;border-radius:10px;">
+    <tr>
+      <td style="padding:28px 28px 0 28px;">
+        <p style="margin:0 0 22px 0;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#57616d;">
+          &#9679;&nbsp; EXCELERATE IA
+        </p>
+
+        <h1 style="margin:0 0 14px 0;font-size:25px;line-height:1.2;color:#0b0e13;font-weight:800;letter-spacing:-0.5px;">
+          Bienvenue.
+        </h1>
+
+        <p style="margin:0 0 24px 0;font-size:15px;line-height:1.6;color:#57616d;">
+          Ton espace Excelerate IA est pret. Clique sur le bouton pour
+          l'activer et entrer. Aucun mot de passe a creer ni a retenir.
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="padding:0 28px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td style="background:#0b0e13;border-radius:10px;">
+              <a href="{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=signup"
+                 style="display:inline-block;padding:15px 28px;font-size:15px;font-weight:700;color:#c8f04b;text-decoration:none;">
+                Activer mon acces
+              </a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="padding:24px 28px 28px 28px;">
+        <p style="margin:0 0 16px 0;font-size:13px;line-height:1.6;color:#8a96a4;">
+          Ce lien est valable une heure et ne sert qu'une fois. Il fonctionne
+          sur n'importe quel appareil, pas seulement celui d'ou tu l'as demande.
+        </p>
+
+        <p style="margin:0 0 20px 0;font-size:13px;line-height:1.6;color:#8a96a4;">
+          Le bouton ne s'affiche pas ? Copie cette adresse dans ton navigateur :<br>
+          <span style="color:#57616d;word-break:break-all;font-size:12px;">{{ .RedirectTo }}&amp;token_hash={{ .TokenHash }}&amp;type=email</span>
+        </p>
+
+        <p style="margin:0;padding-top:18px;border-top:1px solid #e4e9ed;font-size:12px;line-height:1.6;color:#8a96a4;">
+          Tu n'as rien demande ? Ignore ce message, rien ne se passera.<br>
+          Eureka Services &middot; Oscar Aksanti
+        </p>
+      </td>
+    </tr>
+  </table>
+</div>

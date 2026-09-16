@@ -48,7 +48,9 @@ export function FormulaireConnexion({
       ? "Ce lien a expiré ou a déjà servi. Demandes-en un nouveau — c'est immédiat."
       : probleme === "lien-incomplet"
         ? "Ce lien est incomplet. Il a peut-être été coupé par ta messagerie : demandes-en un nouveau."
-        : null;
+        : probleme === "autre-appareil"
+          ? "Ce lien a été demandé depuis un autre appareil. Demandes-en un nouveau ici même, il s'ouvrira sans problème."
+          : null;
 
   return (
     <form action={action} className="flex max-w-[26rem] flex-col gap-4">
