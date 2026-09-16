@@ -13,6 +13,9 @@ export function EnteteApp({ nom, admin }: { nom: string; admin: boolean }) {
         </Link>
 
         <nav className="flex items-center gap-5 font-mono text-[11px] tracking-[0.12em] text-texte-2 uppercase">
+          <Link href="/modules" className="hover:text-texte">
+            Modules
+          </Link>
           {admin && (
             <Link href="/admin" className="hover:text-texte">
               Admin
