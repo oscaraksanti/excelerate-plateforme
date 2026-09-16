@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import QRCode from "qrcode";
-import { Certificat, type DonneesCertificat, type StyleCertificat } from "@/components/certificat";
+import { Certificat, type DonneesCertificat } from "@/components/certificat";
 
 export const metadata: Metadata = { title: "Aperçu du certificat" };
 
@@ -20,72 +21,69 @@ const EXEMPLE: DonneesCertificat = {
   corrections: 9,
 };
 
-const VARIANTES: { cle: StyleCertificat; titre: string; propos: string }[] = [
-  {
-    cle: "selection",
-    titre: "A — Sélection",
-    propos:
-      "Le nom domine, la preuve s'affiche, et la trame de cellules remplace la guilloche. Le titre du programme est « sélectionné » comme une plage Excel — la signature de ta marque, à sa place sur un certificat qui parle d'Excel.",
-  },
-  {
-    cle: "classique",
-    titre: "B — Classique tenue",
-    propos:
-      "Ta composition d'origine, débarrassée de ce qui la datait : plus de guilloche, un seul liseré au lieu de deux, une vraie hiérarchie de tailles, et l'accent de marque en une seule touche sous le nom.",
-  },
-];
-
 export default async function PageApercu({
   searchParams,
 }: {
-  searchParams: Promise<{ seul?: string }>;
+  searchParams: Promise<{ niveau?: string }>;
 }) {
-  const { seul } = await searchParams;
-  const qrSvg = await QRCode.toString(`${SITE}/c/${EXEMPLE.code}`, {
+  const { niveau } = await searchParams;
+  const avance = niveau === "avance";
+
+  const exemple: DonneesCertificat = avance
+    ? {
+        ...EXEMPLE,
+        niveau: "avance",
+        mention: "MS Excel Boosté par l'Intelligence Artificielle",
+        note: 17.2,
+        tps_rendus: 10,
+        corrections: 30,
+      }
+    : EXEMPLE;
+
+  const qrSvg = await QRCode.toString(`${SITE}/c/${exemple.code}`, {
     type: "svg",
     margin: 0,
     errorCorrectionLevel: "M",
     color: { dark: "#0B0E13", light: "#FFFFFF00" },
   });
 
-  const montrees = seul
-    ? VARIANTES.filter((v) => v.cle === seul)
-    : VARIANTES;
-
   return (
     <>
       <h1 className="titre-xl m-0 mb-2 text-[clamp(1.7rem,4vw,2.4rem)]">
         Aperçu du certificat
       </h1>
-      <p className="mb-10 max-w-[35rem] text-[1.01rem] text-texte-2">
-        Deux directions, mêmes marqueurs de confiance : logo et mentions
-        légales, cachet, les deux paraphes, le trophée. Ce qui change, c&apos;est
-        la composition.
+      <p className="mb-7 max-w-[35rem] text-[1.01rem] text-texte-2">
+        Sur un exemple. Seuls le nom, la mention, les chiffres, la date et le
+        code changent d&apos;une personne à l&apos;autre.
       </p>
 
-      {montrees.map((v) => (
-        <section key={v.cle} className="mb-16">
-          <div className="mb-5 flex flex-wrap items-baseline justify-between gap-3 border-t-2 border-texte pt-5">
-            <h2 className="titre-l m-0 text-[1.35rem]">{v.titre}</h2>
-            <a
-              href={`/admin/certificats/apercu?seul=${v.cle}`}
-              className="font-mono text-[10.5px] tracking-[0.12em] text-texte-3 uppercase hover:text-texte"
-            >
-              voir seul →
-            </a>
-          </div>
-          <p className="mb-6 max-w-[36rem] text-[0.96rem] text-texte-2">{v.propos}</p>
+      <div className="mb-8 flex flex-wrap gap-2">
+        <Link
+          href="/admin/certificats/apercu"
+          className={avance ? "bouton-2" : "bouton"}
+        >
+          Les trois soirées
+        </Link>
+        <Link
+          href="/admin/certificats/apercu?niveau=avance"
+          className={avance ? "bouton" : "bouton-2"}
+        >
+          Niveau avancé
+        </Link>
+      </div>
 
-          <div className="cadre-certificat">
-            <Certificat
-              c={EXEMPLE}
-              urlVerification={`${SITE}/c/${EXEMPLE.code}`}
-              qrSvg={qrSvg}
-              style={v.cle}
-            />
-          </div>
-        </section>
-      ))}
+      <div className="cadre-certificat">
+        <Certificat
+          c={exemple}
+          urlVerification={`${SITE}/c/${exemple.code}`}
+          qrSvg={qrSvg}
+        />
+      </div>
+
+      <p className="mt-7 max-w-[35rem] text-[0.92rem] text-texte-3">
+        Pour voir le rendu réel : ⌘P. Le format A4 paysage est déjà réglé, et
+        seul le certificat s&apos;imprime — le reste de la page disparaît.
+      </p>
     </>
   );
 }

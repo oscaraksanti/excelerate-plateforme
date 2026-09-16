@@ -30,6 +30,12 @@ export default async function PageCertificats() {
         un certificat qu&apos;on achète ne vaut rien.
       </p>
 
+      <p className="mb-9">
+        <a href="/admin/certificats/apercu" className="bouton-2">
+          Voir le certificat →
+        </a>
+      </p>
+
       <section className="mb-14 border-t-2 border-texte pt-6">
         <h2 className="titre-l m-0 mb-5 text-[1.35rem]">Qui y a droit</h2>
         {lignes.length === 0 ? (

@@ -2,13 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import QRCode from "qrcode";
-import { Certificat, type DonneesCertificat, type StyleCertificat } from "@/components/certificat";
+import { Certificat, type DonneesCertificat } from "@/components/certificat";
 import { clientAdmin } from "@/lib/supabase/admin";
 
-type Params = {
-  params: Promise<{ code: string }>;
-  searchParams?: Promise<{ style?: string }>;
-};
+type Params = { params: Promise<{ code: string }> };
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://excelai.oscaraksanti.com";
 
@@ -34,9 +31,8 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-export default async function PageCertificat({ params, searchParams }: Params) {
+export default async function PageCertificat({ params }: Params) {
   const { code } = await params;
-  const { style } = (await searchParams) ?? {};
   const c = await lire(code);
   if (!c) notFound();
 
@@ -119,12 +115,7 @@ export default async function PageCertificat({ params, searchParams }: Params) {
 
       {/* ── Le certificat ───────────────────────────────────── */}
       <div className="cadre-certificat">
-        <Certificat
-          c={c}
-          urlVerification={url}
-          qrSvg={qrSvg}
-          style={(style === "classique" ? "classique" : "selection") as StyleCertificat}
-        />
+        <Certificat c={c} urlVerification={url} qrSvg={qrSvg} />
       </div>
 
       <p className="no-print mx-auto mt-8 max-w-[52rem] text-[0.9rem] text-texte-3">
