@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { EnteteApp } from "@/components/entete-app";
-import { listerModules, listerLecons, leconsTerminees } from "@/lib/donnees";
+import { listerModules, sommaireModule, leconsTerminees } from "@/lib/donnees";
 import { profilCourant } from "@/lib/profil";
 
 export const metadata: Metadata = { title: "Les modules" };
@@ -13,10 +13,15 @@ export default async function PageModules() {
 
   const avec = await Promise.all(
     modules.map(async (m) => {
-      const lecons = await listerLecons(m.id);
-      const visibles = lecons.filter((l) => l.publie || profil.role === "admin");
-      const faites = visibles.filter((l) => terminees.has(l.id)).length;
-      return { module: m, total: visibles.length, faites };
+      const lecons = await sommaireModule(m.id);
+      const ouvrables = lecons.filter((l) => !l.verrouille);
+      const faites = ouvrables.filter((l) => terminees.has(l.id)).length;
+      return {
+        module: m,
+        total: ouvrables.length,
+        faites,
+        verrouillees: lecons.length - ouvrables.length,
+      };
     }),
   );
 
@@ -41,7 +46,7 @@ export default async function PageModules() {
           </p>
         ) : (
           <ol className="m-0 flex list-none flex-col gap-0 border-t border-bord p-0">
-            {avec.map(({ module: m, total, faites }) => {
+            {avec.map(({ module: m, total, faites, verrouillees }) => {
               const pret = total > 0;
               const fini = pret && faites === total;
               return (
@@ -86,6 +91,10 @@ export default async function PageModules() {
                         ) : (
                           `${faites} / ${total}`
                         )
+                      ) : verrouillees > 0 ? (
+                        <span className="text-texte-3">
+                          &#128274; {verrouillees} leçon{verrouillees > 1 ? "s" : ""}
+                        </span>
                       ) : (
                         <span className="text-texte-3">à venir</span>
                       )}

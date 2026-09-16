@@ -23,7 +23,7 @@ export default async function PageLeconAdmin({
   const { data: lecon } = await supabase
     .from("lecons")
     .select(
-      "id, module_id, numero, titre, video_source, video_id, duree_min, corps_md, publie",
+      "id, module_id, numero, titre, video_source, video_id, duree_min, corps_md, accroche, acces, publie_le, publie",
     )
     .eq("id", id)
     .maybeSingle();

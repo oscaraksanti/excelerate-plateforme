@@ -110,6 +110,9 @@ export async function enregistrerLecon(_p: Etat, d: FormData): Promise<Etat> {
     }
   }
 
+  const quand = texte(d, "publie_le");
+  const acces = texte(d, "acces");
+
   const champs = {
     titre,
     numero,
@@ -117,6 +120,9 @@ export async function enregistrerLecon(_p: Etat, d: FormData): Promise<Etat> {
     video_id: videoId,
     duree_min: entier(d, "duree_min"),
     corps_md: String(d.get("corps_md") ?? ""),
+    accroche: texte(d, "accroche").slice(0, 300),
+    acces: ["herite", "libre", "payant"].includes(acces) ? acces : "herite",
+    publie_le: quand ? new Date(quand).toISOString() : null,
     publie: d.get("publie") === "on",
   };
 

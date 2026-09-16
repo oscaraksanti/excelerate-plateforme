@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { SCRIPT_THEME } from "@/components/theme";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -53,7 +54,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="fr">
+    <html lang="fr" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: SCRIPT_THEME }} />
+      </head>
       <body
         className={`${archivo.variable} ${plexSans.variable} ${plexMono.variable} antialiased`}
       >

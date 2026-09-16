@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { enregistrerLecon, type Etat } from "@/app/admin/actions";
 import { AIDE, CHAMP, CHAMP_MONO, LABEL } from "@/components/champs";
+import { pourChampDate } from "@/lib/formats";
 import type { Lecon } from "@/lib/donnees";
 
 const DEPART: Etat = { ok: false, message: "" };
@@ -103,6 +104,55 @@ export function FormulaireLecon({ lecon }: { lecon: Lecon }) {
           Markdown : <code>## titre</code>, <code>**gras**</code>,{" "}
           <code>- liste</code>, <code>`formule`</code>, <code>&gt; encadré</code>.
           Les formules en accent grave ressortent en monospace.
+        </p>
+      </div>
+
+      <div className="flex flex-wrap gap-5 border-t border-bord pt-5">
+        <div className="flex w-[15rem] flex-col gap-2">
+          <label htmlFor="acces" className={LABEL}>
+            Qui peut l&apos;ouvrir
+          </label>
+          <select id="acces" name="acces" defaultValue={lecon.acces} className={CHAMP}>
+            <option value="herite">Comme le module</option>
+            <option value="libre">Libre — tous les inscrits</option>
+            <option value="payant">Masterclass uniquement</option>
+          </select>
+        </div>
+        <div className="flex min-w-[15rem] flex-1 flex-col gap-2">
+          <label htmlFor="publie_le" className={LABEL}>
+            Mise en ligne automatique
+          </label>
+          <input
+            id="publie_le"
+            name="publie_le"
+            type="datetime-local"
+            defaultValue={pourChampDate(lecon.publie_le)}
+            className={CHAMP_MONO}
+          />
+        </div>
+      </div>
+      <p className={`${AIDE} -mt-2`}>
+        Avec une date, la leçon s&apos;ouvre toute seule à ce moment-là — tu
+        n&apos;as pas à être devant ton ordinateur le lendemain matin. Sans
+        date, elle s&apos;ouvre dès que « Publiée » est coché.
+      </p>
+
+      <div className="flex flex-col gap-2">
+        <label htmlFor="accroche" className={LABEL}>
+          Ce qu&apos;on lit quand elle est verrouillée
+        </label>
+        <input
+          id="accroche"
+          name="accroche"
+          type="text"
+          maxLength={300}
+          defaultValue={lecon.accroche}
+          placeholder="Nettoyer 40 000 lignes en trois clics, et ne jamais recommencer."
+          className={CHAMP}
+        />
+        <p className={AIDE}>
+          Une phrase, pas une description technique. C&apos;est ce qui donne
+          envie d&apos;ouvrir le cadenas.
         </p>
       </div>
 

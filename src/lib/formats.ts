@@ -62,3 +62,38 @@ export function criteresDe(brut: unknown): Critere[] {
       typeof c === "object" && c !== null && "cle" in c && "titre" in c,
   );
 }
+
+/* ── Le direct ─────────────────────────────────────────────────── */
+
+export type Direct = {
+  actif: boolean;
+  titre: string;
+  lien: string;
+  debut_le: string | null;
+  duree_min: number;
+};
+
+export function formaterDebut(iso: string | null): string {
+  if (!iso) return "date non définie";
+  return new Date(iso).toLocaleString("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+/**
+ * Trois moments : avant (compte a rebours), pendant (le direct tourne),
+ * apres (on n'affiche plus rien). La duree evite d'avoir a eteindre le
+ * bandeau a la main a 21 h.
+ */
+export function etatDirect(d: Direct, maintenant = Date.now()) {
+  if (!d.actif || !d.debut_le) return "eteint" as const;
+  const debut = new Date(d.debut_le).getTime();
+  const fin = debut + Math.max(15, d.duree_min) * 60_000;
+  if (maintenant < debut) return "avant" as const;
+  if (maintenant <= fin) return "pendant" as const;
+  return "termine" as const;
+}

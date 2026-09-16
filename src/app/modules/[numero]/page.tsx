@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EnteteApp } from "@/components/entete-app";
-import { lireModule, listerLecons, leconsTerminees } from "@/lib/donnees";
+import { lireModule, sommaireModule, leconsTerminees } from "@/lib/donnees";
 import { listerTps } from "@/lib/tp";
 import { formaterDuree } from "@/lib/markdown";
+import { formaterDate } from "@/lib/formats";
 import { profilCourant } from "@/lib/profil";
 
 type Params = { params: Promise<{ numero: string }> };
@@ -24,8 +25,7 @@ export default async function PageModule({ params }: Params) {
   const module = await lireModule(n);
   if (!module) notFound();
 
-  const toutes = await listerLecons(module.id);
-  const lecons = toutes.filter((l) => l.publie || profil.role === "admin");
+  const lecons = await sommaireModule(module.id);
   const terminees = await leconsTerminees();
   const tps = (await listerTps(module.id)).filter(
     (t) => t.publie || profil.role === "admin",
@@ -67,39 +67,77 @@ export default async function PageModule({ params }: Params) {
           <ol className="m-0 flex list-none flex-col gap-0 border-t border-bord p-0">
             {lecons.map((l) => {
               const fait = terminees.has(l.id);
+              const corps = (
+                <>
+                  <span
+                    aria-hidden="true"
+                    className={`h-[14px] w-[14px] shrink-0 rounded-[2px] border-2 ${
+                      fait
+                        ? "border-[color:var(--plage-bord)] bg-voltage"
+                        : "border-bord"
+                    }`}
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span
+                      className={`block text-[1.02rem] font-medium ${l.verrouille ? "text-texte-2" : "text-texte"}`}
+                    >
+                      {l.titre}
+                    </span>
+                    {l.verrouille && l.accroche && (
+                      <span className="mt-1 block max-w-[32rem] text-[0.9rem] text-texte-3">
+                        {l.accroche}
+                      </span>
+                    )}
+                    {l.raison && (
+                      <span className="mt-[6px] inline-block rounded-[3px] bg-fond-3 px-2 py-[2px] font-mono text-[9.5px] tracking-[0.12em] text-texte-2 uppercase">
+                        {l.raison === "payant"
+                          ? "Masterclass"
+                          : l.raison === "programmee"
+                            ? `En ligne ${formaterDate(l.publie_le)}`
+                            : "Brouillon"}
+                      </span>
+                    )}
+                  </span>
+                  <span className="font-mono text-[11px] whitespace-nowrap tabular-nums text-texte-3">
+                    {l.verrouille ? "\u{1F512}" : formaterDuree(l.duree_min)}
+                  </span>
+                </>
+              );
+
               return (
                 <li key={l.id} className="border-b border-bord">
-                  <Link
-                    href={`/modules/${module.numero}/${l.numero}`}
-                    className="flex items-center gap-4 py-[18px] transition-colors hover:bg-fond-2"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={`h-[14px] w-[14px] shrink-0 rounded-[2px] border-2 ${
-                        fait
-                          ? "border-[color:var(--plage-bord)] bg-voltage"
-                          : "border-bord"
-                      }`}
-                    />
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-[1.02rem] font-medium text-texte">
-                        {l.titre}
-                      </span>
-                      {!l.publie && (
-                        <span className="mt-1 inline-block rounded-[3px] bg-fond-3 px-2 py-[2px] font-mono text-[9.5px] tracking-[0.12em] text-texte-2 uppercase">
-                          Brouillon
-                        </span>
-                      )}
+                  {l.verrouille ? (
+                    <span className="flex cursor-not-allowed items-center gap-4 py-[18px] opacity-70">
+                      {corps}
                     </span>
-                    <span className="font-mono text-[11px] whitespace-nowrap tabular-nums text-texte-3">
-                      {formaterDuree(l.duree_min)}
-                    </span>
-                  </Link>
+                  ) : (
+                    <Link
+                      href={`/modules/${module.numero}/${l.numero}`}
+                      className="flex items-center gap-4 py-[18px] transition-colors hover:bg-fond-2"
+                    >
+                      {corps}
+                    </Link>
+                  )}
                 </li>
               );
             })}
           </ol>
         )}
+        {lecons.some((l) => l.raison === "payant") && (
+          <div className="plage mt-10 px-6 py-5">
+            <span className="etiquette mb-2 block">Ces leçons sont fermées</span>
+            <p className="m-0 mb-4 max-w-[31rem] text-[1.02rem] leading-[1.5]">
+              Elles font partie de la masterclass. Les trois soirées
+              t&apos;ont montré des méthodes — celles-ci les installent pour
+              de bon, et le certificat avancé est compris.
+            </p>
+            <Link href="/offres" className="bouton">
+              Voir ce que ça contient
+            </Link>
+            <span className="poignee" aria-hidden="true" />
+          </div>
+        )}
+
         {tps.length > 0 && (
           <section className="mt-12 border-t-2 border-texte pt-6">
             <h2 className="titre-l m-0 mb-1 text-[1.4rem]">Le travail pratique</h2>

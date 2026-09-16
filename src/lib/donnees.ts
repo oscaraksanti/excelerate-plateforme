@@ -18,6 +18,9 @@ export type Lecon = {
   video_id: string | null;
   duree_min: number | null;
   corps_md: string;
+  accroche: string;
+  acces: "herite" | "libre" | "payant";
+  publie_le: string | null;
   publie: boolean;
 };
 
@@ -40,7 +43,7 @@ export type Commentaire = {
 
 const CHAMPS_MODULE = "id, numero, titre, resume, acces, publie";
 const CHAMPS_LECON =
-  "id, module_id, numero, titre, video_source, video_id, duree_min, corps_md, publie";
+  "id, module_id, numero, titre, video_source, video_id, duree_min, corps_md, accroche, acces, publie_le, publie";
 
 /**
  * Les modules visibles par la personne connectee.
@@ -161,4 +164,28 @@ export async function enregistrerPassage(leconId: string) {
   );
 
   return Boolean(data?.terminee);
+}
+
+export type EntreeSommaire = {
+  id: string;
+  numero: number;
+  titre: string;
+  duree_min: number | null;
+  accroche: string;
+  a_video: boolean;
+  verrouille: boolean;
+  raison: "brouillon" | "programmee" | "payant" | null;
+  publie_le: string | null;
+};
+
+/**
+ * Le sommaire d'un module : TOUTES ses leçons publiées, y compris celles
+ * qu'on ne peut pas ouvrir. Voir sept leçons cadenassées fait plus pour
+ * la vente que n'importe quel argument — mais le contenu, lui, ne sort
+ * jamais : la fonction ne renvoie ni le corps ni l'identifiant vidéo.
+ */
+export async function sommaireModule(moduleId: string): Promise<EntreeSommaire[]> {
+  const supabase = await clientServeur();
+  const { data } = await supabase.rpc("sommaire_module", { p_module: moduleId });
+  return (data as EntreeSommaire[]) ?? [];
 }

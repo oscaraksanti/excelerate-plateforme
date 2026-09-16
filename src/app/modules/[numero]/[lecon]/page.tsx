@@ -13,7 +13,7 @@ import {
   lireLecon,
   lireModule,
   listerCommentaires,
-  listerLecons,
+  sommaireModule,
   listerRessources,
 } from "@/lib/donnees";
 import { formaterDuree, rendreMarkdown } from "@/lib/markdown";
@@ -42,11 +42,13 @@ export default async function PageLecon({ params }: Params) {
   const courante = await lireLecon(module.id, nLecon);
   if (!courante) notFound();
 
-  const toutes = await listerLecons(module.id);
-  const sommaire = toutes.filter((l) => l.publie || profil.role === "admin");
+  const sommaire = await sommaireModule(module.id);
   const rang = sommaire.findIndex((l) => l.id === courante.id);
-  const precedente = rang > 0 ? sommaire[rang - 1] : null;
-  const suivante = rang >= 0 && rang < sommaire.length - 1 ? sommaire[rang + 1] : null;
+  const ouvrables = sommaire.filter((l) => !l.verrouille);
+  const place = ouvrables.findIndex((l) => l.id === courante.id);
+  const precedente = place > 0 ? ouvrables[place - 1] : null;
+  const suivante =
+    place >= 0 && place < ouvrables.length - 1 ? ouvrables[place + 1] : null;
 
   const [ressources, fils, terminees, dejaTerminee] = await Promise.all([
     listerRessources(courante.id),
@@ -79,25 +81,34 @@ export default async function PageLecon({ params }: Params) {
               const fait = terminees.has(l.id);
               return (
                 <li key={l.id}>
-                  <Link
-                    href={`/modules/${module.numero}/${l.numero}`}
-                    aria-current={ici ? "page" : undefined}
-                    className={`flex items-start gap-[10px] border-b border-bord-2 py-[11px] pr-2 pl-3 text-[0.9rem] transition-colors ${
-                      ici
-                        ? "border-l-2 border-l-[color:var(--plage-bord)] bg-fond-2 font-semibold text-texte"
-                        : "border-l-2 border-l-transparent text-texte-2 hover:text-texte"
-                    }`}
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={`mt-[5px] h-[10px] w-[10px] shrink-0 rounded-[2px] border-2 ${
-                        fait
-                          ? "border-[color:var(--plage-bord)] bg-voltage"
-                          : "border-bord"
+                  {l.verrouille ? (
+                    <span className="flex cursor-not-allowed items-start gap-[10px] border-b border-l-2 border-bord-2 border-l-transparent py-[11px] pr-2 pl-3 text-[0.9rem] text-texte-3">
+                      <span aria-hidden="true" className="mt-[3px] shrink-0 text-[11px]">
+                        &#128274;
+                      </span>
+                      <span className="min-w-0">{l.titre}</span>
+                    </span>
+                  ) : (
+                    <Link
+                      href={`/modules/${module.numero}/${l.numero}`}
+                      aria-current={ici ? "page" : undefined}
+                      className={`flex items-start gap-[10px] border-b border-bord-2 py-[11px] pr-2 pl-3 text-[0.9rem] transition-colors ${
+                        ici
+                          ? "border-l-2 border-l-[color:var(--plage-bord)] bg-fond-2 font-semibold text-texte"
+                          : "border-l-2 border-l-transparent text-texte-2 hover:text-texte"
                       }`}
-                    />
-                    <span className="min-w-0">{l.titre}</span>
-                  </Link>
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={`mt-[5px] h-[10px] w-[10px] shrink-0 rounded-[2px] border-2 ${
+                          fait
+                            ? "border-[color:var(--plage-bord)] bg-voltage"
+                            : "border-bord"
+                        }`}
+                      />
+                      <span className="min-w-0">{l.titre}</span>
+                    </Link>
+                  )}
                 </li>
               );
             })}
