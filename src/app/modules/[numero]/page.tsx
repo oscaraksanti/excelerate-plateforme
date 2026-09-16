@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EnteteApp } from "@/components/entete-app";
 import { lireModule, listerLecons, leconsTerminees } from "@/lib/donnees";
+import { listerTps } from "@/lib/tp";
 import { formaterDuree } from "@/lib/markdown";
 import { profilCourant } from "@/lib/profil";
 
@@ -26,6 +27,9 @@ export default async function PageModule({ params }: Params) {
   const toutes = await listerLecons(module.id);
   const lecons = toutes.filter((l) => l.publie || profil.role === "admin");
   const terminees = await leconsTerminees();
+  const tps = (await listerTps(module.id)).filter(
+    (t) => t.publie || profil.role === "admin",
+  );
 
   return (
     <>
@@ -95,6 +99,32 @@ export default async function PageModule({ params }: Params) {
               );
             })}
           </ol>
+        )}
+        {tps.length > 0 && (
+          <section className="mt-12 border-t-2 border-texte pt-6">
+            <h2 className="titre-l m-0 mb-1 text-[1.4rem]">Le travail pratique</h2>
+            <p className="mt-2 mb-5 max-w-[34rem] text-[0.96rem] text-texte-2">
+              C&apos;est lui qui compte pour le certificat. Ta copie reçoit une
+              note machine immédiate, puis celle de tes pairs.
+            </p>
+            <ol className="m-0 flex list-none flex-col gap-0 border-t border-bord p-0">
+              {tps.map((t) => (
+                <li key={t.id} className="border-b border-bord">
+                  <Link
+                    href={`/modules/${module.numero}/tp/${t.numero}`}
+                    className="flex items-center justify-between gap-4 py-[16px] transition-colors hover:bg-fond-2"
+                  >
+                    <span className="min-w-0 text-[1.02rem] font-medium text-texte">
+                      {t.titre}
+                    </span>
+                    <span className="font-mono text-[10.5px] tracking-[0.1em] whitespace-nowrap text-texte-3 uppercase">
+                      ouvrir →
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          </section>
         )}
       </main>
     </>

@@ -336,10 +336,20 @@
   }
   .prose-excel ul,
   .prose-excel ol {
-    padding-left: 1.3em;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
+  }
+  /* Tailwind retire les marqueurs par defaut : on les remet pour les
+     listes numerotees, indispensables dans un enonce en etapes. */
+  .prose-excel ol {
+    list-style: decimal;
+    padding-left: 1.45em;
+  }
+  .prose-excel ol > li::marker {
+    font-family: var(--police-mono), ui-monospace, monospace;
+    font-size: 0.85em;
+    color: var(--texte-2);
   }
   .prose-excel ul {
     list-style: none;

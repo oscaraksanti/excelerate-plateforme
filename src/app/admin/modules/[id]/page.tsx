@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { creerLecon } from "@/app/admin/actions";
+import { creerTp } from "@/app/admin/tps/actions";
 import { EnteteApp } from "@/components/entete-app";
 import { exigerAdmin } from "@/lib/admin";
 import { listerLecons } from "@/lib/donnees";
+import { listerTps } from "@/lib/tp";
 import { formaterDuree } from "@/lib/markdown";
 import { clientServeur } from "@/lib/supabase/serveur";
 import { FormulaireModule } from "./formulaire";
@@ -28,6 +30,7 @@ export default async function PageModuleAdmin({
 
   if (!module) notFound();
   const lecons = await listerLecons(module.id);
+  const tps = await listerTps(module.id);
 
   return (
     <>
@@ -110,6 +113,58 @@ export default async function PageModuleAdmin({
             </div>
             <button type="submit" className="bouton">
               Créer la leçon
+            </button>
+          </form>
+        </section>
+
+        <section className="mt-16 border-t-2 border-texte pt-6">
+          <h2 className="titre-l m-0 mb-1 text-[1.5rem]">Les travaux pratiques</h2>
+          <p className="mt-2 mb-6 max-w-[34rem] text-[0.98rem] text-texte-2">
+            Un par module suffit. C&apos;est lui qui alimente la correction
+            entre pairs, et les trois conditions du certificat.
+          </p>
+
+          {tps.length > 0 && (
+            <ol className="m-0 mb-7 flex list-none flex-col gap-0 border-t border-bord p-0">
+              {tps.map((t) => (
+                <li key={t.id} className="border-b border-bord">
+                  <Link
+                    href={`/admin/tps/${t.id}`}
+                    className="flex items-center gap-4 py-[15px] transition-colors hover:bg-fond-2"
+                  >
+                    <span className="w-[26px] shrink-0 font-mono text-[12px] tabular-nums text-texte-3">
+                      {t.numero}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[1rem] font-medium text-texte">
+                        {t.titre}
+                      </span>
+                      <span className={`mt-1 inline-block rounded-[3px] px-2 py-[2px] font-mono text-[9.5px] tracking-[0.12em] uppercase ${t.publie ? "bg-[color:var(--plage-fond)] text-accent-texte" : "bg-fond-3 text-texte-2"}`}>
+                        {t.publie ? "Publié" : "Brouillon"}
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          )}
+
+          <form action={creerTp} className="flex flex-wrap items-end gap-3">
+            <input type="hidden" name="module_id" value={module.id} />
+            <div className="flex min-w-[15rem] flex-1 flex-col gap-2">
+              <label htmlFor="titre-tp" className="etiquette">
+                Titre du travail pratique
+              </label>
+              <input
+                id="titre-tp"
+                name="titre"
+                type="text"
+                placeholder="TP 1 — Le tableau de bord des ventes"
+                className="w-full rounded-[2px] border border-bord bg-fond px-[13px] py-[11px] text-[15px] text-texte outline-none placeholder:text-texte-3 focus:border-texte-2"
+              />
+            </div>
+            <button type="submit" className="bouton">
+              Créer le travail pratique
             </button>
           </form>
         </section>
