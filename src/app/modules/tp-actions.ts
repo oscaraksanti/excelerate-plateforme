@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { analyser, ClasseurInvalide, ouvrirClasseur } from "@/lib/correcteur";
+import { courrielCopieDeposee } from "@/lib/courriel";
 import { clientAdmin } from "@/lib/supabase/admin";
 import { clientServeur } from "@/lib/supabase/serveur";
 
@@ -119,6 +120,41 @@ export async function deposerCopie(
 
   if (error) {
     return { ok: false, message: "L'enregistrement a échoué. Réessaie dans un instant." };
+  }
+
+  // Le courriel part après coup et n'a aucun droit de faire échouer le
+  // dépôt : la copie est enregistrée, c'est ce qui compte.
+  try {
+    const { data: profil } = await admin
+      .from("profils")
+      .select("email, nom")
+      .eq("id", auth.user.id)
+      .maybeSingle();
+
+    // mon_avancement() s'appuie sur l'identité de l'appelant : il faut
+    // donc le client de la personne, pas celui d'administration.
+    const { data: avancement } = await supabase.rpc("mon_avancement", { p_tp: tpId });
+    const a = Array.isArray(avancement) ? avancement[0] : avancement;
+    const restant = Math.max(0, (a?.requises ?? 3) - (a?.faites ?? 0));
+
+    const { data: leTp } = await admin
+      .from("tps")
+      .select("titre")
+      .eq("id", tpId)
+      .maybeSingle();
+
+    if (profil?.email) {
+      await courrielCopieDeposee({
+        a: profil.email,
+        prenom: (profil.nom ?? "").split(" ")[0] ?? "",
+        tp: leTp?.titre ?? "ton travail pratique",
+        note,
+        restant,
+        lien: `${process.env.NEXT_PUBLIC_SITE_URL ?? ""}${restant > 0 ? "/corrections" : retour}`,
+      });
+    }
+  } catch (e) {
+    console.error("[depot] courriel non envoyé", e);
   }
 
   revalidatePath(retour);

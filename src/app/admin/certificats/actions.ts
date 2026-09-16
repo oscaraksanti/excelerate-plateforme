@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { exigerAdmin } from "@/lib/admin";
+import { courrielCertificat } from "@/lib/courriel";
+import { clientAdmin } from "@/lib/supabase/admin";
 import { clientServeur } from "@/lib/supabase/serveur";
 
 export type Etat = { ok: boolean; message: string };
@@ -17,13 +19,43 @@ export async function delivrer(_p: Etat, d: FormData): Promise<Etat> {
   let poses = 0;
   const soucis: string[] = [];
 
+  const admin = clientAdmin();
+
   for (const id of ids) {
-    const { error } = await supabase.rpc("delivrer_certificat", {
+    const { data: code, error } = await supabase.rpc("delivrer_certificat", {
       p_profil: id,
       p_niveau: niveau,
     });
-    if (error) soucis.push(error.message);
-    else poses += 1;
+    if (error) {
+      soucis.push(error.message);
+      continue;
+    }
+    poses += 1;
+
+    // Le courriel ne doit jamais faire échouer la délivrance.
+    try {
+      const { data: profil } = await admin
+        .from("profils")
+        .select("email, nom")
+        .eq("id", id)
+        .maybeSingle();
+      const { data: cert } = await admin
+        .from("certificats")
+        .select("mention")
+        .eq("code", code as string)
+        .maybeSingle();
+
+      if (profil?.email && code) {
+        await courrielCertificat({
+          a: profil.email,
+          prenom: (profil.nom ?? "").split(" ")[0] ?? "",
+          code: code as string,
+          mention: cert?.mention ?? "Excelerate IA",
+        });
+      }
+    } catch (e) {
+      console.error("[certificat] courriel non envoyé", e);
+    }
   }
 
   revalidatePath("/admin/certificats");

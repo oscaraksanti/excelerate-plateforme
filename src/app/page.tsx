@@ -1,3 +1,5 @@
+import { PiedPage } from "@/components/pied-page";
+
 const LIEN_INSCRIPTION = "https://formations4data.systeme.io/excel-ia-gratuit";
 const LIEN_TELEGRAM = "https://t.me/ExcelPowerBiPourEntreprises";
 
@@ -143,12 +145,9 @@ export default function Accueil() {
           </p>
         </section>
 
-        <footer className="mt-20 border-t border-bord pt-5">
-          <p className="etiquette m-0">
-            excelai.oscaraksanti.com · Eurêka Services · Oscar Aksanti
-          </p>
-        </footer>
       </main>
+
+      <PiedPage />
     </>
   );
 }

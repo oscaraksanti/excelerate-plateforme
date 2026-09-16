@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { EnteteApp } from "@/components/entete-app";
+import { PiedPage } from "@/components/pied-page";
 import { certificatMerite, listerProduits, mesAchats, mesConditions } from "@/lib/offres";
 import { profilCourant } from "@/lib/profil";
 
@@ -160,6 +161,8 @@ export default async function PageOffres() {
           </p>
         </section>
       </main>
+
+      <PiedPage />
     </>
   );
 }

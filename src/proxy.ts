@@ -10,7 +10,16 @@ import { NextResponse, type NextRequest } from "next/server";
  * ne s'ouvrirait jamais. Ce point d'entree se defend tout seul, par
  * signature.
  */
-const OUVERTS = ["/", "/connexion", "/auth", "/c", "/api/chariow"];
+const OUVERTS = [
+  "/",
+  "/connexion",
+  "/auth",
+  "/c",
+  "/api/chariow",
+  "/mentions-legales",
+  "/confidentialite",
+  "/cgv",
+];
 
 function estOuvert(chemin: string) {
   return OUVERTS.some((o) => chemin === o || chemin.startsWith(`${o}/`));

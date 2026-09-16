@@ -3,6 +3,8 @@ import { SEGMENTS } from "@/app/api/export/[segment]/route";
 import { CHAMP } from "@/components/champs";
 import { formaterDate } from "@/lib/formats";
 import { listerApprenants } from "@/lib/metriques";
+import { clientServeur } from "@/lib/supabase/serveur";
+import { Relances } from "./relances";
 
 export const metadata: Metadata = { title: "Les apprenants" };
 
@@ -14,6 +16,11 @@ export default async function PageApprenants({
   const { q } = await searchParams;
   const recherche = (q ?? "").trim();
   const gens = await listerApprenants(recherche, 300);
+
+  const supabase = await clientServeur();
+  const { data: enRetard } = await supabase.rpc("a_relancer");
+  const aRelancer =
+    (enRetard as { profil_id: string; email: string; nom: string; restant: number }[]) ?? [];
 
   return (
     <>
@@ -51,6 +58,20 @@ export default async function PageApprenants({
             </li>
           ))}
         </ul>
+      </section>
+
+      {/* ── Les relances ─────────────────────────────────── */}
+      <section className="mb-12 border-t-2 border-texte pt-6">
+        <h2 className="titre-l m-0 mb-1 text-[1.35rem]">
+          Les corrections en retard
+        </h2>
+        <p className="mt-2 mb-6 max-w-[35rem] text-[0.96rem] text-texte-2">
+          Ceux qui ont déposé leur copie mais n&apos;ont pas rendu leurs
+          corrections — donc qui ne voient pas encore leur note. C&apos;est la
+          seule relance que systeme.io ne peut pas écrire : elle dépend de ce
+          qui s&apos;est passé ici.
+        </p>
+        <Relances gens={aRelancer} />
       </section>
 
       {/* ── La liste ─────────────────────────────────────── */}

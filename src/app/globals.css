@@ -446,3 +446,110 @@
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ── Les pages légales ─────────────────────────────────────────── */
+.legal {
+  max-width: 38rem;
+}
+.legal h1 {
+  font-family: var(--police-dsp), "Helvetica Neue", Arial, sans-serif;
+  font-variation-settings: "wdth" 108, "wght" 800;
+  font-size: clamp(1.9rem, 4.6vw, 2.6rem);
+  line-height: 1;
+  letter-spacing: -0.024em;
+  margin: 0 0 12px;
+}
+.legal .maj {
+  font-family: var(--police-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--texte-3);
+  margin: 0 0 34px;
+}
+.legal h2 {
+  font-family: var(--police-dsp), "Helvetica Neue", Arial, sans-serif;
+  font-variation-settings: "wdth" 105, "wght" 730;
+  font-size: 1.22rem;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  margin: 42px 0 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--bord);
+}
+.legal h3 {
+  font-family: var(--police-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--texte-2);
+  font-weight: 600;
+  margin: 26px 0 8px;
+}
+.legal p {
+  margin: 0 0 14px;
+  color: var(--texte-2);
+  line-height: 1.68;
+}
+.legal p strong,
+.legal li strong {
+  color: var(--texte);
+  font-weight: 600;
+}
+.legal ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.legal li {
+  position: relative;
+  padding-left: 21px;
+  color: var(--texte-2);
+  line-height: 1.6;
+}
+.legal li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.62em;
+  width: 7px;
+  height: 7px;
+  background: var(--voltage-2);
+  border-radius: 1px;
+}
+.legal dl {
+  margin: 0 0 18px;
+  display: grid;
+  grid-template-columns: minmax(9rem, auto) 1fr;
+  gap: 9px 22px;
+}
+.legal dt {
+  font-family: var(--police-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--texte-3);
+  padding-top: 3px;
+}
+.legal dd {
+  margin: 0;
+  color: var(--texte);
+}
+.legal a {
+  color: var(--texte);
+  text-decoration: underline;
+  text-decoration-color: var(--voltage-2);
+  text-underline-offset: 3px;
+}
+@media (max-width: 560px) {
+  .legal dl {
+    grid-template-columns: 1fr;
+    gap: 3px 0;
+  }
+  .legal dd {
+    margin-bottom: 12px;
+  }
+}
