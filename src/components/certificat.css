@@ -1,0 +1,275 @@
+/* ══════════════════════════════════════════════════════════════════
+   Le certificat — A4 paysage, 297 × 210 mm.
+
+   Georgia plutôt qu'une police chargée du web : présente partout,
+   s'imprime proprement, et très proche du modèle d'origine. Une police
+   distante qui ne charge pas abîmerait le document au moment précis où
+   il compte.
+   ══════════════════════════════════════════════════════════════════ */
+
+.certificat {
+  --bleu: #1c3f94;
+  --bleu-fonce: #16276b;
+  --encre-cert: #2b2b2b;
+
+  width: 297mm;
+  height: 210mm;
+  background: #ffffff;
+  color: var(--encre-cert);
+  font-family: Georgia, "Times New Roman", Times, serif;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  box-shadow: 0 2px 4px rgba(11, 14, 19, 0.08), 0 18px 48px rgba(11, 14, 19, 0.12);
+}
+
+.certificat .cadre-ext {
+  position: absolute;
+  inset: 7mm;
+  border: 2.4mm solid var(--bleu);
+}
+.certificat .cadre-int {
+  position: absolute;
+  inset: 1.6mm;
+  border: 0.5mm solid var(--bleu);
+  padding: 7mm 14mm 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.certificat .guilloche {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 176mm;
+  transform: translate(-50%, -48%);
+  pointer-events: none;
+  z-index: 0;
+}
+.certificat .coin {
+  position: absolute;
+  width: 5.4mm;
+  height: 5.4mm;
+  z-index: 2;
+}
+
+/* ── En-tête ─────────────────────────────────────────────── */
+.certificat .tete {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.certificat .logo {
+  width: 74mm;
+  display: block;
+}
+.certificat .trophee {
+  width: 19mm;
+  margin-top: 2mm;
+}
+
+/* ── Titre et nom ────────────────────────────────────────── */
+.certificat .mot,
+.certificat .decerne,
+.certificat .nom,
+.certificat .pour,
+.certificat .mention,
+.certificat .corps {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.certificat .mot {
+  font-size: 44pt;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--bleu-fonce);
+  letter-spacing: 0.5pt;
+  margin-top: -6mm;
+  line-height: 1.1;
+}
+.certificat .decerne {
+  font-size: 13pt;
+  font-style: italic;
+  color: #3a3a3a;
+  margin-top: 1mm;
+}
+.certificat .nom {
+  font-size: 30pt;
+  font-weight: 700;
+  font-style: italic;
+  color: #2f2f2f;
+  margin-top: 4mm;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.certificat .pour {
+  font-size: 11.5pt;
+  font-style: italic;
+  color: #3a3a3a;
+  margin-top: 5mm;
+}
+.certificat .mention {
+  font-size: 19pt;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--bleu);
+  margin-top: 2mm;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.certificat .corps {
+  font-size: 9.6pt;
+  line-height: 1.55;
+  text-align: justify;
+  text-align-last: center;
+  color: #2f2f2f;
+  margin-top: 4mm;
+  max-width: 232mm;
+}
+.certificat .corps b {
+  font-weight: 700;
+}
+
+/* ── Cachet ──────────────────────────────────────────────── */
+.certificat .cachet {
+  position: absolute;
+  left: 50%;
+  bottom: 31mm;
+  width: 30mm;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+/* ── Signatures ──────────────────────────────────────────── */
+.certificat .pied {
+  position: absolute;
+  left: 16mm;
+  right: 16mm;
+  bottom: 20mm;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: 6mm;
+}
+.certificat .signataire {
+  text-align: center;
+}
+.certificat .paraphe {
+  display: block;
+  width: 38mm;
+}
+.certificat .signataire.droite .paraphe {
+  width: 34mm;
+}
+.certificat .qui {
+  margin: 0;
+  font-size: 11.5pt;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--bleu-fonce);
+}
+.certificat .role {
+  margin: 0.4mm 0 0;
+  font-size: 9.5pt;
+  font-style: italic;
+  color: #3a3a3a;
+}
+/* Le paraphe se pose sous le nom et la fonction, comme sur le modèle */
+.certificat .signataire .paraphe {
+  margin: 0.5mm auto 0;
+}
+
+.certificat .centre {
+  text-align: center;
+  padding-bottom: 1mm;
+}
+.certificat .fait {
+  margin: 0;
+  font-size: 11.5pt;
+  font-style: italic;
+  color: #2f2f2f;
+}
+.certificat .ident {
+  margin: 1.2mm 0 0;
+  font-size: 10.5pt;
+  font-style: italic;
+  letter-spacing: 0.4pt;
+  color: #2f2f2f;
+}
+
+/* ── Le bloc de vérification, ajouté au modèle ───────────── */
+.certificat .verif {
+  position: absolute;
+  left: 50%;
+  bottom: 5mm;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 2.6mm;
+}
+.certificat .qr svg {
+  display: block;
+  width: 13mm;
+  height: 13mm;
+}
+.certificat .verif .url {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 6pt;
+  line-height: 1.5;
+  color: #55606c;
+  text-align: left;
+  max-width: 62mm;
+}
+.certificat .verif .url span {
+  color: var(--bleu);
+  word-break: break-all;
+}
+
+/* Sur un écran étroit, on réduit sans rien casser */
+@media screen and (max-width: 1180px) {
+  .certificat {
+    transform-origin: top left;
+    transform: scale(var(--echelle, 1));
+  }
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+  .certificat {
+    box-shadow: none;
+    margin: 0;
+    transform: none;
+  }
+}
+
+/* ── La page qui porte le certificat ────────────────────────── */
+.cadre-certificat {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .cadre-certificat {
+    overflow: visible;
+    padding: 0;
+  }
+  body {
+    background: #fff !important;
+  }
+}
