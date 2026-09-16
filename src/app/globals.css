@@ -1,26 +1,309 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ══════════════════════════════════════════════════════════════
+   EXCELERATE IA — jetons de marque
+   Repris tels quels des affiches et de la page d'inscription.
+   Ne pas inventer de couleur ici : tout part de cette liste.
+   ══════════════════════════════════════════════════════════════ */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root {
+  /* Palette brute */
+  --encre: #0b0e13;
+  --encre-2: #141922;
+  --papier: #ffffff;
+  --papier-2: #eef1f4;
+  --papier-3: #f7f9fa;
+  --trait: #d7dde3;
+  --trait-2: #e4e9ed;
+  --gris: #57616d;
+  --gris-2: #8a96a4;
+  --voltage: #c8f04b;
+  --voltage-2: #afdc33;
+  --ambre: #ffb020;
+
+  /* Rôles — thème clair */
+  --fond: var(--papier);
+  --fond-2: var(--papier-3);
+  --fond-3: var(--papier-2);
+  --texte: var(--encre);
+  --texte-2: var(--gris);
+  --texte-3: var(--gris-2);
+  --bord: var(--trait);
+  --bord-2: var(--trait-2);
+  --grille: rgba(11, 14, 19, 0.062);
+  --plage-bord: var(--encre);
+  --plage-fond: rgba(200, 240, 75, 0.14);
+  --accent-texte: #5a7a05;
+  --ambre-texte: #8a5a00;
+  --ok: #3e7d2e;
+  --ko: #be3b30;
+  --bouton-fond: var(--encre);
+  --bouton-fond-2: var(--encre-2);
+  --bouton-texte: var(--voltage);
+
+  /* Géométrie */
+  --cell: 48px;
+  --r-btn: 10px;
+
+  color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --fond: var(--encre);
+    --fond-2: var(--encre-2);
+    --fond-3: #1b212c;
+    --texte: #f2f5f8;
+    --texte-2: #9aa6b4;
+    --texte-3: #77828f;
+    --bord: rgba(255, 255, 255, 0.115);
+    --bord-2: rgba(255, 255, 255, 0.072);
+    --grille: rgba(255, 255, 255, 0.055);
+    --plage-bord: var(--voltage);
+    --plage-fond: rgba(200, 240, 75, 0.055);
+    --accent-texte: var(--voltage);
+    --ambre-texte: var(--ambre);
+    --ok: #b7e24a;
+    --ko: #f08b82;
+    --bouton-fond: var(--voltage);
+    --bouton-fond-2: var(--voltage-2);
+    --bouton-texte: var(--encre);
+
+    color-scheme: dark;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+:root[data-theme="dark"] {
+  --fond: var(--encre);
+  --fond-2: var(--encre-2);
+  --fond-3: #1b212c;
+  --texte: #f2f5f8;
+  --texte-2: #9aa6b4;
+  --texte-3: #77828f;
+  --bord: rgba(255, 255, 255, 0.115);
+  --bord-2: rgba(255, 255, 255, 0.072);
+  --grille: rgba(255, 255, 255, 0.055);
+  --plage-bord: var(--voltage);
+  --plage-fond: rgba(200, 240, 75, 0.055);
+  --accent-texte: var(--voltage);
+  --ambre-texte: var(--ambre);
+  --ok: #b7e24a;
+  --ko: #f08b82;
+  --bouton-fond: var(--voltage);
+  --bouton-fond-2: var(--voltage-2);
+  --bouton-texte: var(--encre);
+
+  color-scheme: dark;
+}
+
+/* ── Exposition des jetons à Tailwind ──────────────────────── */
+@theme inline {
+  --color-fond: var(--fond);
+  --color-fond-2: var(--fond-2);
+  --color-fond-3: var(--fond-3);
+  --color-texte: var(--texte);
+  --color-texte-2: var(--texte-2);
+  --color-texte-3: var(--texte-3);
+  --color-bord: var(--bord);
+  --color-bord-2: var(--bord-2);
+  --color-voltage: var(--voltage);
+  --color-voltage-2: var(--voltage-2);
+  --color-ambre: var(--ambre);
+  --color-encre: var(--encre);
+  --color-papier: var(--papier);
+  --color-accent-texte: var(--accent-texte);
+  --color-ambre-texte: var(--ambre-texte);
+  --color-ok: var(--ok);
+  --color-ko: var(--ko);
+  --color-bouton-fond: var(--bouton-fond);
+  --color-bouton-texte: var(--bouton-texte);
+
+  --font-dsp: var(--police-dsp), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--police-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--police-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-btn: 10px;
+}
+
+/* ── Base ──────────────────────────────────────────────────── */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--fond);
+    color: var(--texte);
+    font-family: var(--police-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--voltage);
+    color: var(--encre);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--voltage-2);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--police-dsp), "Helvetica Neue", Arial, sans-serif;
+    text-wrap: balance;
+  }
+}
+
+/* ── Éléments de signature ─────────────────────────────────── */
+@layer components {
+  /* Le titrage : Archivo en largeur étendue */
+  .titre-xl {
+    font-variation-settings: "wdth" 108, "wght" 800;
+    letter-spacing: -0.024em;
+    line-height: 0.97;
+  }
+  .titre-l {
+    font-variation-settings: "wdth" 106, "wght" 760;
+    letter-spacing: -0.016em;
+    line-height: 1.08;
+  }
+  .titre-m {
+    font-variation-settings: "wdth" 105, "wght" 730;
+    letter-spacing: -0.01em;
+    line-height: 1.18;
+  }
+
+  /* L'étiquette en capitales espacées */
+  .etiquette {
+    font-family: var(--police-mono), ui-monospace, monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--texte-2);
+  }
+
+  /* La trame de cellules, en fond de page */
+  .trame {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--grille) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grille) 1px, transparent 1px);
+    background-size: var(--cell) var(--cell);
+    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 55%);
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 55%);
+  }
+
+  /* La plage sélectionnée d'Excel */
+  .plage {
+    position: relative;
+    align-self: flex-start;
+    border: 2px solid var(--plage-bord);
+    background: var(--plage-fond);
+    border-radius: 2px;
+  }
+  .plage > .poignee {
+    position: absolute;
+    right: -7px;
+    bottom: -7px;
+    width: 14px;
+    height: 14px;
+    background: var(--plage-bord);
+    border: 2px solid var(--fond);
+    border-radius: 2px;
+  }
+
+  /* La barre de formule */
+  .barre-formule {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid var(--bord);
+    border-radius: 4px;
+    background: var(--fond);
+    overflow: hidden;
+    font-family: var(--police-mono), ui-monospace, monospace;
+  }
+  .barre-formule > .ref {
+    font-size: 12px;
+    padding: 11px 14px;
+    min-width: 64px;
+    border-right: 1px solid var(--bord);
+    color: var(--texte-2);
+    background: var(--fond-2);
+    display: flex;
+    align-items: center;
+  }
+  .barre-formule > .fx {
+    font-size: 12px;
+    font-style: italic;
+    padding: 11px 12px;
+    border-right: 1px solid var(--bord);
+    color: var(--texte-3);
+    display: flex;
+    align-items: center;
+  }
+  .barre-formule > .val {
+    font-size: 13px;
+    padding: 11px 15px;
+    flex: 1;
+    min-width: 0;
+    color: var(--texte);
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+  }
+
+  /* Le bouton principal */
+  .bouton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    background: var(--bouton-fond);
+    color: var(--bouton-texte);
+    font-weight: 600;
+    font-size: 0.97rem;
+    padding: 14px 24px;
+    border-radius: var(--r-btn);
+    border: 1px solid var(--bouton-fond);
+    transition: transform 0.12s ease, background 0.12s ease;
+  }
+  .bouton:hover {
+    transform: translateY(-1px);
+    background: var(--bouton-fond-2);
+    border-color: var(--bouton-fond-2);
+  }
+
+  .bouton-2 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    color: var(--texte);
+    font-weight: 500;
+    font-size: 0.97rem;
+    padding: 14px 22px;
+    border-radius: var(--r-btn);
+    border: 1px solid var(--bord);
+    transition: border-color 0.12s ease;
+  }
+  .bouton-2:hover {
+    border-color: var(--texte-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
 }
