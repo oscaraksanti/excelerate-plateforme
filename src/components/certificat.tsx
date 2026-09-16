@@ -11,116 +11,204 @@ export type DonneesCertificat = {
   lieu: string;
   emis_le: string;
   revoque_le: string | null;
+  tps_rendus?: number;
+  corrections?: number;
 };
 
-const CORPS_DEFAUT: Record<string, string> = {
+export type StyleCertificat = "selection" | "classique";
+
+const ATTESTATION: Record<string, string> = {
   avance:
-    "Au cours de cette formation, l'apprenant a acquis une **maîtrise avancée d'Excel boosté par l'intelligence artificielle**, notamment dans l'utilisation de **Power Query, Power Pivot, Tableaux Croisés Dynamiques**, ainsi que dans la **création de Tableaux de Bord interactifs**. Il a démontré sa capacité à **nettoyer, transformer, analyser et visualiser les données** de manière professionnelle. Grâce aux **cas pratiques et au projet final**, l'apprenant est désormais capable d'**exploiter la puissance des données** pour fournir des **insights stratégiques** et concevoir des solutions analytiques à fort impact.",
+    "a suivi l'intégralité du programme, rendu ses travaux pratiques, corrigé ceux de ses pairs, et démontré sa maîtrise d'Excel augmenté par l'intelligence artificielle — de la structuration des données jusqu'au tableau de bord automatisé.",
   fondamentaux:
-    "Au cours de cette formation, l'apprenant a acquis les **méthodes qui font la différence sur Excel** : **tableaux structurés, RECHERCHEX, FILTRE, TRIER et UNIQUE**, ainsi que l'usage raisonné de **l'intelligence artificielle comme copilote d'analyse**. Il a rendu ses **travaux pratiques**, **corrigé ceux de ses pairs**, et démontré sa capacité à **structurer, analyser et présenter des données** de manière professionnelle et reproductible.",
+    "a suivi l'intégralité du programme, rendu ses travaux pratiques, corrigé ceux de ses pairs, et démontré sa maîtrise des méthodes qui font la différence sur Excel — tableaux structurés, fonctions dynamiques, et usage raisonné de l'intelligence artificielle.",
 };
-
-/** Le gras du modèle d'origine, sans laisser passer de HTML. */
-function enrichir(texte: string) {
-  const morceaux = texte.split(/(\*\*[^*]+\*\*)/g);
-  return morceaux.map((m, i) =>
-    m.startsWith("**") && m.endsWith("**") ? (
-      <b key={i}>{m.slice(2, -2)}</b>
-    ) : (
-      <span key={i}>{m}</span>
-    ),
-  );
-}
 
 function dateLongue(iso: string) {
   return new Date(iso).toLocaleDateString("fr-FR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+    day: "numeric", month: "long", year: "numeric",
   });
 }
 
-/**
- * Le certificat, aux dimensions exactes d'une A4 paysage.
- *
- * Georgia plutot qu'une police chargee du web : elle est presente sur
- * toutes les machines, elle s'imprime proprement, et elle est tres
- * proche du modele d'origine. Une police distante qui ne charge pas
- * abimerait le document au moment precis ou il compte.
- */
+function dateCourte(iso: string) {
+  return new Date(iso)
+    .toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" })
+    .replace(".", "");
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   A — « Sélection »
+
+   Tous les marqueurs de confiance restent : logo et mentions légales,
+   cachet, les deux paraphes, le trophée. Ce qui change, c'est la
+   composition — le nom domine, la preuve s'affiche, et la trame de
+   cellules remplace la guilloche : un certificat qui parle d'Excel n'a
+   aucune raison d'emprunter le décor d'un diplôme de notaire.
+   ══════════════════════════════════════════════════════════════════ */
+function Selection({ c, url, qrSvg }: { c: DonneesCertificat; url: string; qrSvg: string }) {
+  const attestation = ATTESTATION[c.niveau] ?? ATTESTATION.fondamentaux;
+  const preuves = [
+    { k: "Travaux rendus", v: String(c.tps_rendus ?? 0) },
+    { k: "Copies corrigées", v: String(c.corrections ?? 0) },
+    {
+      k: "Moyenne obtenue",
+      v: c.note !== null ? String(c.note).replace(".", ",") : "—",
+      unite: c.note !== null ? "/20" : "",
+    },
+    { k: "Délivré le", v: dateCourte(c.emis_le) },
+  ];
+
+  return (
+    <div className="cert cert-a">
+      <div className="fond-grille" aria-hidden="true" />
+      <div className="liseret">
+        <span className="angle angle-hg" aria-hidden="true" />
+        <span className="angle angle-bd" aria-hidden="true" />
+
+        <header className="entete">
+          <img src="/certificat/logo-eureka.png" alt="Eurêka Services" className="logo" />
+          <img src="/certificat/trophee.png" alt="" className="trophee" />
+        </header>
+
+        <div className="corps-central">
+          <p className="sur-titre">
+            <span>Certificat de réussite</span>
+            <span className="tiret" aria-hidden="true" />
+            <span>{c.niveau === "avance" ? "Niveau avancé" : "Fondations"}</span>
+          </p>
+
+          <p className="nom">{c.nom_affiche}</p>
+          <p className="liaison">a suivi et validé le programme</p>
+
+          <span className="plage-mention">
+            {c.mention}
+            <span className="poignee-cert" aria-hidden="true" />
+          </span>
+
+          <p className="attestation">{attestation}</p>
+        </div>
+
+        <div className="preuves">
+          {preuves.map((p) => (
+            <div key={p.k} className="preuve">
+              <span className="pk">{p.k}</span>
+              <span className="pv">
+                {p.v}
+                {p.unite ? <i>{p.unite}</i> : null}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <footer className="pied">
+          <div className="sign">
+            <img src="/certificat/signature-reagan.png" alt="" className="paraphe" />
+            <span className="filet" aria-hidden="true" />
+            <p className="qui">Dr Reagan LUVANDE, Msc</p>
+            <p className="role">Épidémiologiste biostatisticien</p>
+          </div>
+
+          <div className="milieu">
+            <img src="/certificat/cachet.png" alt="" className="cachet" />
+            <p className="lieu-date">{c.lieu}, le {dateLongue(c.emis_le)}</p>
+          </div>
+
+          <div className="sign">
+            <img src="/certificat/signature-oscar.png" alt="" className="paraphe" />
+            <span className="filet" aria-hidden="true" />
+            <p className="qui">Ir Oscar AKSANTI</p>
+            <p className="role">Data Analyst &amp; Instructor</p>
+          </div>
+        </footer>
+
+        <div className="barre-verif">
+          <div className="qr" dangerouslySetInnerHTML={{ __html: qrSvg }} />
+          <p className="txt">
+            <b>Vérifiable en ligne</b>
+            <span>{url.replace(/^https?:\/\//, "")}</span>
+          </p>
+          <p className="code-cert">
+            <span>Code</span>
+            <b>{c.code}</b>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   B — « Classique tenue »
+
+   La composition d'origine, débarrassée de ce qui la datait : plus de
+   guilloche, un seul liseré au lieu de deux, une vraie hiérarchie de
+   tailles, et l'accent de marque en une seule touche.
+   ══════════════════════════════════════════════════════════════════ */
+function Classique({ c, url, qrSvg }: { c: DonneesCertificat; url: string; qrSvg: string }) {
+  const attestation = ATTESTATION[c.niveau] ?? ATTESTATION.fondamentaux;
+
+  return (
+    <div className="cert cert-b">
+      <div className="liseret">
+        <header className="entete">
+          <img src="/certificat/logo-eureka.png" alt="Eurêka Services" className="logo" />
+          <img src="/certificat/trophee.png" alt="" className="trophee" />
+        </header>
+
+        <p className="mot">Certificat</p>
+        <p className="decerne">décerné à</p>
+        <p className="nom">{c.nom_affiche}</p>
+        <span className="souligne" aria-hidden="true" />
+        <p className="pour">pour avoir suivi et validé le programme</p>
+        <p className="mention">{c.mention}</p>
+        <p className="attestation">{attestation}</p>
+
+        <div className="preuves">
+          <span>{c.tps_rendus ?? 0} travaux rendus</span>
+          <span>{c.corrections ?? 0} copies corrigées</span>
+          <span>Moyenne {c.note !== null ? String(c.note).replace(".", ",") : "—"} / 20</span>
+        </div>
+
+        <footer className="pied">
+          <div className="sign">
+            <p className="qui">Dr Reagan LUVANDE, Msc</p>
+            <p className="role">Épidémiologiste biostatisticien</p>
+            <img src="/certificat/signature-reagan.png" alt="" className="paraphe" />
+          </div>
+          <div className="milieu">
+            <img src="/certificat/cachet.png" alt="" className="cachet" />
+            <p className="lieu-date">Fait à {c.lieu}, le {dateLongue(c.emis_le)}</p>
+            <p className="code-cert">ID : {c.code}</p>
+          </div>
+          <div className="sign">
+            <p className="qui">Ir Oscar AKSANTI</p>
+            <p className="role">Data Analyst &amp; Instructor</p>
+            <img src="/certificat/signature-oscar.png" alt="" className="paraphe" />
+          </div>
+        </footer>
+
+        <div className="barre-verif">
+          <div className="qr" dangerouslySetInnerHTML={{ __html: qrSvg }} />
+          <p className="txt">
+            Authenticité vérifiable sur <span>{url.replace(/^https?:\/\//, "")}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Certificat({
-  c,
-  urlVerification,
-  qrSvg,
+  c, urlVerification, qrSvg, style = "selection",
 }: {
   c: DonneesCertificat;
   urlVerification: string;
   qrSvg: string;
+  style?: StyleCertificat;
 }) {
-  const corps = c.corps?.trim() || CORPS_DEFAUT[c.niveau] || CORPS_DEFAUT.fondamentaux;
-
-  return (
-    <div className="certificat">
-      <div className="cadre-ext">
-        <div className="cadre-int">
-          <img src="/certificat/guilloche.jpg" alt="" className="guilloche" />
-
-          {(
-            [
-              { cle: "hg", top: "5mm", left: "5mm" },
-              { cle: "hd", top: "5mm", right: "5mm" },
-              { cle: "bg", bottom: "5mm", left: "5mm" },
-              { cle: "bd", bottom: "5mm", right: "5mm" },
-            ] as const
-          ).map(({ cle, ...pos }) => (
-            <img key={cle} src="/certificat/coin.png" alt="" className="coin" style={pos} />
-          ))}
-
-          <header className="tete">
-            <img src="/certificat/logo-eureka.png" alt="Eurêka Services" className="logo" />
-            <img src="/certificat/trophee.png" alt="" className="trophee" />
-          </header>
-
-          <h1 className="mot">Certificat</h1>
-          <p className="decerne">décerné à</p>
-          <p className="nom">{c.nom_affiche}</p>
-          <p className="pour">Pour avoir suivi avec succès une formation approfondie en</p>
-          <p className="mention">{c.mention}</p>
-          <p className="corps">{enrichir(corps)}</p>
-
-          <img src="/certificat/cachet.png" alt="" className="cachet" />
-
-          <footer className="pied">
-            <div className="signataire gauche">
-              <p className="qui">Dr Reagan LUVANDE, Msc</p>
-              <p className="role">Épidémiologiste biostatisticien</p>
-              <img src="/certificat/signature-reagan.png" alt="" className="paraphe" />
-            </div>
-
-            <div className="centre">
-              <p className="fait">
-                Fait à {c.lieu}, le {dateLongue(c.emis_le)}
-              </p>
-              <p className="ident">ID : {c.code}</p>
-            </div>
-
-            <div className="signataire droite">
-              <p className="qui">Ir Oscar AKSANTI</p>
-              <p className="role">Data Analyst &amp; Instructor</p>
-              <img src="/certificat/signature-oscar.png" alt="" className="paraphe" />
-            </div>
-          </footer>
-
-          <div className="verif">
-            <div className="qr" dangerouslySetInnerHTML={{ __html: qrSvg }} />
-            <p className="url">
-              Vérifier l&apos;authenticité
-              <br />
-              <span>{urlVerification.replace(/^https?:\/\//, "")}</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+  return style === "classique" ? (
+    <Classique c={c} url={urlVerification} qrSvg={qrSvg} />
+  ) : (
+    <Selection c={c} url={urlVerification} qrSvg={qrSvg} />
   );
 }

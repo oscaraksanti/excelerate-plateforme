@@ -1,247 +1,556 @@
 /* ══════════════════════════════════════════════════════════════════
    Le certificat — A4 paysage, 297 × 210 mm.
 
-   Georgia plutôt qu'une police chargée du web : présente partout,
-   s'imprime proprement, et très proche du modèle d'origine. Une police
-   distante qui ne charge pas abîmerait le document au moment précis où
-   il compte.
+   Les polices de la marque, avec des replis solides : ce document doit
+   rester correct même si le web ne répond pas au moment de l'impression.
    ══════════════════════════════════════════════════════════════════ */
 
-.certificat {
-  --bleu: #1c3f94;
-  --bleu-fonce: #16276b;
-  --encre-cert: #2b2b2b;
+.cert {
+  --encre-c: #0b0e13;
+  --gris-c: #57616d;
+  --gris-clair: #8a96a4;
+  --trait-c: #d7dde3;
+  --voltage-c: #c8f04b;
+  --bleu-c: #1c3f94;
+  --papier-c: #ffffff;
+
+  --dsp-c: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --sans-c: "IBM Plex Sans", system-ui, "Segoe UI", sans-serif;
+  --mono-c: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   width: 297mm;
   height: 210mm;
-  background: #ffffff;
-  color: var(--encre-cert);
-  font-family: Georgia, "Times New Roman", Times, serif;
   position: relative;
   overflow: hidden;
   margin: 0 auto;
-  box-shadow: 0 2px 4px rgba(11, 14, 19, 0.08), 0 18px 48px rgba(11, 14, 19, 0.12);
+  background: var(--papier-c);
+  color: var(--encre-c);
+  font-family: var(--sans-c);
+  box-shadow: 0 1px 3px rgba(11, 14, 19, 0.07), 0 20px 56px rgba(11, 14, 19, 0.13);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
-.certificat .cadre-ext {
+/* ══════════════════════════════════════════════════════════════════
+   A — « Sélection »
+   ══════════════════════════════════════════════════════════════════ */
+
+/* La trame de cellules, à la place de la guilloche. Elle dit « Excel »
+   sans un mot, et elle appartient à la marque. */
+.cert-a .fond-grille {
   position: absolute;
-  inset: 7mm;
-  border: 2.4mm solid var(--bleu);
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(11, 14, 19, 0.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 14, 19, 0.075) 1px, transparent 1px);
+  background-size: 14mm 14mm;
+  -webkit-mask-image: radial-gradient(
+    ellipse 54% 50% at 50% 47%,
+    transparent 30%,
+    rgba(0, 0, 0, 1) 88%
+  );
+  mask-image: radial-gradient(
+    ellipse 54% 50% at 50% 47%,
+    transparent 30%,
+    rgba(0, 0, 0, 1) 88%
+  );
 }
-.certificat .cadre-int {
+
+.cert-a .liseret {
   position: absolute;
-  inset: 1.6mm;
-  border: 0.5mm solid var(--bleu);
-  padding: 7mm 14mm 0;
+  inset: 9mm;
+  border: 0.45mm solid var(--encre-c);
+  padding: 6mm 13mm 5mm;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Les deux poignées de sélection, aux angles opposés. */
+.cert-a .angle {
+  position: absolute;
+  width: 7mm;
+  height: 7mm;
+  border: 1.1mm solid var(--voltage-c);
+}
+.cert-a .angle-hg {
+  top: -0.45mm;
+  left: -0.45mm;
+  border-right: none;
+  border-bottom: none;
+}
+.cert-a .angle-bd {
+  bottom: -0.45mm;
+  right: -0.45mm;
+  border-left: none;
+  border-top: none;
+}
+
+.cert-a .entete {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10mm;
+}
+.cert-a .logo {
+  width: 68mm;
+  display: block;
+}
+.cert-a .trophee {
+  width: 14mm;
+  display: block;
+}
+
+.cert-a .corps-central {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.certificat .guilloche {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 176mm;
-  transform: translate(-50%, -48%);
-  pointer-events: none;
-  z-index: 0;
-}
-.certificat .coin {
-  position: absolute;
-  width: 5.4mm;
-  height: 5.4mm;
-  z-index: 2;
-}
-
-/* ── En-tête ─────────────────────────────────────────────── */
-.certificat .tete {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-.certificat .logo {
-  width: 74mm;
-  display: block;
-}
-.certificat .trophee {
-  width: 19mm;
-  margin-top: 2mm;
-}
-
-/* ── Titre et nom ────────────────────────────────────────── */
-.certificat .mot,
-.certificat .decerne,
-.certificat .nom,
-.certificat .pour,
-.certificat .mention,
-.certificat .corps {
-  position: relative;
-  z-index: 1;
-  margin: 0;
+  justify-content: center;
   text-align: center;
-  width: 100%;
+  padding: 2mm 0 1mm;
 }
 
-.certificat .mot {
-  font-size: 44pt;
-  font-weight: 700;
-  font-style: italic;
-  color: var(--bleu-fonce);
-  letter-spacing: 0.5pt;
-  margin-top: -6mm;
-  line-height: 1.1;
+.cert-a .sur-titre {
+  margin: 0 0 4mm;
+  font-family: var(--mono-c);
+  font-size: 8pt;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gris-c);
+  display: flex;
+  align-items: center;
+  gap: 4mm;
 }
-.certificat .decerne {
-  font-size: 13pt;
-  font-style: italic;
-  color: #3a3a3a;
-  margin-top: 1mm;
+.cert-a .sur-titre .tiret {
+  width: 9mm;
+  height: 0.35mm;
+  background: var(--trait-c);
 }
-.certificat .nom {
-  font-size: 30pt;
-  font-weight: 700;
-  font-style: italic;
-  color: #2f2f2f;
-  margin-top: 4mm;
-  line-height: 1.15;
+
+.cert-a .nom {
+  margin: 0;
+  font-family: var(--dsp-c);
+  font-variation-settings: "wdth" 106, "wght" 800;
+  font-weight: 800;
+  font-size: 43pt;
+  line-height: 1.01;
+  letter-spacing: -0.024em;
+  color: var(--encre-c);
+  max-width: 238mm;
   text-wrap: balance;
 }
-.certificat .pour {
-  font-size: 11.5pt;
-  font-style: italic;
-  color: #3a3a3a;
-  margin-top: 5mm;
+
+.cert-a .liaison {
+  margin: 6mm 0 4mm;
+  font-size: 10pt;
+  color: var(--gris-clair);
+  font-family: var(--mono-c);
+  font-size: 7.4pt;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
 }
-.certificat .mention {
-  font-size: 19pt;
+
+/* La plage sélectionnée : le titre du programme, « sélectionné ». */
+.cert-a .plage-mention {
+  position: relative;
+  display: inline-block;
+  border: 0.55mm solid var(--encre-c);
+  background: rgba(200, 240, 75, 0.17);
+  padding: 3.8mm 9mm;
+  font-family: var(--dsp-c);
+  font-variation-settings: "wdth" 104, "wght" 700;
   font-weight: 700;
-  font-style: italic;
-  color: var(--bleu);
-  margin-top: 2mm;
+  font-size: 17.5pt;
+  letter-spacing: -0.006em;
   line-height: 1.2;
-  text-wrap: balance;
+  max-width: 215mm;
 }
-.certificat .corps {
+.cert-a .poignee-cert {
+  position: absolute;
+  right: -1.6mm;
+  bottom: -1.6mm;
+  width: 3.2mm;
+  height: 3.2mm;
+  background: var(--encre-c);
+  border: 0.5mm solid var(--papier-c);
+}
+
+.cert-a .attestation {
+  margin: 6mm 0 0;
   font-size: 9.6pt;
-  line-height: 1.55;
-  text-align: justify;
-  text-align-last: center;
-  color: #2f2f2f;
-  margin-top: 4mm;
-  max-width: 232mm;
+  line-height: 1.68;
+  color: var(--gris-c);
+  max-width: 158mm;
 }
-.certificat .corps b {
+
+/* La preuve : c'est elle qui rend le document désirable. */
+.cert-a .preuves {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 0.3mm solid var(--trait-c);
+  border-bottom: 0.3mm solid var(--trait-c);
+  background: rgba(238, 241, 244, 0.5);
+  margin: 6mm 0 0;
+}
+.cert-a .preuve {
+  padding: 3.2mm 5mm;
+  text-align: center;
+  border-left: 0.3mm solid var(--trait-c);
+}
+.cert-a .preuve:first-child {
+  border-left: none;
+}
+.cert-a .pk {
+  display: block;
+  font-family: var(--mono-c);
+  font-size: 6.6pt;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--gris-clair);
+  margin-bottom: 1.6mm;
+}
+.cert-a .pv {
+  display: block;
+  font-family: var(--dsp-c);
+  font-variation-settings: "wdth" 104, "wght" 700;
   font-weight: 700;
+  font-size: 14pt;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.cert-a .pv i {
+  font-style: normal;
+  font-size: 9pt;
+  color: var(--gris-clair);
+  margin-left: 0.6mm;
 }
 
-/* ── Cachet ──────────────────────────────────────────────── */
-.certificat .cachet {
-  position: absolute;
-  left: 50%;
-  bottom: 31mm;
-  width: 30mm;
-  transform: translateX(-50%);
-  z-index: 1;
-}
-
-/* ── Signatures ──────────────────────────────────────────── */
-.certificat .pied {
-  position: absolute;
-  left: 16mm;
-  right: 16mm;
-  bottom: 20mm;
-  z-index: 1;
+.cert-a .pied {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: end;
-  gap: 6mm;
+  gap: 8mm;
+  margin-top: 4mm;
 }
-.certificat .signataire {
+.cert-a .sign {
   text-align: center;
 }
-.certificat .paraphe {
+.cert-a .paraphe {
   display: block;
-  width: 38mm;
+  width: 30mm;
+  margin: 0 auto 0.5mm;
 }
-.certificat .signataire.droite .paraphe {
-  width: 34mm;
+.cert-a .sign:last-of-type .paraphe {
+  width: 29mm;
 }
-.certificat .qui {
+.cert-a .filet {
+  display: block;
+  width: 50mm;
+  height: 0.3mm;
+  background: var(--trait-c);
+  margin: 0 auto 1.6mm;
+}
+.cert-a .qui {
   margin: 0;
-  font-size: 11.5pt;
+  font-family: var(--dsp-c);
+  font-variation-settings: "wdth" 104, "wght" 700;
   font-weight: 700;
-  font-style: italic;
-  color: var(--bleu-fonce);
+  font-size: 10pt;
+  letter-spacing: -0.005em;
 }
-.certificat .role {
-  margin: 0.4mm 0 0;
-  font-size: 9.5pt;
-  font-style: italic;
-  color: #3a3a3a;
+.cert-a .role {
+  margin: 0.8mm 0 0;
+  font-family: var(--mono-c);
+  font-size: 6.6pt;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--gris-clair);
 }
-/* Le paraphe se pose sous le nom et la fonction, comme sur le modèle */
-.certificat .signataire .paraphe {
-  margin: 0.5mm auto 0;
-}
-
-.certificat .centre {
+.cert-a .milieu {
   text-align: center;
   padding-bottom: 1mm;
 }
-.certificat .fait {
-  margin: 0;
-  font-size: 11.5pt;
-  font-style: italic;
-  color: #2f2f2f;
+.cert-a .cachet {
+  display: block;
+  width: 23mm;
+  margin: 0 auto 1.6mm;
 }
-.certificat .ident {
-  margin: 1.2mm 0 0;
-  font-size: 10.5pt;
-  font-style: italic;
-  letter-spacing: 0.4pt;
-  color: #2f2f2f;
+.cert-a .lieu-date {
+  margin: 0;
+  font-size: 8.6pt;
+  color: var(--gris-c);
+  white-space: nowrap;
 }
 
-/* ── Le bloc de vérification, ajouté au modèle ───────────── */
-.certificat .verif {
-  position: absolute;
-  left: 50%;
-  bottom: 5mm;
-  transform: translateX(-50%);
-  z-index: 2;
+.cert-a .barre-verif {
   display: flex;
   align-items: center;
-  gap: 2.6mm;
+  gap: 4mm;
+  border-top: 0.3mm solid var(--trait-c);
+  margin-top: 3mm;
+  padding-top: 2.6mm;
 }
-.certificat .qr svg {
+.cert-a .qr svg {
   display: block;
   width: 13mm;
   height: 13mm;
 }
-.certificat .verif .url {
+.cert-a .barre-verif .txt {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 6pt;
-  line-height: 1.5;
-  color: #55606c;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8mm;
   text-align: left;
-  max-width: 62mm;
 }
-.certificat .verif .url span {
-  color: var(--bleu);
-  word-break: break-all;
+.cert-a .barre-verif .txt b {
+  font-family: var(--mono-c);
+  font-size: 6.6pt;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--gris-clair);
+  font-weight: 600;
+}
+.cert-a .barre-verif .txt span {
+  font-family: var(--mono-c);
+  font-size: 8pt;
+  color: var(--encre-c);
+}
+.cert-a .code-cert {
+  margin: 0;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8mm;
+}
+.cert-a .code-cert span {
+  font-family: var(--mono-c);
+  font-size: 6.6pt;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--gris-clair);
+}
+.cert-a .code-cert b {
+  font-family: var(--mono-c);
+  font-size: 11pt;
+  font-weight: 600;
+  letter-spacing: 0.08em;
 }
 
-/* Sur un écran étroit, on réduit sans rien casser */
-@media screen and (max-width: 1180px) {
-  .certificat {
-    transform-origin: top left;
-    transform: scale(var(--echelle, 1));
-  }
+/* ══════════════════════════════════════════════════════════════════
+   B — « Classique tenue »
+   ══════════════════════════════════════════════════════════════════ */
+
+.cert-b {
+  font-family: Georgia, "Times New Roman", serif;
+}
+.cert-b .liseret {
+  position: absolute;
+  inset: 8mm;
+  border: 0.5mm solid var(--bleu-c);
+  outline: 1.6mm solid var(--bleu-c);
+  outline-offset: 1.4mm;
+  padding: 8mm 16mm 7mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cert-b .entete {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.cert-b .logo {
+  width: 64mm;
+}
+.cert-b .trophee {
+  width: 15mm;
+}
+
+.cert-b .mot {
+  margin: 1mm 0 0;
+  font-size: 40pt;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--bleu-c);
+  line-height: 1.05;
+}
+.cert-b .decerne {
+  margin: 1.5mm 0 0;
+  font-size: 11.5pt;
+  font-style: italic;
+  color: var(--gris-c);
+}
+.cert-b .nom {
+  margin: 4mm 0 0;
+  font-size: 30pt;
+  font-weight: 700;
+  color: #2b2b2b;
+  line-height: 1.12;
+  text-align: center;
+  text-wrap: balance;
+}
+.cert-b .souligne {
+  display: block;
+  width: 46mm;
+  height: 0.7mm;
+  background: var(--voltage-c);
+  margin: 3mm auto 0;
+}
+.cert-b .pour {
+  margin: 5mm 0 0;
+  font-size: 10.5pt;
+  font-style: italic;
+  color: var(--gris-c);
+}
+.cert-b .mention {
+  margin: 2mm 0 0;
+  font-size: 18pt;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--bleu-c);
+  text-align: center;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.cert-b .attestation {
+  margin: 5mm 0 0;
+  font-size: 9.4pt;
+  line-height: 1.6;
+  color: #3a3a3a;
+  text-align: center;
+  max-width: 178mm;
+}
+.cert-b .preuves {
+  display: flex;
+  gap: 9mm;
+  margin-top: 5mm;
+  font-family: var(--mono-c);
+  font-size: 7.4pt;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gris-c);
+}
+.cert-b .preuves span {
+  position: relative;
+}
+.cert-b .preuves span + span::before {
+  content: "";
+  position: absolute;
+  left: -4.5mm;
+  top: 50%;
+  width: 0.8mm;
+  height: 0.8mm;
+  background: var(--voltage-c);
+  transform: translateY(-50%);
+}
+
+.cert-b .pied {
+  width: 100%;
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: 8mm;
+}
+.cert-b .sign {
+  text-align: center;
+}
+.cert-b .paraphe {
+  display: block;
+  width: 34mm;
+  margin: 0.5mm auto 0;
+}
+.cert-b .sign:last-of-type .paraphe {
+  width: 30mm;
+}
+.cert-b .qui {
+  margin: 0;
+  font-size: 11pt;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--bleu-c);
+}
+.cert-b .role {
+  margin: 0.4mm 0 0;
+  font-size: 8.8pt;
+  font-style: italic;
+  color: var(--gris-c);
+}
+.cert-b .milieu {
+  text-align: center;
+}
+.cert-b .cachet {
+  display: block;
+  width: 26mm;
+  margin: 0 auto 1.5mm;
+}
+.cert-b .lieu-date {
+  margin: 0;
+  font-size: 10pt;
+  font-style: italic;
+  color: #2f2f2f;
+  white-space: nowrap;
+}
+.cert-b .code-cert {
+  margin: 1mm 0 0;
+  font-family: var(--mono-c);
+  font-size: 8pt;
+  letter-spacing: 0.06em;
+  color: var(--gris-c);
+}
+
+.cert-b .barre-verif {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  margin-top: 5mm;
+  padding-top: 3mm;
+  border-top: 0.3mm solid var(--trait-c);
+}
+.cert-b .qr svg {
+  display: block;
+  width: 11mm;
+  height: 11mm;
+}
+.cert-b .barre-verif .txt {
+  margin: 0;
+  font-family: var(--mono-c);
+  font-size: 7pt;
+  letter-spacing: 0.06em;
+  color: var(--gris-clair);
+}
+.cert-b .barre-verif .txt span {
+  color: var(--bleu-c);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Page porteuse et impression
+   ══════════════════════════════════════════════════════════════════ */
+
+/* À l'écran, le document est réduit pour tenir dans la page. Zoom et non
+   transform : la boîte se réduit vraiment, sans laisser de vide en dessous.
+   L'impression, elle, repart toujours à l'échelle 1. */
+.cadre-certificat {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+@media screen and (max-width: 1340px) {
+  .cadre-certificat .cert { zoom: 0.84; }
+}
+@media screen and (max-width: 1140px) {
+  .cadre-certificat .cert { zoom: 0.72; }
+}
+@media screen and (max-width: 980px) {
+  .cadre-certificat .cert { zoom: 0.58; }
+}
+@media screen and (max-width: 780px) {
+  .cadre-certificat .cert { zoom: 0.42; }
+}
+@media screen and (max-width: 560px) {
+  .cadre-certificat .cert { zoom: 0.3; }
 }
 
 @media print {
@@ -249,25 +558,19 @@
     size: A4 landscape;
     margin: 0;
   }
-  .certificat {
-    box-shadow: none;
-    margin: 0;
-    transform: none;
-  }
-}
-
-/* ── La page qui porte le certificat ────────────────────────── */
-.cadre-certificat {
-  overflow-x: auto;
-  padding-bottom: 4px;
-}
-@media print {
   .no-print {
     display: none !important;
+  }
+  .cert {
+    box-shadow: none;
+    margin: 0;
   }
   .cadre-certificat {
     overflow: visible;
     padding: 0;
+  }
+  .cadre-certificat .cert {
+    zoom: 1 !important;
   }
   body {
     background: #fff !important;
