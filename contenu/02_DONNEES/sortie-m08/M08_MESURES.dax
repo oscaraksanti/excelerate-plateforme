@@ -1,0 +1,144 @@
+// ══════════════════════════════════════════════════════════════════════
+//  Module 8 — Les huit mesures du modèle Baobab
+//
+//  À écrire une par une : Power Pivot > Mesures > Nouvelle mesure,
+//  ou dans la grille de calcul, en bas de la fenêtre Power Pivot.
+//
+//  ⚠️  Pour Power Pivot dans Excel 2024. Pas pour Power BI.
+// ══════════════════════════════════════════════════════════════════════
+
+
+// ── 1 ─────────────────────────────────────────────────  CA Local
+//  La somme brute, toutes devises confondues. Elle n'a AUCUN sens
+//  métier — on additionne des francs congolais et des francs CFA.
+//  On l'écrit quand même : c'est le total de contrôle qui permet de
+//  vérifier qu'aucune ligne ne s'est perdue au chargement.
+
+CA Local := SUM ( f_Ventes[Montant_Local] )
+
+
+// ── 2 ───────────────────────────────────────────────────  CA USD
+//  La mesure centrale. Ligne par ligne, elle prend la devise de
+//  l'agence et le taux DU MOIS DE LA LIGNE — pas un taux moyen.
+//
+//  RELATED suit la relation. Pour d_Taux, il en suit deux :
+//  f_Ventes → d_Calendrier → d_Taux. C'est le flocon, et c'est ici
+//  qu'il sert.
+
+CA USD :=
+SUMX (
+    f_Ventes ,
+    DIVIDE (
+        f_Ventes[Montant_Local] ,
+        SWITCH ( RELATED ( d_Agence[Devise] ) ,
+                 "CDF" , RELATED ( d_Taux[CDF] ) ,
+                 "XOF" , RELATED ( d_Taux[XOF] ) ,
+                 "XAF" , RELATED ( d_Taux[XAF] ) )
+    )
+)
+
+
+// ── 3 ────────────────────────────────────────────────  Marge USD
+//  Le taux de marge vit dans d_Produit, pas dans la table de faits :
+//  six valeurs distinctes répétées 1,2 million de fois coûteraient
+//  neuf mégaoctets pour rien.
+
+Marge USD :=
+SUMX (
+    f_Ventes ,
+    DIVIDE (
+        f_Ventes[Montant_Local] * RELATED ( d_Produit[Taux_Marge] ) ,
+        SWITCH ( RELATED ( d_Agence[Devise] ) ,
+                 "CDF" , RELATED ( d_Taux[CDF] ) ,
+                 "XOF" , RELATED ( d_Taux[XOF] ) ,
+                 "XAF" , RELATED ( d_Taux[XAF] ) )
+    )
+)
+
+
+// ── 4 ──────────────────────────────────────────────────  Marge %
+//  Elle n'additionne rien : elle appelle deux autres mesures.
+//  C'est la bonne façon de faire — chaque mesure reste courte, et
+//  une correction dans CA USD se propage partout.
+//
+//  DIVIDE, jamais « / ». Le troisième argument est ce qu'on rend
+//  quand le dénominateur vaut zéro.
+
+Marge % := DIVIDE ( [Marge USD] , [CA USD] , 0 )
+
+
+// ── 5 et 6 ─────────────────────────  Les comptages distincts
+//  DISTINCTCOUNT n'a pas d'équivalent raisonnable en formule.
+//
+//  🔴 Ces deux mesures ne sont PAS additives : la somme des six
+//  agences ne fait pas le total, parce qu'un client qui achète dans
+//  deux agences n'est compté qu'une fois au total. Ce n'est pas un
+//  bug — c'est la définition.
+
+Clients actifs := DISTINCTCOUNT ( f_Ventes[Client_Cle] )
+
+Nb Tickets     := DISTINCTCOUNT ( f_Ventes[Ticket_Cle] )
+
+
+// ── 7 ─────────────────────────────────────────────  CA USD N-1
+//  ⚠️ Ne fonctionne QUE si d_Calendrier est marquée comme table de
+//  dates : Conception > Marquer comme table de dates.
+//  Sans ce clic, elle rend VIDE. Pas une erreur : vide.
+
+CA USD N-1 := CALCULATE ( [CA USD] , SAMEPERIODLASTYEAR ( d_Calendrier[Date] ) )
+
+
+// ── 8 ────────────────────────────────  CA USD Cumul Annuel
+//  Le cumul depuis le 1er janvier jusqu'à la fin de la période
+//  affichée. Même condition : la table de dates doit être marquée.
+
+CA USD Cumul Annuel := TOTALYTD ( [CA USD] , d_Calendrier[Date] )
+
+
+// ══════════════════════════════════════════════════════════════════════
+//  LES MESURES QUI VIENNENT ENSUITE, ET QU'ON ÉCRIT TOUJOURS
+// ══════════════════════════════════════════════════════════════════════
+
+//  L'évolution. Elle fonctionne à TOUS les niveaux — par mois, par
+//  trimestre, par agence — sans une colonne de plus.
+Évolution % := DIVIDE ( [CA USD] - [CA USD N-1] , [CA USD N-1] )
+
+//  La part du total, qui reste juste quel que soit le découpage.
+//  ALL retire le filtre d'agence : on obtient le total sur chaque ligne.
+Part de l'agence := DIVIDE ( [CA USD] , CALCULATE ( [CA USD] , ALL ( d_Agence ) ) )
+
+//  Le panier moyen. Attention : c'est un ratio, donc il n'est pas
+//  additif non plus.
+Panier moyen := DIVIDE ( [CA USD] , [Nb Tickets] , 0 )
+
+//  Les douze mois glissants — la mesure que les directions préfèrent,
+//  parce qu'elle lisse la saisonnalité.
+CA 12 mois glissants :=
+CALCULATE (
+    [CA USD] ,
+    DATESINPERIOD ( d_Calendrier[Date] , MAX ( d_Calendrier[Date] ) , -12 , MONTH )
+)
+
+//  Le cumul depuis le début d'un EXERCICE qui ne commence pas en
+//  janvier. Le troisième argument est la date de clôture — celui que
+//  personne ne connaît, et qui évite de fabriquer une colonne
+//  d'exercice à la main. Chez Baobab, l'exercice se clôt au 30/09.
+Cumul Exercice := TOTALYTD ( [CA USD] , d_Calendrier[Date] , "30/09" )
+
+
+// ══════════════════════════════════════════════════════════════════════
+//  LES VALEURS À RETROUVER — année 2026
+//
+//    CA USD ................... 30 317 122,55
+//    CA USD N-1 ............... 27 852 544,37
+//    Évolution % ..............      + 8,85 %
+//    Marge % ..................       17,19 %
+//    Clients actifs ...........        3 384
+//    Nb Tickets ...............      318 799
+//    Panier moyen .............        95,10
+//    Cumul annuel à fin juin .. 14 180 213,65
+//    CA USD de Kinshasa ........ 8 131 115,97
+//
+//  Si un de ces chiffres diffère chez vous, la mesure est en cause —
+//  ou une relation manque. Les données, elles, sont les mêmes.
+// ══════════════════════════════════════════════════════════════════════

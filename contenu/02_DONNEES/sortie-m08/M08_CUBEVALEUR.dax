@@ -1,0 +1,95 @@
+// ══════════════════════════════════════════════════════════════════════
+//  Module 8 · Leçon 3 — Lire le modèle depuis une cellule
+//
+//  CUBEVALEUR sort du carcan du tableau croisé : une cellule, n'importe
+//  où sur la feuille, alimentée par un modèle d'un million de lignes.
+//  C'est le tableau de bord du module 6, branché sur le modèle.
+// ══════════════════════════════════════════════════════════════════════
+
+
+// ── La forme générale ────────────────────────────────────────────────
+//
+//   =CUBEVALEUR( connexion ; mesure ; filtre1 ; filtre2 ; ... )
+//
+//   · la connexion du modèle interne au classeur s'appelle TOUJOURS
+//     "ThisWorkbookDataModel" — y compris en français ;
+//   · la mesure s'écrit entre [Measures].[ ] ;
+//   · chaque filtre suivant réduit le contexte. &[valeur] désigne
+//     une valeur précise.
+
+
+// ── Le total de l'année ──────────────────────────────────────────────
+=CUBEVALEUR("ThisWorkbookDataModel";
+            "[Measures].[CA USD]";
+            "[d_Calendrier].[Annee].&[2026]")
+
+
+// ── Une agence, une année ────────────────────────────────────────────
+=CUBEVALEUR("ThisWorkbookDataModel";
+            "[Measures].[CA USD]";
+            "[d_Calendrier].[Annee].&[2026]";
+            "[d_Agence].[Agence].&[Kinshasa]")
+
+
+// ── Un cumul arrêté à un mois ────────────────────────────────────────
+=CUBEVALEUR("ThisWorkbookDataModel";
+            "[Measures].[CA USD Cumul Annuel]";
+            "[d_Calendrier].[Annee].&[2026]";
+            "[d_Calendrier].[Mois_Num].&[6]")
+
+
+// ── Un taux, qui est une mesure comme une autre ──────────────────────
+=CUBEVALEUR("ThisWorkbookDataModel";
+            "[Measures].[Marge %]";
+            "[d_Calendrier].[Annee].&[2026]";
+            "[d_Produit].[Famille].&[Riz]")
+
+
+// ── Piloter les filtres par des cellules ─────────────────────────────
+//  C'est ce qui rend la page vivante : B2 contient l'année, B3
+//  l'agence, et la formule suit. On concatène.
+=CUBEVALEUR("ThisWorkbookDataModel";
+            "[Measures].[CA USD]";
+            "[d_Calendrier].[Annee].&[" & $B$2 & "]";
+            "[d_Agence].[Agence].&[" & $B$3 & "]")
+
+
+// ══════════════════════════════════════════════════════════════════════
+//  💎 ON NE LES ÉCRIT PAS À LA MAIN
+//
+//  Faire le tableau croisé d'abord, puis :
+//     Analyse du TCD > Outils OLAP > Convertir en formules
+//
+//  Excel remplace chaque cellule du tableau par son CUBEVALEUR, avec
+//  la bonne syntaxe et sans faute de frappe. Il n'y a plus qu'à
+//  déplacer les cellules où l'on veut.
+//
+//  🔴 L'opération est IRRÉVERSIBLE : le tableau croisé disparaît.
+//     On le duplique avant.
+// ══════════════════════════════════════════════════════════════════════
+
+
+// ── Les autres fonctions de cube, pour mémoire ───────────────────────
+//
+//   MEMBRECUBE       désigne un membre — utile pour un en-tête vivant
+//   JEUCUBE          construit un ensemble : « les 10 premiers clients »
+//   RANGMEMBRECUBE   le n-ième membre d'un jeu — pour un classement
+//   NBJEUCUBE        combien de membres dans un jeu
+//   MEMBREKPICUBE    la valeur, la cible ou le statut d'un KPI
+//
+//  On en a rarement besoin. CUBEVALEUR suffit à 90 % des cas.
+
+
+// ── Ce qui ne marche pas, et pourquoi ────────────────────────────────
+//
+//  #N/A       la mesure n'existe pas, ou son nom est mal orthographié.
+//             Le nom est celui du modèle, pas celui affiché dans le TCD.
+//
+//  #NOM?      la connexion est mal nommée. Pour le modèle interne,
+//             c'est "ThisWorkbookDataModel", jamais autre chose.
+//
+//  vide       le filtre ne correspond à aucun membre. Vérifier
+//             l'orthographe EXACTE de la valeur, accents compris.
+//
+//  ⚠️  CUBEVALEUR n'existe pas dans Power BI : il n'y a pas de cellules.
+//      C'est la seule chose de ce module qui ne s'y transporte pas.

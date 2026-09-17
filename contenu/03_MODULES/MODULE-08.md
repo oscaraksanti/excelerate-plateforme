@@ -1,4 +1,5 @@
-# MODULE 8 — Modèle de données, Power Pivot & DAX
+# MODULE 8 — Dépasser le million
+### *Modèle de données, Power Pivot & DAX*
 ## 🔒 Payant · publié **vendredi 2 octobre** · à tourner **lun. 28 / mar. 29**
 
 > **Promesse :** *Vous dépasserez le million de lignes, vous supprimerez 90 % de vos `RECHERCHEX`, et vous parlerez le langage de la BI.*
@@ -59,4 +60,47 @@ Erreur n° 7 : **elle propose du DAX de Power BI que Power Pivot ne supporte pas
 Écrire `=CONVERTIR_USD(montant;devise;mois)` une fois, l'utiliser partout · `LAMBDA` + `LET` · `PARLIGNE`, `MAP`, `REDUCE`, `SCAN` · le gestionnaire de noms comme bibliothèque de fonctions · **l'alternative 2021** : noms définis + `LET`.
 
 ## 🧪 TP 8 — « Le modèle qui remplace 42 RECHERCHEX » → `04_TP/TP-08.md`
-## ❓ QCM → `05_QCM/QCM-M08.md`
+## ❓ QCM → `05_QCM/QCM-M08.md` — **7 questions** *(6 prévues + la non-additivité de DISTINCTCOUNT)*
+
+---
+
+## ✅ État de production — livré le 17 septembre 2026
+
+| | |
+|---|---|
+| Corps des 5 leçons | **55 122 caractères** |
+| Schémas | **8** — `public/lecons/m08/` |
+| Jeu de données | `J08_Modele.zip` — **13 Mo**, 39 Mo décompressés |
+| Code livré | `M08_MESURES.dax` *(8 mesures + 4 bonus)* · `M08_CUBEVALEUR.dax` · `M08_BONUS_LAMBDA.md` |
+| TP | 15 cellules · 3 plages nommées · 38 points · **corrigé 20/20** · départ 2,6/20 |
+| QCM | 7 questions en ligne |
+
+### Le modèle livré
+
+| Table | Lignes | Clé |
+|---|---:|---|
+| `f_Ventes` | **1 200 000** | aucune — table de faits |
+| `d_Calendrier` | 1 096 | `Date_Cle` · **marquée table de dates** |
+| `d_Client` | 3 600 | `Client_Cle` |
+| `d_Produit` | 980 | `Produit_Cle` · porte `Taux_Marge` |
+| `d_Taux` | 36 | `Debut_Mois` · une colonne par devise |
+| `d_Agence` | 6 | `Agence_Cle` |
+
+**Cinq relations**, dont un flocon `d_Calendrier → d_Taux` — assumé, et c'est lui qui rend la conversion exacte.
+
+### Les chiffres du module, figés — année 2026
+
+| | |
+|---|---|
+| CA USD | **30 317 122,55** · N-1 **27 852 544,37** · évolution **+8,85 %** |
+| Marge % | **17,19 %** |
+| Clients actifs | **3 384** *(3 312 en 2025)* |
+| Nb Tickets | **318 799** · panier moyen **95,10 USD** |
+| Cumul à fin juin | **14 180 213,65** |
+| Kinshasa | **8 131 115,97** |
+
+### Deux contraintes réelles, et comment elles ont été traitées
+
+**Power Pivot n'existe pas sur macOS.** Le DAX de ce module a donc été **écrit mais pas exécuté**. Toutes les valeurs attendues sont calculées en Python, sur les données livrées, et ce sont elles qui font foi. Le plan B pour les apprenants Mac est écrit dans l'énoncé et pris en compte par la grille de correction.
+
+**Le correcteur automatique ne sait pas lire un modèle.** Les réponses passent donc par **`CUBEVALEUR`** — une formule, avec un résultat vérifiable, qui interroge le modèle depuis une cellule. Les valeurs du cache ont été injectées dans le XML du corrigé, faute de pouvoir les faire calculer par Excel ici. `CUBEVALUE` et les six autres fonctions de cube ont été ajoutées au glossaire du correcteur.

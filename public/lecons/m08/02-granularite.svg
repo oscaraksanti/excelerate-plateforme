@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 484" width="704" height="484" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="484" rx="8" class="fond"/><text x="24" y="30" class="eti">« Une ligne, c’est quoi exactement ? » — la question qui décide de tout</text><rect x="24" y="54" width="656" height="68" rx="6" class="rfill"/><rect x="24" y="54" width="656" height="68" rx="6" class="bord"/><text x="44" y="82" class="h" font-size="13.5">Une ligne = un mois × une agence</text><text x="44" y="106" class="p" font-size="12">on ne peut plus descendre au produit</text><text x="660" y="94" class="mono rtext" font-size="19" font-weight="600" text-anchor="end">434</text><rect x="24" y="134" width="656" height="68" rx="6" class="carte"/><rect x="24" y="134" width="656" height="68" rx="6" class="bord"/><text x="44" y="162" class="h" font-size="13.5">Une ligne = une commande</text><text x="44" y="186" class="p" font-size="12">on ne sait plus ce qui a été vendu</text><text x="660" y="174" class="mono t3" font-size="19" font-weight="600" text-anchor="end">612 000</text><rect x="24" y="214" width="656" height="68" rx="6" class="vfill"/><rect x="24" y="214" width="656" height="68" rx="6" class="bord"/><text x="44" y="242" class="h" font-size="13.5">Une ligne = une ligne de ticket</text><text x="44" y="266" class="p" font-size="12">on peut tout agréger vers le haut</text><text x="660" y="254" class="mono vtext" font-size="19" font-weight="600" text-anchor="end">1 200 000</text><rect x="24" y="294" width="656" height="68" rx="6" class="carte"/><rect x="24" y="294" width="656" height="68" rx="6" class="bord"/><text x="44" y="322" class="h" font-size="13.5">Une ligne = un mouvement de stock</text><text x="44" y="346" class="p" font-size="12">plus fin que ce que la question demande</text><text x="660" y="334" class="mono t3" font-size="19" font-weight="600" text-anchor="end">4 800 000</text><rect x="24" y="378" width="656" height="88" rx="6" class="vfill"/><rect x="24" y="378" width="656" height="88" rx="6" class="bord"/><text x="44" y="404" class="h" font-size="13.5">La règle, et elle n’a qu’un sens</text><text x="44" y="428" class="p" font-size="12.5">On agrège toujours vers le haut, jamais vers le bas. Choisissez la maille la plus fine</text><text x="44" y="448" class="p" font-size="12.5">dont vous aurez besoin — et pas une de plus.</text></svg>

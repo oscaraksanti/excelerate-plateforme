@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 430" width="704" height="430" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="430" rx="8" class="fond"/><text x="24" y="30" class="eti">Trois outils, trois moments, et ils s’enchaînent</text><rect x="24" y="54" width="208" height="170" rx="6" class="vfill"/><rect x="24" y="54" width="208" height="170" rx="6" class="bord"/><text x="44" y="82" class="h" font-size="14.5">Power Query</text><text x="44" y="104" class="mono t3" font-size="10.5">le langage M</text><text x="44" y="136" class="eti" font-size="10">AVANT le chargement</text><text x="44" y="166" class="p" font-size="12">nettoyer, recoller,</text><text x="44" y="185" class="p" font-size="12">typer, joindre</text><rect x="248" y="54" width="208" height="170" rx="6" class="vfill"/><rect x="248" y="54" width="208" height="170" rx="6" class="bord"/><text x="268" y="82" class="h" font-size="14.5">Power Pivot</text><text x="268" y="104" class="mono t3" font-size="10.5">le langage DAX</text><text x="268" y="136" class="eti" font-size="10">APRÈS le chargement</text><text x="268" y="166" class="p" font-size="12">relations, mesures,</text><text x="268" y="185" class="p" font-size="12">time intelligence</text><rect x="472" y="54" width="208" height="170" rx="6" class="carte"/><rect x="472" y="54" width="208" height="170" rx="6" class="bord"/><text x="492" y="82" class="h" font-size="14.5">Excel ou Power BI</text><text x="492" y="104" class="mono t3" font-size="10.5">TCD · CUBEVALEUR</text><text x="492" y="136" class="eti" font-size="10">RESTITUTION</text><text x="492" y="166" class="p" font-size="12">la page que</text><text x="492" y="185" class="p" font-size="12">quelqu’un lit</text><path d="M236 139 L 247 139" class="vstroke" stroke-width="1.6"/><path d="M242 134 L 249 139 L 242 144 Z" fill="var(--vb)"/><path d="M460 139 L 471 139" class="vstroke" stroke-width="1.6"/><path d="M466 134 L 473 139 L 466 144 Z" fill="var(--vb)"/><rect x="24" y="242" width="656" height="96" rx="6" class="rfill"/><rect x="24" y="242" width="656" height="96" rx="6" class="bord"/><text x="44" y="268" class="h" font-size="13.5">L’erreur n° 7 de l’IA, et elle est systématique</text><text x="44" y="292" class="p" font-size="12.5">Elle propose du DAX que Power BI accepte et que Power Pivot refuse : les deux moteurs</text><text x="44" y="312" class="p" font-size="12.5">ne suivent pas le même rythme de mise à jour. La formule est rejetée à la saisie.</text><text x="44" y="332" class="mono rtext" font-size="11.5">V1 — la phrase à mettre dans le prompt : « pour Power Pivot dans Excel 2024 ».</text><rect x="24" y="354" width="656" height="58" rx="6" class="vfill"/><rect x="24" y="354" width="656" height="58" rx="6" class="bord"/><text x="44" y="388" class="p" font-size="12.5">Et le modèle Excel s’importe tel quel dans Power BI Desktop. Le travail n’est jamais perdu.</text></svg>

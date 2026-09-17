@@ -105,7 +105,7 @@
 
 | Leçon | CL | SC | TO | MO | YT | AD |
 |---|:--:|:--:|:--:|:--:|:--:|:--:|
-| 8.1 → 8.5 Modèle de données & DAX | □ | □ | □ | □ | □ | □ |
+| 8.1 → 8.5 Modèle de données & DAX | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
 | 9.1 → 9.5 Simulation, finance, modèle pro | □ | □ | □ | □ | □ | □ |
 | 10.1 → 10.5 Automatiser & livrer | □ | □ | □ | □ | □ | □ |
 | **TP 8, 9, 10** · **QCM M8, M9, M10** | □ | □ | | | | □ |

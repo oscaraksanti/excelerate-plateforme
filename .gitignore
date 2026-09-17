@@ -43,3 +43,7 @@ next-env.d.ts
 
 # Scripts de vérification jetables
 .verif/
+
+# Les CSV bruts du module 8 : 53 Mo, régénérables par le script.
+# Seule l's archive est versionnée.
+contenu/02_DONNEES/sortie-m08/J08_Modele/
