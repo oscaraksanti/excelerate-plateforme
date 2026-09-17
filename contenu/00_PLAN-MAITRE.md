@@ -408,7 +408,7 @@ Les prompts · ce que l'IA a produit · **au moins une erreur détectée et corr
 4. La **barre d'état** qui calcule sans formule (Mise à niveau)
 5. **`F5 > Différences entre lignes`** : trouver la cellule sabotée en 2 secondes (M2)
 6. Le **total de contrôle** qui doit valoir zéro — la pratique qui distingue un professionnel (M2)
-7. L'**espace insécable `CAR(160)`** qui casse tous vos copier-coller (M3)
+7. L'**espace insécable** qui casse tous vos copier-coller — et pourquoi `CAR(160)` ne marche pas partout (M3)
 8. **`DATEDIF`**, la fonction secrète absente de tous les menus depuis trente ans (M3)
 9. **Dépivoter** : 12 tableaux croisés redevenus analysables en 4 clics (M3)
 10. Le TCD **« % de différence par rapport au précédent »** : l'évolution sans formule (M5)

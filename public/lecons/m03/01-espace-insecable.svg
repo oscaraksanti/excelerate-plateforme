@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 380" width="704" height="380" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="380" rx="8" class="fond"/><text x="24" y="30" class="eti">Pourquoi SUPPRESPACE ne nettoie pas cette cellule</text><rect x="24" y="50" width="656" height="58" rx="6" class="carte"/><rect x="24" y="50" width="656" height="58" rx="6" class="bord"/><text x="44" y="82" class="mono t" font-size="15">G</text><text x="58" y="82" class="mono t" font-size="15">É</text><text x="72" y="82" class="mono t" font-size="15">R</text><text x="86" y="82" class="mono t" font-size="15">A</text><text x="100" y="82" class="mono t" font-size="15">R</text><text x="114" y="82" class="mono t" font-size="15">D</text><rect x="128" y="62" width="20" height="26" rx="3" class="rfill"/><rect x="128" y="62" width="20" height="26" rx="3" class="vstroke" stroke-width="1.6" stroke="var(--r)"/><text x="138" y="82" text-anchor="middle" class="mono rtext" font-size="13">·</text><text x="158" y="82" class="mono t" font-size="15">Y</text><text x="172" y="82" class="mono t" font-size="15">A</text><text x="186" y="82" class="mono t" font-size="15">M</text><text x="200" y="82" class="mono t" font-size="15">E</text><text x="214" y="82" class="mono t" font-size="15">O</text><text x="228" y="82" class="mono t" font-size="15">G</text><text x="242" y="82" class="mono t" font-size="15">O</text><text x="290" y="82" class="p" font-size="12.5">← ce caractère n’est pas un espace</text><text x="290" y="100" class="mono t3" font-size="11">U+00A0 · insécable · code 160</text><text x="40" y="136" class="mono" font-size="11.5" fill="var(--r)">=SUPPRESPACE(A1)</text><text x="392" y="136" class="p" font-size="11.5">ne l’enlève pas : il ne connaît que le code 32</text><line x1="24" y1="145" x2="680" y2="145" class="bord2"/><text x="40" y="164" class="mono" font-size="11.5" fill="var(--r)">=SUBSTITUE(A1;CAR(160);&quot; &quot;)</text><text x="392" y="164" class="p" font-size="11.5">dépend de la plateforme — sur Mac, CAR(160) rend « † »</text><line x1="24" y1="173" x2="680" y2="173" class="bord2"/><text x="40" y="192" class="mono" font-size="11.5" fill="var(--r)">=CHERCHE(UNICAR(160);A1)</text><text x="392" y="192" class="p" font-size="11.5">trop laxiste : CHERCHE assimile l’insécable à un espace</text><line x1="24" y1="201" x2="680" y2="201" class="bord2"/><text x="40" y="220" class="mono" font-size="11.5" fill="var(--v)">=TROUVE(UNICAR(160);A1)</text><text x="392" y="220" class="p" font-size="11.5">exact, partout</text><line x1="24" y1="229" x2="680" y2="229" class="bord2"/><text x="40" y="248" class="mono" font-size="11.5" fill="var(--v)">=SUPPRESPACE(SUBSTITUE(A1;UNICAR(160);&quot; &quot;))</text><text x="392" y="248" class="p" font-size="11.5">la formule qui répare — à garder</text><line x1="24" y1="257" x2="680" y2="257" class="bord2"/><rect x="24" y="286" width="656" height="76" rx="6" class="vfill"/><text x="44" y="312" class="h" font-size="13.5" fill="var(--v)">Le détecteur fiable</text><text x="44" y="334" class="mono t" font-size="11">=NBCAR(plage) &lt;&gt; NBCAR(SUBSTITUE(plage;UNICAR(160);""))</text><text x="44" y="352" class="p" font-size="11.5">Identique sur Windows, sur Mac et dans le navigateur. Vérifié sur les deux moteurs.</text></svg>

@@ -19,10 +19,10 @@
 
 - A — `SUPPRESPACE` ne fonctionne pas sur du texte importé
 - B — Il faut `EPURAGE` à la place
-- C — **C'est un espace insécable, `CAR(160)` — `SUPPRESPACE` n'enlève que `CAR(32)`** ✅
+- C — **C'est un espace insécable — `SUPPRESPACE` n'enlève que l'espace ordinaire, le code 32** ✅
 - D — La cellule contient un retour à la ligne
 
-> `=SUPPRESPACE(SUBSTITUE(A1;CAR(160);" "))`. La formule qui répare des années de rapprochements qui ne tombaient pas juste.
+> `=SUPPRESPACE(SUBSTITUE(A1;UNICAR(160);" "))`. Et pas `CAR(160)` : il ne rend pas le même caractère sur Mac et sur Windows.
 
 ---
 

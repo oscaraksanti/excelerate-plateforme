@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 480" width="704" height="480" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="480" rx="8" class="fond"/><text x="24" y="30" class="eti">L’ordre n’est pas une préférence : il change le résultat</text><rect x="24" y="52" width="656" height="52" rx="6" class="carte"/><rect x="24" y="52" width="656" height="52" rx="6" class="bord"/><circle cx="52" cy="78" r="14" class="vfill"/><circle cx="52" cy="78" r="14" class="vstroke" stroke-width="1.5"/><text x="52" y="83" text-anchor="middle" class="mono vtext" font-size="12" font-weight="600">1</text><text x="82" y="75" class="h" font-size="13.5">Supprimer les caractères invisibles</text><text x="82" y="93" class="p" font-size="12">insécables, retours à la ligne, tabulations</text><path d="M 52 104 L 52 112" class="bord" stroke-width="1.4"/><rect x="24" y="112" width="656" height="52" rx="6" class="carte"/><rect x="24" y="112" width="656" height="52" rx="6" class="bord"/><circle cx="52" cy="138" r="14" class="vfill"/><circle cx="52" cy="138" r="14" class="vstroke" stroke-width="1.5"/><text x="52" y="143" text-anchor="middle" class="mono vtext" font-size="12" font-weight="600">2</text><text x="82" y="135" class="h" font-size="13.5">Normaliser la casse et les espaces</text><text x="82" y="153" class="p" font-size="12">MAJUSCULE / MINUSCULE / SUPPRESPACE</text><path d="M 52 164 L 52 172" class="bord" stroke-width="1.4"/><rect x="24" y="172" width="656" height="52" rx="6" class="carte"/><rect x="24" y="172" width="656" height="52" rx="6" class="bord"/><circle cx="52" cy="198" r="14" class="vfill"/><circle cx="52" cy="198" r="14" class="vstroke" stroke-width="1.5"/><text x="52" y="203" text-anchor="middle" class="mono vtext" font-size="12" font-weight="600">3</text><text x="82" y="195" class="h" font-size="13.5">Typer les dates et les nombres</text><text x="82" y="213" class="p" font-size="12">le texte qui ressemble à un nombre n’en est pas un</text><path d="M 52 224 L 52 232" class="bord" stroke-width="1.4"/><rect x="24" y="232" width="656" height="52" rx="6" class="carte"/><rect x="24" y="232" width="656" height="52" rx="6" class="bord"/><circle cx="52" cy="258" r="14" class="vfill"/><circle cx="52" cy="258" r="14" class="vstroke" stroke-width="1.5"/><text x="52" y="263" text-anchor="middle" class="mono vtext" font-size="12" font-weight="600">4</text><text x="82" y="255" class="h" font-size="13.5">Dédoublonner</text><text x="82" y="273" class="p" font-size="12">sur une clé déjà normalisée</text><path d="M 52 284 L 52 292" class="bord" stroke-width="1.4"/><rect x="24" y="292" width="656" height="52" rx="6" class="carte"/><rect x="24" y="292" width="656" height="52" rx="6" class="bord"/><circle cx="52" cy="318" r="14" class="vfill"/><circle cx="52" cy="318" r="14" class="vstroke" stroke-width="1.5"/><text x="52" y="323" text-anchor="middle" class="mono vtext" font-size="12" font-weight="600">5</text><text x="82" y="315" class="h" font-size="13.5">Rapprocher</text><text x="82" y="333" class="p" font-size="12">les clés se correspondent enfin</text><rect x="24" y="356" width="656" height="100" rx="6" class="rfill"/><text x="44" y="382" class="h" font-size="13.5" fill="var(--r)">Ce qui se passe si on intervertit 2 et 4</text><text x="44" y="406" class="p" font-size="12.5">« KALALA Nadège » et « kalala nadege » sont deux clients différents.</text><text x="44" y="426" class="p" font-size="12.5">Excel trouve <tspan font-weight="600">150 doublons</tspan> au lieu de <tspan font-weight="600">340</tspan>. Et il ne le signale pas.</text><text x="44" y="446" class="mono t3" font-size="11">Le fichier a l’air propre. Il est faux.</text></svg>

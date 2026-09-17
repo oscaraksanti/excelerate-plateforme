@@ -59,8 +59,9 @@ Corriger une cellule à la main, c'est perdre le travail. Écrire la règle qui 
 Sur 200 lignes du CRM : normaliser les noms, réparer les dates, extraire l'indicatif téléphonique. Et **prouver par `NBCAR`** qu'il ne reste aucun caractère invisible.
 
 ### Pépites 💎
-1. 💎💎 **L'espace insécable `CAR(160)`.** `SUPPRESPACE` ne l'enlève pas — il n'enlève que l'espace normal, le `CAR(32)`. Tout ce qui est copié depuis le web, SAP, un PDF ou un logiciel comptable en contient. La formule qui sauve tous les copier-coller :
-   `=SUPPRESPACE(SUBSTITUE(A1;CAR(160);" "))`
+1. 💎💎 **L'espace insécable, `U+00A0`.** `SUPPRESPACE` ne l'enlève pas — il ne connaît que l'espace ordinaire, le code 32. Tout ce qui est copié depuis le web, SAP, un PDF ou un logiciel comptable en contient. ⚠️ **N'écris pas `CAR(160)` : il dépend de la plateforme** — sur Excel pour Mac il rend « † ». La formule fiable partout :
+   `=SUPPRESPACE(SUBSTITUE(A1;UNICAR(160);" "))`
+   Et pour **détecter** : `NBCAR(x) <> NBCAR(SUBSTITUE(x;UNICAR(160);""))` — pas `CHERCHE`, qui assimile l'insécable à un espace ordinaire.
    **C'est la pépite la plus rentable du programme.** Elle explique des années de rapprochements qui ne tombaient pas juste.
 2. **`DATEDIF`** n'apparaît dans aucun assistant, dans aucun menu, dans aucune autocomplétion — et elle existe depuis trente ans. Elle calcule l'ancienneté exacte en années, mois et jours : `=DATEDIF(A1;AUJOURDHUI();"y")`.
 3. **Détecter les caractères invisibles** en comparant `NBCAR()` à la longueur attendue. Six caractères annoncés, huit comptés : il y a quelque chose.
@@ -77,7 +78,7 @@ Faire confiance à `Ctrl+E` sans vérifier les vingt dernières lignes — il ap
 Sur 200 lignes du CRM : normaliser les noms, réparer les dates, extraire l'indicatif, et **prouver par `NBCAR`** qu'il ne reste aucun caractère invisible.
 
 ### Chez vous, demain
-Prends la colonne qui ne se rapproche jamais correctement dans ton fichier, et applique-lui `SUBSTITUE(…;CAR(160);" ")`. Dis-nous combien de lignes se sont réparées.
+Prends la colonne qui ne se rapproche jamais correctement dans ton fichier, et applique-lui `SUBSTITUE(…;UNICAR(160);" ")`. Dis-nous combien de lignes se sont réparées.
 
 ### 📝 Corps de la leçon — à coller dans l'admin
 *(rédigé en phase 2)*
