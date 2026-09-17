@@ -1,5 +1,9 @@
-# MODULE 10 — Automatiser & livrer
-## 🔒 Payant · publié **samedi 3 octobre** · à tourner **ven. 2 / sam. 3 oct.**
+# MODULE 10 — « Le lundi matin d'Aïcha »
+### *Automatiser & livrer*
+## 🔒 Payant · **en ligne** · publié **samedi 3 octobre** · à tourner **ven. 2 / sam. 3 oct.**
+
+> **Livré.** 5 leçons *(40 974 caractères)* · 8 schémas · 200 classeurs clients · 2 fichiers `.bas` · 1 script Python vérifié · TP noté **20/20** · 7 questions de QCM.
+> **Le programme est complet.** Il reste le capstone.
 
 > **Promesse :** *Ce que vous faites chaque lundi matin, vous ne le ferez plus jamais. Et vous rendrez une solution, pas un fichier.*
 >

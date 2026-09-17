@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 492" width="704" height="492" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="492" rx="8" class="fond"/><style>.ok{fill:#15803d}.ko{fill:#c0392b}.bl{fill:#1d4ed8}@media (prefers-color-scheme: dark){.ok{fill:#5fd68f}.ko{fill:#f87171}.bl{fill:#8ab4ff}}</style><text x="24" y="30" class="eti">Pourquoi votre fichier n’arrive jamais</text><rect x="24" y="56" width="152" height="96" rx="6" class="carte"/><rect x="24" y="56" width="152" height="96" rx="6" class="bord"/><text x="100" y="88" class="h" font-size="12.5" text-anchor="middle">Vous envoyez</text><text x="100" y="108" class="h" font-size="12.5" text-anchor="middle">Rapports.xlsm</text><path d="M 176 104 L 190 104" stroke="var(--b)" stroke-width="2"/><rect x="192" y="56" width="152" height="96" rx="6" class="rfill"/><rect x="192" y="56" width="152" height="96" rx="6" class="bord"/><text x="268" y="88" class="h" font-size="12.5" text-anchor="middle">La messagerie</text><text x="268" y="108" class="h" font-size="12.5" text-anchor="middle">supprime la pièce</text><text x="268" y="138" class="mono ko" font-size="9.5" text-anchor="middle">bloqué</text><path d="M 344 104 L 358 104" stroke="var(--b)" stroke-width="2"/><rect x="360" y="56" width="152" height="96" rx="6" class="rfill"/><rect x="360" y="56" width="152" height="96" rx="6" class="bord"/><text x="436" y="88" class="h" font-size="12.5" text-anchor="middle">Ou elle passe,</text><text x="436" y="108" class="h" font-size="12.5" text-anchor="middle">et Excel désactive</text><text x="436" y="138" class="mono ko" font-size="9.5" text-anchor="middle">Mark of the Web</text><path d="M 512 104 L 526 104" stroke="var(--b)" stroke-width="2"/><rect x="528" y="56" width="152" height="96" rx="6" class="rfill"/><rect x="528" y="56" width="152" height="96" rx="6" class="bord"/><text x="604" y="88" class="h" font-size="12.5" text-anchor="middle">Le destinataire</text><text x="604" y="108" class="h" font-size="12.5" text-anchor="middle">voit un fichier mort</text><rect x="24" y="174" width="656" height="118" rx="6" class="vfill"/><rect x="24" y="174" width="656" height="118" rx="6" class="bord"/><text x="44" y="200" class="h" font-size="14">Ce qu’on fait à la place</text><text x="44" y="226" class="mono t2" font-size="11.5">1.  On met le .xlsm dans un .zip, avec un LISEZ-MOI.txt</text><text x="44" y="246" class="mono t2" font-size="11.5">2.  Le LISEZ-MOI dit : enregistrer le fichier sur le disque AVANT de l’ouvrir</text><text x="44" y="266" class="mono t2" font-size="11.5">3.  Puis : clic droit &gt; Propriétés &gt; cocher « Débloquer »  (Windows)</text><text x="44" y="286" class="mono t2" font-size="11.5">4.  Et seulement ensuite : ouvrir, et accepter l’activation des macros</text><rect x="24" y="308" width="656" height="92" rx="6" class="carte"/><rect x="24" y="308" width="656" height="92" rx="6" class="bord"/><text x="44" y="334" class="h" font-size="13.5">Le Mark of the Web, en une phrase</text><text x="44" y="360" class="p" font-size="12.5">Tout fichier venu d’Internet porte une marque invisible. Excel la lit et désactive</text><text x="44" y="380" class="p" font-size="12.5">les macros — sans le dire clairement. Ouvrir depuis la pièce jointe ne la retire pas.</text><rect x="24" y="414" width="656" height="58" rx="6" class="vfill"/><rect x="24" y="414" width="656" height="58" rx="6" class="bord"/><text x="44" y="440" class="h" font-size="13.5">Et la question d’avant : avez-vous vraiment besoin d’une macro ?</text><text x="44" y="462" class="p" font-size="12.5">Un .xlsx avec Power Query s’envoie sans aucune de ces précautions.</text></svg>

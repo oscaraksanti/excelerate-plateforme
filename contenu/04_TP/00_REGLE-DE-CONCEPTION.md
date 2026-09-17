@@ -147,6 +147,19 @@ Cases à cocher, **jamais d'appréciation libre**. Chaque critère est noté *ab
 
 > **Le test « le corrigé se note 20/20 » est le seul qui compte.** Il attrape tout : la feuille mal nommée, la formule non recalculée, la matricielle mal posée.
 
+## Le cas du `.xlsm`
+
+Le dépôt accepte `.xlsx` **et** `.xlsm` : le correcteur lit les deux, l'extension ne change rien à la notation. Mais **il ne voit jamais le code VBA** — SheetJS n'expose pas le projet macro.
+
+Un TP dont le livrable est une macro se note donc en deux temps :
+
+- **la machine** note la *couche de vérification* — ce que la macro produit, et les contrôles qui prouvent que c'est juste ;
+- **les pairs** notent la macro, ses commentaires, et les fichiers qu'elle a sortis.
+
+Et on baisse `poids_machine` en conséquence : **0,50 pour le TP 10**, contre 0,60 partout ailleurs.
+
+> **Un corrigé de TP ne contient jamais de macro.** Il est privé, mais il n'a aucune raison de porter la solution du code : la machine ne la lirait pas, et le code de référence appartient au corrigé vidéo.
+
 ---
 
 # 5. Écrire des formules dans un fichier qu'Excel n'a pas créé

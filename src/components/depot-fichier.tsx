@@ -57,7 +57,7 @@ export function DepotFichier({
     }
     if (accept.includes(".xlsx") && !/\.(xlsx|xlsm)$/i.test(fichier.name)) {
       setErreur(
-        "Il faut un classeur Excel (.xlsx). Dans Excel : Fichier → Enregistrer sous → Classeur Excel.",
+        "Il faut un classeur Excel (.xlsx ou .xlsm). Dans Excel : Fichier → Enregistrer sous → Classeur Excel.",
       );
       return;
     }

@@ -1,0 +1,30 @@
+{
+ "clients": 200,
+ "clients_actifs": 196,
+ "classeurs_vides": 4,
+ "classeurs_anomalie": 15,
+ "lignes": 5637,
+ "total_usd": 1672787.91,
+ "ecart_methode": 0.54,
+ "rapports": 12,
+ "total_agences": 1672787.91,
+ "total_familles": 1672787.91,
+ "plus_gros_client_usd": 89558.99,
+ "plus_gros_client": "Ets Essomba & Fils",
+ "clients_20k": 17,
+ "totaux_rapports": {
+  "Kinshasa": 387868.97,
+  "Lubumbashi": 219953.12,
+  "Abidjan": 402516.35,
+  "Dakar": 162151.38,
+  "Douala": 194444.31,
+  "Libreville": 305853.78,
+  "Huiles": 279286.53,
+  "Riz": 790854.58,
+  "Farine": 339712.77,
+  "Boissons": 81306.67,
+  "Savons": 159883.22,
+  "Conserves": 21744.14
+ },
+ "taille_zip_mo": 1.39
+}

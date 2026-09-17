@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 460" width="704" height="460" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="460" rx="8" class="fond"/><style>.ok{fill:#15803d}.ko{fill:#c0392b}.bl{fill:#1d4ed8}@media (prefers-color-scheme: dark){.ok{fill:#5fd68f}.ko{fill:#f87171}.bl{fill:#8ab4ff}}</style><text x="24" y="30" class="eti">Ce qui change quand le travail sort d’Excel</text><rect x="24" y="52" width="200" height="150" rx="6" class="carte"/><rect x="24" y="52" width="200" height="150" rx="6" class="bord"/><text x="44" y="80" class="h" font-size="14">J10_Clients/</text><text x="44" y="104" class="mono t2" font-size="12">200 classeurs</text><text x="44" y="126" class="mono t3" font-size="11">4 vides</text><text x="44" y="146" class="mono t3" font-size="11">6 avec une ligne TOTAL</text><text x="44" y="166" class="mono t3" font-size="11">3 avec une colonne en plus</text><text x="44" y="186" class="mono t3" font-size="11">2 mal nommées</text><rect x="256" y="52" width="192" height="150" rx="6" class="vfill"/><rect x="256" y="52" width="192" height="150" rx="6" class="bord"/><text x="352" y="80" class="h" font-size="14.5" text-anchor="middle">Claude Code</text><text x="352" y="108" class="mono ok" font-size="11.5" text-anchor="middle">CLAUDE.md</text><text x="352" y="128" class="t3" font-size="10.5" text-anchor="middle">vos conventions</text><text x="352" y="156" class="mono ok" font-size="11.5" text-anchor="middle">une Skill</text><text x="352" y="176" class="t3" font-size="10.5" text-anchor="middle">votre processus</text><rect x="480" y="52" width="200" height="150" rx="6" class="carte"/><rect x="480" y="52" width="200" height="150" rx="6" class="bord"/><text x="500" y="80" class="h" font-size="14">La sortie</text><text x="500" y="104" class="mono t2" font-size="11.5">5637 lignes consolidées</text><text x="500" y="126" class="mono t3" font-size="11">1 récap. par fichier</text><text x="500" y="146" class="mono t3" font-size="11">12 rapports</text><text x="500" y="166" class="mono ok" font-size="11">1 écart : zéro</text><path d="M 224 127 L 250 127" stroke="var(--vb)" stroke-width="2"/><path d="M 244 122 L 252 127 L 244 132" stroke="var(--vb)" stroke-width="2" fill="none"/><path d="M 448 127 L 474 127" stroke="var(--vb)" stroke-width="2"/><path d="M 468 122 L 476 127 L 468 132" stroke="var(--vb)" stroke-width="2" fill="none"/><rect x="24" y="222" width="656" height="76" rx="6" class="vfill"/><rect x="24" y="222" width="656" height="76" rx="6" class="bord"/><text x="44" y="248" class="h" font-size="13.5">La commande</text><text x="44" y="276" class="mono ok" font-size="12">&gt; consolide les classeurs de J10_Clients et produis les douze rapports</text><rect x="24" y="312" width="656" height="128" rx="6" class="carte"/><rect x="24" y="312" width="656" height="128" rx="6" class="bord"/><text x="44" y="338" class="h" font-size="13.5">Ce qui fait la différence avec « demander à une IA »</text><text x="44" y="364" class="p" font-size="12.5">CLAUDE.md dit une fois pour toutes : les devises, les taux, le nommage des fichiers,</text><text x="44" y="384" class="p" font-size="12.5">les quinze anomalies connues, et le contrôle qui doit valoir zéro. C’est rejoué à</text><text x="44" y="404" class="p" font-size="12.5">chaque fois, sans que vous le retapiez — et c’est relisible par quelqu’un d’autre.</text><text x="44" y="428" class="mono t3" font-size="11">Un prompt se perd. Un fichier de conventions se transmet.</text></svg>

@@ -112,7 +112,8 @@ export default async function PageTp({ params }: Params) {
             {copie ? "Remplacer ta copie" : "Déposer ta copie"}
           </h2>
           <p className="mt-2 mb-6 max-w-[34rem] text-[0.98rem] text-texte-2">
-            Un classeur <code className="font-mono text-[0.88em]">.xlsx</code>, 10
+            Un classeur <code className="font-mono text-[0.88em]">.xlsx</code> ou{" "}
+            <code className="font-mono text-[0.88em]">.xlsm</code>, 10
             Mo au maximum. Ta note machine s&apos;affiche en quelques secondes
             {copie ? ". Tu peux redéposer autant de fois que tu veux avant la fermeture." : "."}
           </p>

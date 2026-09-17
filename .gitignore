@@ -47,3 +47,7 @@ next-env.d.ts
 # Les CSV bruts du module 8 : 53 Mo, régénérables par le script.
 # Seule l's archive est versionnée.
 contenu/02_DONNEES/sortie-m08/J08_Modele/
+
+# Les dossiers de données décompressés : seul le .zip est livré.
+contenu/02_DONNEES/sortie-m08/J08_Modele/
+contenu/02_DONNEES/sortie-m10/J10_Clients/
