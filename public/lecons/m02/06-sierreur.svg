@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 322" width="704" height="322" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="322" rx="8" class="fond"/><text x="24" y="30" class="eti">Pourquoi SIERREUR posé partout est une faute professionnelle</text><text x="44" y="58" class="mono rtext" font-size="12.5">#DIV/0!</text><text x="160" y="58" class="p" font-size="12.5">un objectif nul, une vraie donnée manquante</text><path d="M 470 53 L 500 53" class="bord" stroke-width="1.2"/><text x="44" y="86" class="mono rtext" font-size="12.5">#N/A</text><text x="160" y="86" class="p" font-size="12.5">un matricule absent de la table de référence</text><path d="M 470 81 L 500 81" class="bord" stroke-width="1.2"/><text x="44" y="114" class="mono rtext" font-size="12.5">#VALEUR!</text><text x="160" y="114" class="p" font-size="12.5">un nombre stocké en texte, à réparer</text><path d="M 470 109 L 500 109" class="bord" stroke-width="1.2"/><text x="44" y="142" class="mono rtext" font-size="12.5">#REF!</text><text x="160" y="142" class="p" font-size="12.5">une colonne supprimée : la formule est cassée</text><path d="M 470 137 L 500 137" class="bord" stroke-width="1.2"/><text x="44" y="170" class="mono rtext" font-size="12.5">#NOM?</text><text x="160" y="170" class="p" font-size="12.5">une fonction qui n’existe pas dans cette version</text><path d="M 470 165 L 500 165" class="bord" stroke-width="1.2"/><rect x="508" y="36" width="172" height="152" rx="6" class="rfill"/><text x="594" y="106.0" text-anchor="middle" class="mono rtext" font-size="12">SIERREUR</text><text x="594" y="126.0" text-anchor="middle" class="p" font-size="11.5">les avale toutes</text><rect x="24" y="206" width="656" height="98" rx="6" class="vfill"/><text x="44" y="232" class="h" font-size="13.5" fill="var(--v)">Ce qu’il faut faire à la place</text><text x="44" y="256" class="mono t" font-size="11.5">=SI.NON.DISP(…)        n’attrape QUE l’absence</text><text x="44" y="276" class="mono t" font-size="11.5">=RECHERCHEX(… ; "absent")   le filet est dans la fonction</text><text x="44" y="294" class="p" font-size="11.5">Une formule qui ne se plaint jamais est une formule dont personne ne sait si elle est juste.</text></svg>

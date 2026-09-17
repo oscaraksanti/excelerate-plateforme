@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 470" width="704" height="470" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="470" rx="8" class="fond"/><text x="24" y="30" class="eti">On dessine l'arbre AVANT d'écrire la formule</text><text x="24" y="56" class="p" font-size="12.5">« 4 % à partir de 80 % de l'objectif, 6 % à partir de 100 %, 8 % au-delà de 120 %. »</text><rect x="252" y="76" width="200" height="40" rx="5" class="carte"/><rect x="252" y="76" width="200" height="40" rx="5" class="bord" stroke-width="1.4"/><text x="352.0" y="101.0" text-anchor="middle" class="h" font-size="12.5">L’objectif est-il nul ?</text><path d="M 252 96 L 150 96 L 150 134" class="bord" stroke-width="1.4" fill="none"/><path d="M 452 96 L 554 96 L 554 134" class="bord" stroke-width="1.4" fill="none"/><text x="186" y="90" class="mono t3" font-size="10.5">OUI</text><text x="494" y="90" class="mono t3" font-size="10.5">NON</text><rect x="60" y="134" width="180" height="52" rx="5" class="rfill"/><rect x="60" y="134" width="180" height="52" rx="5" class="bord" stroke-width="1.4"/><text x="150.0" y="158" text-anchor="middle" class="h" font-size="12.5">Taux = 0 %</text><text x="150.0" y="176" text-anchor="middle" class="p" font-size="11.5">et on le signale</text><rect x="464" y="134" width="180" height="52" rx="5" class="carte"/><rect x="464" y="134" width="180" height="52" rx="5" class="bord" stroke-width="1.4"/><text x="554.0" y="158" text-anchor="middle" class="h" font-size="12.5">Réalisé ÷ Objectif</text><text x="554.0" y="176" text-anchor="middle" class="p" font-size="11.5">le taux de réalisation</text><path d="M 554 186 L 554 216" class="bord" stroke-width="1.4" fill="none"/><rect x="288" y="216" width="392" height="32" rx="4" class="carte"/><rect x="288" y="216" width="392" height="32" rx="4" class="bord"/><text x="306" y="237" class="p" font-size="12.5">moins de 80 %</text><rect x="580" y="220" width="88" height="24" rx="3" class="vfill"/><text x="624" y="237" text-anchor="middle" class="mono vtext" font-size="12.5" font-weight="600">0 %</text><rect x="288" y="254" width="392" height="32" rx="4" class="carte"/><rect x="288" y="254" width="392" height="32" rx="4" class="bord"/><text x="306" y="275" class="p" font-size="12.5">de 80 % à 100 %</text><rect x="580" y="258" width="88" height="24" rx="3" class="vfill"/><text x="624" y="275" text-anchor="middle" class="mono vtext" font-size="12.5" font-weight="600">4 %</text><rect x="288" y="292" width="392" height="32" rx="4" class="carte"/><rect x="288" y="292" width="392" height="32" rx="4" class="bord"/><text x="306" y="313" class="p" font-size="12.5">de 100 % à 120 %</text><rect x="580" y="296" width="88" height="24" rx="3" class="vfill"/><text x="624" y="313" text-anchor="middle" class="mono vtext" font-size="12.5" font-weight="600">6 %</text><rect x="288" y="330" width="392" height="32" rx="4" class="carte"/><rect x="288" y="330" width="392" height="32" rx="4" class="bord"/><text x="306" y="351" class="p" font-size="12.5">plus de 120 %</text><rect x="580" y="334" width="88" height="24" rx="3" class="vfill"/><text x="624" y="351" text-anchor="middle" class="mono vtext" font-size="12.5" font-weight="600">8 %</text><path d="M 554 216 L 554 346 M 268 232 L 286 232" class="bord" stroke-width="1.2" fill="none"/><path d="M 268 346 L 286 346" class="bord" stroke-width="1.2" fill="none"/><path d="M 268 232 L 268 346" class="bord" stroke-width="1.2" fill="none"/><path d="M 268 289.0 L 250 289.0" class="bord" stroke-width="1.2" fill="none"/><path d="M 250 289.0 L 250 186 L 554 186" class="bord" stroke-width="0" fill="none"/><rect x="24" y="378" width="656" height="72" rx="6" class="vfill"/><text x="44" y="404" class="h" font-size="13.5" fill="var(--v)">Deux minutes de dessin évitent neuf SI imbriqués</text><text x="44" y="426" class="p" font-size="12.5">Et surtout : la branche « objectif nul » ne se voit qu’en dessinant.</text></svg>
