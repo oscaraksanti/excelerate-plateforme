@@ -154,7 +154,7 @@ Un classeur hérité dont le contrôle général affiche **4 272 USD** là où l
 
 Spécifiés au moment de la production de chaque module. Contraintes déjà arrêtées :
 
-- **M4** — les trois fichiers ont des clés qui ne concordent pas : espaces, casse, préfixes, et **8 commandes livrées jamais facturées, pour 84 000 USD**
+- **M4** — les trois fichiers ont des clés qui ne concordent pas : espaces, casse, préfixes, et **8 commandes livrées jamais facturées, pour 84 320 USD**
 - **M5** — 120 000 lignes, ce qui force le tableau structuré et rend le TCD indispensable
 - **M7** — les 12 fichiers mensuels ont **des colonnes qui changent de place**, et trois d'entre eux sont des tableaux croisés qu'il faut dépivoter
 - **M8** — schéma en étoile : `f_Ventes`, `d_Client`, `d_Produit`, `d_Agence`, `d_Calendrier`, `d_Taux`

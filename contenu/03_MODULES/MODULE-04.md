@@ -19,7 +19,7 @@ C'est **ce que l'acheteur ouvre dans les cinq minutes qui suivent son paiement**
 
 Trois fichiers ouverts côte à côte : les commandes, les livraisons, les factures. 24 000 lignes au total. Nadège : *« Il manque de l'argent. Je ne sais pas combien, je ne sais pas où. »*
 
-À la fin de la leçon 4.4, on affiche : **84 320 USD, 8 commandes, 3 agences, et la raison de chacune.**
+À la fin de la leçon 4.4, on affiche : **84 320 USD, 8 commandes, et la raison de chacune.**
 
 ## Les données du jour
 `J04_Commandes.xlsx` · `J04_Livraisons.xlsx` · `J04_Factures.xlsx` — 3 × 8 000 lignes, **trois devises**, et des clés qui ne concordent pas : espaces, casse, préfixes d'agence ajoutés par un logiciel.
@@ -71,7 +71,7 @@ Trois fichiers ouverts côte à côte : les commandes, les livraisons, les factu
 ---
 
 ## Leçon 4.4 — 🤖 La réconciliation intelligente — **le cas que personne ne sait faire**
-**Le problème.** Trois fichiers, 24 000 lignes, des clés qui ne concordent pas, trois devises. Où sont les 84 000 USD ?
+**Le problème.** Trois fichiers, 24 000 lignes, des clés qui ne concordent pas, trois devises. Où sont les 84 320 USD ?
 
 ### Le prompt décortiqué
 Décrire les trois structures · **dire explicitement que les clés sont sales** · demander **la méthode avant le code** · exiger un rapport de réconciliation, pas une colonne de résultats
@@ -105,7 +105,7 @@ Faire produire une **maquette interactive** du tableau de bord **avant** de l'ou
 ## 🎁 Bonus Niveau + — Le Filtre Avancé et sa zone de critères
 La fonctionnalité de 1993 qui fait encore des choses que `FILTRE` ne fait pas : extraire vers une autre feuille, critères en OU sur plusieurs colonnes, **critère calculé par formule**, extraction sans doublon.
 
-## 🧪 TP 4 — « Le trou de 84 000 dollars » → `04_TP/TP-04.md`
+## 🧪 TP 4 — « Le trou de 84 320 dollars » → `04_TP/TP-04.md`
 ## ❓ QCM → `05_QCM/QCM-M04.md`
 ## 📦 Fichiers
 `M04_L01` → `M04_L05` *(DEPART, CORRIGE, SCRIPT, DEFI)* · `J04_*.xlsx` *(3 fichiers)* · `M04_L04_PROMPTS.md` · `M04_BONUS_FiltreAvance.xlsx` · `M04_MEMO_Reconciliation.pdf` · `TP04_*`

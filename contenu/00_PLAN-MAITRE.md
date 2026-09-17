@@ -200,7 +200,7 @@ Détail complet : `01_PILOTAGE/CALENDRIER.md`
 | **1** | Reprendre la main sur ses données | 🟢 gratuit | Tableaux structurés, RECHERCHEX, FILTRE/TRIER/UNIQUE |
 | **2** | L'IA comme copilote, pas comme oracle | 🟢 gratuit | Traduire une règle métier, auditer un classeur cassé, le Protocole V4 |
 | **3** | Ce qui tourne tout seul | 🟢 gratuit | Nettoyer définitivement, Power Query, un dashboard qui s'actualise |
-| **4** | Chercher, croiser, réconcilier | 🔒 payant | Ne plus jamais recopier une donnée |
+| **4** | Chercher, croiser, réconcilier | 🔒 payant | Ne plus jamais recopier une donnée — et retrouver 84 320 $ |
 | **5** | Tableaux croisés dynamiques | 🔒 payant | Répondre à toute question de direction en 5 min |
 | **6** | Visualiser & construire un dashboard | 🔒 payant | Être compris en 8 secondes |
 | **7** | Power Query en profondeur | 🔒 payant | Le rapport de 3 h devient un clic, définitivement |

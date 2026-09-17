@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 484" width="704" height="484" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="484" rx="8" class="fond"/><text x="24" y="30" class="eti">Cinq étapes, dans cet ordre, toujours</text><rect x="24" y="56" width="656" height="56" rx="6" class="carte"/><rect x="24" y="56" width="656" height="56" rx="6" class="bord"/><circle cx="54" cy="84" r="15" class="vfill"/><circle cx="54" cy="84" r="15" class="vstroke" stroke-width="1.5"/><text x="54" y="89" text-anchor="middle" class="mono vtext" font-size="12" font-weight="600">1</text><text x="86" y="81" class="h" font-size="13.5">Compter</text><text x="86" y="100" class="p" font-size="12">Combien de lignes de chaque côté ? On l’écrit avant de commencer.</text><path d="M 54 112 L 54 120" class="bord" stroke-width="1.4"/><rect x="24" y="120" width="656" height="56" rx="6" class="carte"/><rect x="24" y="120" width="656" height="56" rx="6" class="bord"/><circle cx="54" cy="148" r="15" class="vfill"/><circle cx="54" cy="148" r="15" class="vstroke" stroke-width="1.5"/><text x="54" y="153" text-anchor="middle" class="mono vtext" font-size="12" font-weight="600">2</text><text x="86" y="145" class="h" font-size="13.5">Normaliser</text><text x="86" y="164" class="p" font-size="12">Casse, espaces, préfixes. Sur les DEUX côtés, avec la même règle.</text><path d="M 54 176 L 54 184" class="bord" stroke-width="1.4"/><rect x="24" y="184" width="656" height="56" rx="6" class="carte"/><rect x="24" y="184" width="656" height="56" rx="6" class="bord"/><circle cx="54" cy="212" r="15" class="vfill"/><circle cx="54" cy="212" r="15" class="vstroke" stroke-width="1.5"/><text x="54" y="217" text-anchor="middle" class="mono vtext" font-size="12" font-weight="600">3</text><text x="86" y="209" class="h" font-size="13.5">Rapprocher</text><text x="86" y="228" class="p" font-size="12">Une ligne par élément du référentiel. Jamais l’inverse.</text><path d="M 54 240 L 54 248" class="bord" stroke-width="1.4"/><rect x="24" y="248" width="656" height="56" rx="6" class="carte"/><rect x="24" y="248" width="656" height="56" rx="6" class="bord"/><circle cx="54" cy="276" r="15" class="vfill"/><circle cx="54" cy="276" r="15" class="vstroke" stroke-width="1.5"/><text x="54" y="281" text-anchor="middle" class="mono vtext" font-size="12" font-weight="600">4</text><text x="86" y="273" class="h" font-size="13.5">Classer</text><text x="86" y="292" class="p" font-size="12">Chaque ligne reçoit un statut, et un seul. Priorité écrite.</text><path d="M 54 304 L 54 312" class="bord" stroke-width="1.4"/><rect x="24" y="312" width="656" height="56" rx="6" class="carte"/><rect x="24" y="312" width="656" height="56" rx="6" class="bord"/><circle cx="54" cy="340" r="15" class="vfill"/><circle cx="54" cy="340" r="15" class="vstroke" stroke-width="1.5"/><text x="54" y="345" text-anchor="middle" class="mono vtext" font-size="12" font-weight="600">5</text><text x="86" y="337" class="h" font-size="13.5">Contrôler</text><text x="86" y="356" class="p" font-size="12">Somme des statuts = total. Sinon quelque chose s’est perdu.</text><rect x="24" y="382" width="656" height="78" rx="6" class="rfill"/><text x="44" y="408" class="h" font-size="13.5" fill="var(--r)">L’étape qu’on saute, et qui coûte le plus cher</text><text x="44" y="432" class="p" font-size="12.5">La 1. Sans le comptage de départ, on ne peut pas savoir si on a perdu des lignes</text><text x="44" y="452" class="p" font-size="12.5">en chemin — et c’est l’erreur la plus fréquente d’un rapprochement.</text></svg>

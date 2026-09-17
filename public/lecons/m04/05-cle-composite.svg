@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 422" width="704" height="422" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="422" rx="8" class="fond"/><text x="24" y="30" class="eti">Quand la clé n’est pas dans une seule colonne</text><rect x="24" y="50" width="656" height="46" rx="5" class="carte"/><rect x="24" y="50" width="656" height="46" rx="5" class="bord"/><text x="44" y="79" class="mono t" font-size="13">=[@Produit] &amp; "|" &amp; [@Canal] &amp; "|" &amp; TEXTE([@Mois];"aaaa-mm")</text><rect x="148" y="58" width="30" height="30" rx="3" class="vstroke" stroke-width="2"/><text x="24" y="134" class="h" font-size="13.5">Le piège du séparateur</text><text x="44" y="160" class="mono t3" font-size="10.5">PARTIE 1</text><text x="188" y="160" class="mono t3" font-size="10.5">PARTIE 2</text><text x="340" y="160" class="mono t3" font-size="10.5">CLÉ OBTENUE</text><text x="44" y="182" class="mono t" font-size="12">ABC-1</text><text x="188" y="182" class="mono t" font-size="12">2</text><text x="340" y="182" class="mono" font-size="12" fill="var(--r)">ABC-1-2</text><line x1="24" y1="191" x2="680" y2="191" class="bord2"/><text x="44" y="210" class="mono t" font-size="12">ABC</text><text x="188" y="210" class="mono t" font-size="12">1-2</text><text x="340" y="210" class="mono" font-size="12" fill="var(--r)">ABC-1-2</text><line x1="24" y1="219" x2="680" y2="219" class="bord2"/><text x="44" y="238" class="mono t" font-size="12">ABC-1</text><text x="188" y="238" class="mono t" font-size="12">2</text><text x="340" y="238" class="mono" font-size="12" fill="var(--v)">ABC-1|2</text><line x1="24" y1="247" x2="680" y2="247" class="bord2"/><text x="44" y="266" class="mono t" font-size="12">ABC</text><text x="188" y="266" class="mono t" font-size="12">1-2</text><text x="340" y="266" class="mono" font-size="12" fill="var(--v)">ABC|1-2</text><line x1="24" y1="275" x2="680" y2="275" class="bord2"/><text x="480" y="210" class="p" font-size="12" fill="var(--r)">deux clés identiques</text><text x="480" y="228" class="p" font-size="12" fill="var(--r)">pour deux lignes différentes</text><text x="480" y="266" class="p" font-size="12" fill="var(--v)">chacune la sienne</text><rect x="24" y="304" width="656" height="94" rx="6" class="vfill"/><text x="44" y="330" class="h" font-size="13.5" fill="var(--v)">Le séparateur doit être impossible dans les données</text><text x="44" y="354" class="p" font-size="12.5">« | », « ¤ », « ~ » : des caractères qu’aucune référence ne contient.</text><text x="44" y="374" class="p" font-size="12.5">Jamais « - », jamais « / », jamais l’espace : ils existent déjà dans vos données.</text></svg>

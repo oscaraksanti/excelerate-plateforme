@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 430" width="704" height="430" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="430" rx="8" class="fond"/><text x="24" y="30" class="eti">La même commande, écrite de cinq façons par trois logiciels</text><rect x="24" y="40" width="200" height="26" rx="3" class="vfill"/><text x="36" y="58" class="mono" font-size="12" fill="var(--v)">CMD-00220</text><text x="244" y="58" class="p" font-size="12.5">la référence, telle qu’elle devrait être</text><rect x="24" y="74" width="200" height="26" rx="3" class="rfill"/><text x="36" y="92" class="mono" font-size="12" fill="var(--r)">cmd-00220</text><text x="244" y="92" class="p" font-size="12.5">le logiciel de livraison écrit en minuscules</text><rect x="24" y="108" width="200" height="26" rx="3" class="rfill"/><text x="36" y="126" class="mono" font-size="12" fill="var(--r)">␣CMD-00220␣</text><text x="244" y="126" class="p" font-size="12.5">des espaces de bord — invisibles à l’écran</text><rect x="24" y="142" width="200" height="26" rx="3" class="rfill"/><text x="36" y="160" class="mono" font-size="12" fill="var(--r)">DKR/CMD-00220</text><text x="244" y="160" class="p" font-size="12.5">le préfixe d’agence, ajouté à l’export</text><rect x="24" y="176" width="200" height="26" rx="3" class="rfill"/><text x="36" y="194" class="mono" font-size="12" fill="var(--r)">CMD-00220␣</text><text x="244" y="194" class="p" font-size="12.5">un espace insécable collé à la fin</text><rect x="24" y="234" width="316" height="96" rx="6" class="rfill"/><text x="44" y="262" class="h" font-size="13.5" fill="var(--r)">Rapprochement brut</text><text x="44" y="294" class="mono rtext" font-size="24" font-weight="600">5 635</text><text x="44" y="316" class="p" font-size="12">écarts sur 7 880 livraisons</text><rect x="364" y="234" width="316" height="96" rx="6" class="vfill"/><text x="384" y="262" class="h" font-size="13.5" fill="var(--v)">Après normalisation</text><text x="384" y="294" class="mono vtext" font-size="24" font-weight="600">8</text><text x="384" y="316" class="p" font-size="12">et ce sont les vrais</text><text x="24" y="364" class="p" font-size="12.5">Cinq mille six cent trente-cinq écarts sur sept mille huit cent quatre-vingts lignes :</text><text x="24" y="384" class="h" font-size="13">ce n’est pas un problème de données. C’est un problème de méthode.</text><text x="24" y="406" class="mono t3" font-size="11">C’est V3 — Volumétrie — qui doit vous arrêter avant d’écrire le rapport.</text></svg>
