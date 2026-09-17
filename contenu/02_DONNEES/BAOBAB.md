@@ -140,7 +140,7 @@ Un classeur hérité dont le contrôle général affiche **4 272 USD** là où l
 | Famille | Anomalies |
 |---|---|
 | Noms | MAJUSCULES, minuscules, ordre inversé, doubles espaces |
-| **Espaces insécables `CAR(160)`** | sur ~400 lignes, invisibles, que `SUPPRESPACE` n'enlève pas |
+| **Espaces insécables `U+00A0`** | sur 412 lignes, invisibles, que `SUPPRESPACE` n'enlève pas. Se détectent par `UNICAR(160)`, jamais par `CAR(160)` |
 | Dates | `03/04/25` ambigu · format américain · dates stockées en texte · 12 dates impossibles (31/02) |
 | Téléphones | six formats, avec et sans indicatif, avec espaces, points, tirets |
 | Emails | espaces avant/après, majuscules, 40 doublons de casse |

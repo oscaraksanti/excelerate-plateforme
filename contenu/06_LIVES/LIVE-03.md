@@ -11,7 +11,7 @@
 | | Durée | |
 |---|:--:|---|
 | **19:00** | 10 min | **Le mur des résultats**, en plus grand. Les erreurs trouvées hier par les participants dans leurs vrais fichiers. Puis : *« Ce soir, je vous montre à quoi ressemble la chose finie. Et à 20 h 30, je vous dirai comment aller la chercher. »* **On annonce l'offre maintenant, pour que personne ne parte à 20 h 25.** |
-| **19:10** | 20 min | **🔧 Nettoyer sans retoucher à la main.** 💎💎 L'espace insécable `CAR(160)`. 💎 `DATEDIF`. *« Ça, c'est quinze ans de rapprochements qui ne tombaient pas juste. »* |
+| **19:10** | 20 min | **🔧 Nettoyer sans retoucher à la main.** 💎💎 L'espace insécable — et pourquoi `CAR(160)` ne marche pas partout. 💎 `DATEDIF`. *« Ça, c'est quinze ans de rapprochements qui ne tombaient pas juste. »* |
 | **19:30** | 25 min | **🔧 Power Query.** Douze fichiers, un dossier, un clic. 💎💎 **Dépivoter.** Puis on ajoute un treizième fichier et on actualise. |
 | **19:55** | 20 min | **🔧 Le tableau de bord.** TCD sur la requête, segments connectés, `LET`. Il se met à jour tout seul. |
 | **20:15** | 12 min | **🎬 LA DÉMONSTRATION.** Sans commentaire, sans pause : douze fichiers tombent → un clic → nettoyés, consolidés, convertis en USD au bon taux, modèle, tableau de bord, note de synthèse, **total de contrôle à zéro**. |
