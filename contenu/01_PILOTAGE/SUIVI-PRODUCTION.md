@@ -83,12 +83,12 @@
 
 | Leçon | CL | SC | TO | MO | YT | AD |
 |---|:--:|:--:|:--:|:--:|:--:|:--:|
-| 6.1 🔧 Les graphiques, correctement | □ | □ | □ | □ | □ | □ |
-| 6.2 🔧 Les visualisations ignorées | □ | □ | □ | □ | □ | □ |
-| 6.3 🔧 Assembler un dashboard interactif | □ | □ | □ | □ | □ | □ |
-| 6.4 🤖 L'IA comme directeur artistique | □ | □ | □ | □ | □ | □ |
-| 6.5 🤖 Maquetter avec Artifacts | □ | □ | □ | □ | □ | □ |
-| **TP 6** · **QCM M6** | □ | □ | | | | □ |
+| 6.1 🔧 Les graphiques, correctement | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| 6.2 🔧 Les visualisations ignorées | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| 6.3 🔧 Assembler un dashboard interactif | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| 6.4 🤖 L'IA comme directeur artistique | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| 6.5 🤖 Maquetter avec Artifacts | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| **TP 6** · **QCM M6** | ✅ | ✅ | | | | ✅ |
 
 ## 🔒 MODULE 7 — à tourner **sam. 26 / dim. 27** · publié jeu. 1er oct.
 

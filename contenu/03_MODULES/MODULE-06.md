@@ -1,4 +1,5 @@
-# MODULE 6 — Visualiser & construire un dashboard
+# MODULE 6 — Huit secondes
+### *Visualiser & construire un tableau de bord*
 ## 🔒 Payant · publié **mercredi 30 septembre** · à tourner **jeu. 24 / ven. 25**
 
 > **Promesse :** *Vos rapports seront compris en huit secondes. Et vous saurez pourquoi les vôtres ne l'étaient pas.*
@@ -56,4 +57,30 @@ Elle propose une palette rouge/vert **illisible pour 8 % des hommes**. `V4` : un
 Un graphique piloté par une liste déroulante · une série définie par un **nom qui contient `DECALER`** · le graphique qui ne montre que les 12 derniers mois, toujours · la mise en évidence de la série survolée.
 
 ## 🧪 TP 6 — « Le rapport que personne ne lit » → `04_TP/TP-06.md`
-## ❓ QCM → `05_QCM/QCM-M06.md`
+## ❓ QCM → `05_QCM/QCM-M06.md` — **7 questions** *(6 prévues + le piège de l'ordre des règles de MFC)*
+
+---
+
+## ✅ État de production — livré le 17 septembre 2026
+
+| | |
+|---|---|
+| Corps des 5 leçons | **56 048 caractères** |
+| Schémas | **9** — `public/lecons/m06/` |
+| Jeu de données | `J06_Synthese_Mensuelle.xlsx` — 434 + 72 lignes, agrégé depuis J05 |
+| Le rapport illisible | `J06_Rapport_Mensuel_Actuel.xlsx` — 14 indicateurs, 3 camemberts, axe à 1,8 M |
+| Classeurs de leçon | `M06_L01_*` *(4 questions, 4 types)* · `M06_L02_*` *(MFC, Gantt, cascade, Pareto)* |
+| TP | 30 cellules de calcul · 12 plages nommées · 163 points · **corrigé 20/20** · départ 0,9/20 |
+| **Pondération** | **pairs 60 % / machine 40 %** — migration `0013_poids_par_tp.sql` |
+| QCM | 7 questions en ligne |
+
+### Les chiffres du module, figés
+
+| | |
+|---|---|
+| Septembre 2026 | CA **2 299 043,24 USD** · objectif **2 335 000** · atteinte **98,46 %** |
+| Variation sur un mois | **−9,80 %** · taux de marge **17,17 %** |
+| Cumul de l'exercice | **28 022 768,30 USD** |
+| L'agence en difficulté | **Lubumbashi — 87,1 %, soit −51 503,07 USD** |
+| Le pont de marge | **434 374 → 394 687 USD**, dont la farine pour −13 400 |
+| Pareto | les trois premières familles font **64,7 %** du chiffre d'affaires |

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 448" width="704" height="448" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="448" rx="8" class="fond"/><text x="24" y="30" class="eti">Une maquette promet des choses qu’Excel ne tient pas</text><rect x="24" y="50" width="330" height="268" rx="6" class="vfill"/><rect x="24" y="50" width="330" height="268" rx="6" class="bord"/><text x="44" y="78" class="h" font-size="14">Ce qui traverse</text><text x="44" y="106" class="p" font-size="12">✓  les tuiles d&#x27;indicateurs</text><text x="44" y="130" class="p" font-size="12">✓  les barres, les courbes, la cascade</text><text x="44" y="154" class="p" font-size="12">✓  les barres de données et les icônes</text><text x="44" y="178" class="p" font-size="12">✓  les sparklines dans une cellule</text><text x="44" y="202" class="p" font-size="12">✓  les segments et la chronologie</text><text x="44" y="226" class="p" font-size="12">✓  le tri et le filtre à la volée</text><text x="44" y="250" class="p" font-size="12">✓  l&#x27;impression sur une page A4</text><text x="44" y="274" class="p" font-size="12">✓  la mise en page libre — par l&#x27;appareil photo</text><rect x="374" y="50" width="306" height="268" rx="6" class="rfill"/><rect x="374" y="50" width="306" height="268" rx="6" class="bord"/><text x="394" y="78" class="h" font-size="14">Ce qui reste dans la maquette</text><text x="394" y="106" class="p" font-size="12">✕  les animations et les transitions</text><text x="394" y="130" class="p" font-size="12">✕  les infobulles riches au survol</text><text x="394" y="154" class="p" font-size="12">✕  le défilement fluide d&#x27;une page web</text><text x="394" y="178" class="p" font-size="12">✕  les polices qui ne sont pas installées</text><text x="394" y="202" class="p" font-size="12">✕  les ombres douces et les dégradés fins</text><text x="394" y="226" class="p" font-size="12">✕  les coins arrondis sur une plage</text><text x="394" y="250" class="p" font-size="12">✕  l&#x27;adaptation automatique au téléphone</text><rect x="24" y="334" width="656" height="96" rx="6" class="carte"/><rect x="24" y="334" width="656" height="96" rx="6" class="bord"/><text x="44" y="360" class="h" font-size="13.5">La phrase à dire au commanditaire, avant de montrer</text><text x="44" y="384" class="p" font-size="12.5">« C&#x27;est une maquette : elle sert à choisir la disposition et la hiérarchie,</text><text x="44" y="404" class="p" font-size="12.5">pas le rendu. Le fichier final sera un classeur Excel. »</text><text x="44" y="424" class="mono vtext" font-size="11.5">Dite avant, elle évite une réunion. Dite après, elle ne sert plus à rien.</text></svg>

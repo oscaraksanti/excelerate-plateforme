@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 406" width="704" height="406" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="406" rx="8" class="fond"/><text x="24" y="30" class="eti">Pourquoi la marge a reculé — en un seul graphique</text><line x1="54" y1="252.0" x2="654" y2="252.0" class="bord2"/><text x="44" y="256.0" class="mono t3" font-size="10" text-anchor="end">380 k</text><line x1="54" y1="193.5" x2="654" y2="193.5" class="bord2"/><text x="44" y="197.5" class="mono t3" font-size="10" text-anchor="end">400 k</text><line x1="54" y1="135.1" x2="654" y2="135.1" class="bord2"/><text x="44" y="139.1" class="mono t3" font-size="10" text-anchor="end">420 k</text><line x1="54" y1="76.6" x2="654" y2="76.6" class="bord2"/><text x="44" y="80.6" class="mono t3" font-size="10" text-anchor="end">440 k</text><rect x="74" y="93.1" width="46" height="158.9" fill="#2F6B47"/><text x="97" y="270" class="mono t3" font-size="10" text-anchor="middle">Marge août</text><rect x="158" y="93.1" width="46" height="39.2" fill="#C0392B"/><text x="181" y="270" class="mono t3" font-size="10" text-anchor="middle">Farine</text><text x="181" y="86.1" class="mono rtext" font-size="10" text-anchor="middle">-13 400</text><rect x="242" y="132.2" width="46" height="26.0" fill="#C0392B"/><text x="265" y="270" class="mono t3" font-size="10" text-anchor="middle">Riz</text><text x="265" y="125.2" class="mono rtext" font-size="10" text-anchor="middle">-8 894</text><rect x="326" y="158.2" width="46" height="24.0" fill="#C0392B"/><text x="349" y="270" class="mono t3" font-size="10" text-anchor="middle">Huiles</text><text x="349" y="151.2" class="mono rtext" font-size="10" text-anchor="middle">-8 224</text><rect x="410" y="182.3" width="46" height="20.0" fill="#C0392B"/><text x="433" y="270" class="mono t3" font-size="10" text-anchor="middle">Savons</text><text x="433" y="175.3" class="mono rtext" font-size="10" text-anchor="middle">-6 834</text><rect x="494" y="202.2" width="46" height="6.8" fill="#C0392B"/><text x="517" y="270" class="mono t3" font-size="10" text-anchor="middle">Autres</text><text x="517" y="195.2" class="mono rtext" font-size="10" text-anchor="middle">-2 334</text><rect x="578" y="209.1" width="46" height="42.9" fill="#2F6B47"/><text x="601" y="270" class="mono t3" font-size="10" text-anchor="middle">Marge sept.</text><rect x="24" y="296" width="330" height="92" rx="6" class="carte"/><rect x="24" y="296" width="330" height="92" rx="6" class="bord"/><text x="44" y="322" class="h" font-size="13.5">Ce que ça remplace</text><text x="44" y="346" class="p" font-size="12.5">Un tableau de huit lignes que personne</text><text x="44" y="366" class="p" font-size="12.5">ne lit, et une phrase d&#x27;explication.</text><rect x="374" y="296" width="306" height="92" rx="6" class="vfill"/><rect x="374" y="296" width="306" height="92" rx="6" class="bord"/><text x="394" y="322" class="h" font-size="13.5">La seule entorse autorisée</text><text x="394" y="346" class="p" font-size="12.5">L&#x27;axe ne part pas de zéro — et c&#x27;est</text><text x="394" y="366" class="p" font-size="12.5">juste : ces barres sont des écarts.</text></svg>

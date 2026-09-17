@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 416" width="704" height="416" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="416" rx="8" class="fond"/><text x="24" y="30" class="eti">Tout ce qui n’informe pas encombre</text><rect x="24" y="50" width="330" height="274" rx="6" class="rfill"/><rect x="24" y="50" width="330" height="274" rx="6" class="bord"/><text x="44" y="78" class="h" font-size="14">À retirer</text><text x="44" y="106" class="p" font-size="12">✕  le quadrillage horizontal</text><text x="44" y="130" class="p" font-size="12">✕  le contour du graphique</text><text x="44" y="154" class="p" font-size="12">✕  la légende à une seule série</text><text x="44" y="178" class="p" font-size="12">✕  les effets d&#x27;ombre et de relief</text><text x="44" y="202" class="p" font-size="12">✕  l&#x27;axe vertical quand il y a des étiquettes</text><text x="44" y="226" class="p" font-size="12">✕  les décimales d&#x27;un montant en millions</text><text x="44" y="250" class="p" font-size="12">✕  le titre « Graphique 1 »</text><text x="44" y="274" class="p" font-size="12">✕  une couleur par barre pour une seule série</text><rect x="374" y="50" width="306" height="274" rx="6" class="vfill"/><rect x="374" y="50" width="306" height="274" rx="6" class="bord"/><text x="394" y="78" class="h" font-size="14">À garder</text><text x="394" y="106" class="p" font-size="12">✓  un titre qui affirme quelque chose</text><text x="394" y="130" class="p" font-size="12">✓  les étiquettes des catégories</text><text x="394" y="154" class="p" font-size="12">✓  une valeur par barre, arrondie</text><text x="394" y="178" class="p" font-size="12">✓  une couleur d&#x27;accent, une seule</text><text x="394" y="202" class="p" font-size="12">✓  l&#x27;unité, dite une fois</text><text x="394" y="240" class="eti" font-size="10.5">Et une chose de plus :</text><text x="394" y="266" class="p" font-size="12">ce que le lecteur doit</text><text x="394" y="286" class="p" font-size="12">faire après avoir lu.</text><rect x="24" y="340" width="656" height="58" rx="6" class="carte"/><rect x="24" y="340" width="656" height="58" rx="6" class="bord"/><text x="44" y="366" class="h" font-size="13.5">Le test</text><text x="44" y="388" class="p" font-size="12.5">Retirez un élément. Si la compréhension ne baisse pas, il n&#x27;avait rien à faire là.</text></svg>

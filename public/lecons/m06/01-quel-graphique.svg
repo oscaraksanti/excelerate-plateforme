@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 470" width="704" height="470" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="470" rx="8" class="fond"/><text x="24" y="30" class="eti">Le type de graphique ne se choisit pas au goût</text><rect x="24" y="54" width="300" height="70" rx="6" class="carte"/><rect x="24" y="54" width="300" height="70" rx="6" class="bord"/><text x="44" y="84" class="h" font-size="13.5">« Comment ça bouge ? »</text><text x="44" y="106" class="eti" font-size="10.5">ÉVOLUTION</text><path d="M332 89 L 364 89" class="vstroke" stroke-width="1.5"/><path d="M358 84 L 366 89 L 358 94 Z" fill="var(--vb)"/><rect x="374" y="54" width="306" height="70" rx="6" class="vfill"/><rect x="374" y="54" width="306" height="70" rx="6" class="bord"/><text x="394" y="84" class="h" font-size="14">courbe</text><text x="394" y="106" class="mono t3" font-size="10.5">une ligne, le temps en abscisse</text><rect x="24" y="138" width="300" height="70" rx="6" class="carte"/><rect x="24" y="138" width="300" height="70" rx="6" class="bord"/><text x="44" y="168" class="h" font-size="13.5">« Qui fait plus que qui ? »</text><text x="44" y="190" class="eti" font-size="10.5">COMPARAISON</text><path d="M332 173 L 364 173" class="vstroke" stroke-width="1.5"/><path d="M358 168 L 366 173 L 358 178 Z" fill="var(--vb)"/><rect x="374" y="138" width="306" height="70" rx="6" class="vfill"/><rect x="374" y="138" width="306" height="70" rx="6" class="bord"/><text x="394" y="168" class="h" font-size="14">barres triées</text><text x="394" y="190" class="mono t3" font-size="10.5">horizontales si les noms sont longs</text><rect x="24" y="222" width="300" height="70" rx="6" class="carte"/><rect x="24" y="222" width="300" height="70" rx="6" class="bord"/><text x="44" y="252" class="h" font-size="13.5">« De quoi c&#x27;est fait ? »</text><text x="44" y="274" class="eti" font-size="10.5">COMPOSITION</text><path d="M332 257 L 364 257" class="vstroke" stroke-width="1.5"/><path d="M358 252 L 366 257 L 358 262 Z" fill="var(--vb)"/><rect x="374" y="222" width="306" height="70" rx="6" class="vfill"/><rect x="374" y="222" width="306" height="70" rx="6" class="bord"/><text x="394" y="252" class="h" font-size="14">barres empilées à 100 %</text><text x="394" y="274" class="mono t3" font-size="10.5">jamais un camembert au-delà de 3 parts</text><rect x="24" y="306" width="300" height="70" rx="6" class="carte"/><rect x="24" y="306" width="300" height="70" rx="6" class="bord"/><text x="44" y="336" class="h" font-size="13.5">« Est-ce que ça va ensemble ? »</text><text x="44" y="358" class="eti" font-size="10.5">CORRÉLATION</text><path d="M332 341 L 364 341" class="vstroke" stroke-width="1.5"/><path d="M358 336 L 366 341 L 358 346 Z" fill="var(--vb)"/><rect x="374" y="306" width="306" height="70" rx="6" class="vfill"/><rect x="374" y="306" width="306" height="70" rx="6" class="bord"/><text x="394" y="336" class="h" font-size="14">nuage de points</text><text x="394" y="358" class="mono t3" font-size="10.5">deux mesures, un point par individu</text><rect x="24" y="390" width="656" height="58" rx="6" class="vfill"/><rect x="24" y="390" width="656" height="58" rx="6" class="bord"/><text x="44" y="416" class="h" font-size="13.5">La règle, et elle n&#x27;a pas d&#x27;exception</text><text x="44" y="438" class="p" font-size="12.5">On écrit d&#x27;abord la question en français. Le type de graphique en découle.</text></svg>

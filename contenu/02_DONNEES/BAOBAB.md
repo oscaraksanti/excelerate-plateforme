@@ -69,7 +69,7 @@ Thomas est l'avatar de l'apprenant. Il doit avoir une trajectoire visible, et el
 | **M3** | Export CRM issu d'une fusion + 12 fichiers mensuels | 5 000 lignes · 12 fichiers | Doublons, casse, espaces insécables, dates texte, six formats de téléphone |
 | **M4** | Commandes / Livraisons / Factures | 3 × 8 000 lignes | **Clés qui ne concordent pas**, trois devises |
 | **M5** | Ventes détaillées 24 mois | 120 000 lignes | Multi-dimensions |
-| **M6** | Idem + le rapport mensuel actuel, illisible | — | Design et restitution |
+| **M6** | `J06_Synthese_Mensuelle.xlsx` *(434 + 72 lignes, agrégé depuis J05)* + `J06_Rapport_Mensuel_Actuel.xlsx` | 2 fichiers | Design et restitution |
 | **M7** | 12 fichiers mensuels des 6 agences | 12 fichiers hétérogènes | Colonnes qui bougent, tableaux croisés reçus |
 | **M8** | Faits + dimensions + calendrier + taux de change | 6 tables | Modélisation en étoile |
 | **M9** | Business plan de la 7ᵉ agence | — | Hypothèses, scénarios, optimisation |
@@ -159,7 +159,7 @@ Spécifiés au moment de la production de chaque module. Contraintes déjà arr�
   - **le reclassement de Douala au 1er mars 2026** — `Savons` → `Hygiène & entretien`, `Conserves` → `Épicerie sèche`. Mêmes produits, mêmes clients, mêmes prix. Une analyse filtrée sur les six familles historiques affiche **−12,2 %** là où l'agence **progresse de +2,9 %**. 623 248,35 USD sortent des tableaux.
   - **37 références vendues une seule fois** dans l'exercice, exactement.
   - **9 quantités stockées en texte** sur 29 046 lignes — de quoi faire basculer un TCD en « Nombre de ».
-  - CA consolidé de l'exercice : **28 022 927,06 USD**, conforme aux 28 M du fil rouge.
+  - CA consolidé de l'exercice : **28 022 768,30 USD**, conforme aux 28 M du fil rouge. *(Relevé sur le fichier livré ; une première mesure annonçait 28 022 927,06 — elle datait d'avant le rattachement des 37 références en fin de vie aux trois agences du TP.)*
 - **M7** — les 12 fichiers mensuels ont **des colonnes qui changent de place**, et trois d'entre eux sont des tableaux croisés qu'il faut dépivoter
 - **M8** — schéma en étoile : `f_Ventes`, `d_Client`, `d_Produit`, `d_Agence`, `d_Calendrier`, `d_Taux`
 - **M9** — un business plan avec 14 hypothèses, toutes sur une seule feuille, en bleu

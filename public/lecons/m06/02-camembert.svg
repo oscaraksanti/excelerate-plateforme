@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 462" width="704" height="462" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="462" rx="8" class="fond"/><text x="24" y="30" class="eti">Les mêmes huit chiffres, deux fois</text><path d="M150 175 L150.0 79.0 A96 96 0 0 1 245.2 187.6 Z" fill="#4A7EBB" stroke="var(--f)" stroke-width="1.5"/><path d="M150 175 L245.2 187.6 A96 96 0 0 1 160.8 270.4 Z" fill="#C0392B" stroke="var(--f)" stroke-width="1.5"/><path d="M150 175 L160.8 270.4 A96 96 0 0 1 73.0 232.4 Z" fill="#7FA653" stroke="var(--f)" stroke-width="1.5"/><path d="M150 175 L73.0 232.4 A96 96 0 0 1 54.7 163.6 Z" fill="#6E4B9E" stroke="var(--f)" stroke-width="1.5"/><path d="M150 175 L54.7 163.6 A96 96 0 0 1 86.5 103.0 Z" fill="#3E9AA8" stroke="var(--f)" stroke-width="1.5"/><path d="M150 175 L86.5 103.0 A96 96 0 0 1 137.4 79.8 Z" fill="#D98026" stroke="var(--f)" stroke-width="1.5"/><path d="M150 175 L137.4 79.8 A96 96 0 0 1 144.0 79.2 Z" fill="#9BB7DB" stroke="var(--f)" stroke-width="1.5"/><path d="M150 175 L144.0 79.2 A96 96 0 0 1 150.0 79.0 Z" fill="#D88A8A" stroke="var(--f)" stroke-width="1.5"/><text x="150" y="300" class="h" font-size="13" text-anchor="middle">Camembert — 8 parts</text><text x="150" y="322" class="p" font-size="12" text-anchor="middle">Classez Farine, Boissons et Conserves.</text><text x="150" y="342" class="mono rtext" font-size="11.5" text-anchor="middle">Personne n&#x27;y arrive.</text><rect x="426" y="59" width="180.0" height="18" rx="2" fill="#4A7EBB"/><text x="418" y="72" class="p" font-size="12" text-anchor="end">Riz</text><text x="612.0" y="72" class="mono t3" font-size="11">27,1 %</text><rect x="426" y="86" width="140.1" height="18" rx="2" fill="#4A7EBB"/><text x="418" y="99" class="p" font-size="12" text-anchor="end">Huiles</text><text x="572.1476014760148" y="99" class="mono t3" font-size="11">21,1 %</text><rect x="426" y="113" width="110.3" height="18" rx="2" fill="#4A7EBB"/><text x="418" y="126" class="p" font-size="12" text-anchor="end">Farine</text><text x="542.2583025830259" y="126" class="mono t3" font-size="11">16,6 %</text><rect x="426" y="140" width="80.4" height="18" rx="2" fill="#4A7EBB"/><text x="418" y="153" class="p" font-size="12" text-anchor="end">Boissons</text><text x="512.3690036900368" y="153" class="mono t3" font-size="11">12,1 %</text><rect x="426" y="167" width="77.0" height="18" rx="2" fill="#4A7EBB"/><text x="418" y="180" class="p" font-size="12" text-anchor="end">Conserves</text><text x="509.04797047970476" y="180" class="mono t3" font-size="11">11,6 %</text><rect x="426" y="194" width="62.4" height="18" rx="2" fill="#4A7EBB"/><text x="418" y="207" class="p" font-size="12" text-anchor="end">Savons</text><text x="494.43542435424354" y="207" class="mono t3" font-size="11">9,4 %</text><rect x="426" y="221" width="7.3" height="18" rx="2" fill="#4A7EBB"/><text x="418" y="234" class="p" font-size="12" text-anchor="end">Hygiène</text><text x="439.3062730627306" y="234" class="mono t3" font-size="11">1,1 %</text><rect x="426" y="248" width="6.6" height="18" rx="2" fill="#4A7EBB"/><text x="418" y="261" class="p" font-size="12" text-anchor="end">Épicerie</text><text x="438.6420664206642" y="261" class="mono t3" font-size="11">1,0 %</text><text x="330" y="300" class="h" font-size="13">Barres triées — les mêmes données</text><text x="330" y="322" class="p" font-size="12">L&#x27;ordre se lit. Les écarts se mesurent.</text><text x="330" y="342" class="mono vtext" font-size="11.5">Et elles tiennent dans une colonne.</text><rect x="24" y="364" width="656" height="80" rx="6" class="vfill"/><rect x="24" y="364" width="656" height="80" rx="6" class="bord"/><text x="44" y="390" class="h" font-size="13.5">Les deux seuls cas où le camembert est défendable</text><text x="44" y="412" class="p" font-size="12.5">1.  Deux ou trois parts, et l&#x27;une écrase les autres.</text><text x="44" y="432" class="p" font-size="12.5">2.  Une part contre le reste — « 8 % de nos clients font 60 % du CA ».</text></svg>
