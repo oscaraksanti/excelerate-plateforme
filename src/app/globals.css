@@ -425,6 +425,17 @@
     padding: 11px 13px;
     border-bottom: 1px solid var(--bord-2);
   }
+  /* Sur telephone, une formule doit tenir sans qu'on la fasse defiler.
+     Une partie de la promotion suit en replay, sur un ecran de 375 px. */
+  @media (max-width: 640px) {
+    .prose-excel pre {
+      padding: 13px 14px;
+    }
+    .prose-excel pre code {
+      font-size: 0.775rem;
+      line-height: 1.55;
+    }
+  }
   .prose-excel img {
     max-width: 100%;
     height: auto;

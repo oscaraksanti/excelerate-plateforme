@@ -31,6 +31,10 @@ export default async function PageModuleAdmin({
   if (!module) notFound();
   const lecons = await listerLecons(module.id);
   const tps = await listerTps(module.id);
+  const { count: questions } = await supabase
+    .from("questions")
+    .select("id", { count: "exact", head: true })
+    .eq("module_id", module.id);
 
   return (
     <>
@@ -115,6 +119,18 @@ export default async function PageModuleAdmin({
               Créer la leçon
             </button>
           </form>
+        </section>
+
+        <section className="mt-16 border-t-2 border-texte pt-6">
+          <h2 className="titre-l m-0 mb-1 text-[1.5rem]">Le contrôle</h2>
+          <p className="mt-2 mb-5 max-w-[34rem] text-[0.98rem] text-texte-2">
+            Six questions, deux minutes, faites pour être répondues depuis un
+            téléphone. C&apos;est la seule chose qu&apos;on peut faire en
+            replay sans ouvrir Excel.
+          </p>
+          <Link href={`/admin/modules/${module.id}/qcm`} className="bouton-2">
+            {questions ?? 0} question{(questions ?? 0) > 1 ? "s" : ""} — modifier →
+          </Link>
         </section>
 
         <section className="mt-16 border-t-2 border-texte pt-6">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { lireMetriques } from "@/lib/metriques";
 import { lireDirect, formaterDebut } from "@/lib/direct";
+import { statsQcm } from "@/lib/qcm";
 
 export const metadata: Metadata = { title: "Tableau de bord" };
 
@@ -19,6 +20,7 @@ function pourcent(a: number, b: number) {
 export default async function TableauDeBordAdmin() {
   const m = await lireMetriques();
   const direct = await lireDirect();
+  const qcm = (await statsQcm()).filter((q) => q.reponses > 0);
 
   const netEstime =
     m.ventes > 0 ? Math.round(m.ca_brut * 0.9) : 0;
@@ -113,6 +115,43 @@ export default async function TableauDeBordAdmin() {
           ))}
         </ul>
       </section>
+
+      {/* ── Ce qui n'est pas compris ─────────────────────── */}
+      {qcm.length > 0 && (
+        <section className="mb-12">
+          <h2 className="titre-l m-0 mb-1 text-[1.35rem]">Ce qui n&apos;est pas compris</h2>
+          <p className="mt-2 mb-5 max-w-[34rem] text-[0.96rem] text-texte-2">
+            Le taux de réussite au premier essai. Une question ratée par plus
+            de la moitié n&apos;est pas forcément difficile — c&apos;est souvent
+            une leçon à reprendre le soir même.
+          </p>
+          <ul className="m-0 flex list-none flex-col gap-0 border-t border-bord p-0">
+            {[...qcm]
+              .sort((a, b) => (a.reussite ?? 100) - (b.reussite ?? 100))
+              .slice(0, 8)
+              .map((q) => (
+                <li
+                  key={q.question_id}
+                  className="flex items-baseline justify-between gap-4 border-b border-bord-2 py-[13px]"
+                >
+                  <span className="min-w-0 flex-1 text-[0.95rem] text-texte-2">
+                    <span className="font-mono text-[11px] text-texte-3">
+                      M{q.module_numero}.{q.numero}
+                    </span>{" "}
+                    {q.enonce}
+                  </span>
+                  <span
+                    className={`shrink-0 font-mono text-[1.02rem] tabular-nums ${
+                      (q.reussite ?? 100) < 50 ? "text-ko" : "text-texte"
+                    }`}
+                  >
+                    {q.reussite} %
+                  </span>
+                </li>
+              ))}
+          </ul>
+        </section>
+      )}
 
       {/* ── L'état du contenu ────────────────────────────── */}
       <section>

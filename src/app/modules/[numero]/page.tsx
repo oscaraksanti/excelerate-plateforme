@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EnteteApp } from "@/components/entete-app";
+import { Qcm } from "@/components/qcm";
 import { lireModule, sommaireModule, leconsTerminees } from "@/lib/donnees";
 import { listerTps } from "@/lib/tp";
+import { monQcm } from "@/lib/qcm";
 import { formaterDuree } from "@/lib/markdown";
 import { formaterDate } from "@/lib/formats";
 import { profilCourant } from "@/lib/profil";
@@ -30,6 +32,7 @@ export default async function PageModule({ params }: Params) {
   const tps = (await listerTps(module.id)).filter(
     (t) => t.publie || profil.role === "admin",
   );
+  const questions = await monQcm(module.id);
 
   return (
     <>
@@ -164,6 +167,7 @@ export default async function PageModule({ params }: Params) {
             </ol>
           </section>
         )}
+        <Qcm questions={questions} />
       </main>
     </>
   );

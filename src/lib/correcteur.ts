@@ -187,13 +187,23 @@ export function analyser(ref: XLSX.WorkBook, copie: XLSX.WorkBook): Resultat {
       const celluleCopie = feuilleCopie[adresse] as XLSX.CellObject | undefined;
       const fnsRef = fonctions(celluleRef.f);
       const fnsCopie = fonctions(celluleCopie?.f);
-      const okMethode = fnsRef.length > 0 && fnsRef.every((x) => fnsCopie.includes(x));
+
+      // Certaines bonnes reponses n'appellent aucune fonction : « =B5/TauxUSD »
+      // est exactement ce qu'on enseigne — une division qui pointe vers la
+      // cellule de taux nommee. Exiger une fonction la rendrait impossible a
+      // reussir. Dans ce cas, la methode, c'est d'avoir calcule plutot que
+      // d'avoir tape le chiffre : il suffit qu'une formule soit presente.
+      const okMethode =
+        fnsRef.length > 0
+          ? fnsRef.every((x) => fnsCopie.includes(x))
+          : Boolean(celluleCopie?.f);
+
       const okValeur = celluleCopie ? memeValeur(celluleRef.v, celluleCopie.v) : false;
 
       lignes.push({
         genre: "cellule",
         ou: `${nomFeuille}!${adresse}`,
-        attFn: fnsRef.map(fr).join(" · ") || "—",
+        attFn: fnsRef.map(fr).join(" · ") || "une formule",
         renFn: fnsCopie.length
           ? fnsCopie.map(fr).join(" · ")
           : celluleCopie

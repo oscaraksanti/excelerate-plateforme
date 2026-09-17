@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 316" width="720" height="316" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="720" height="316" rx="8" class="fond"/><text x="24" y="30" class="eti">On ne fait jamais confiance à une lecture d'image</text><rect x="24" y="52" width="216" height="128" rx="6" class="carte"/><rect x="24" y="52" width="216" height="128" rx="6" class="bord"/><circle cx="54" cy="82" r="15" class="vfill"/><circle cx="54" cy="82" r="15" class="vstroke" stroke-width="1.5"/><text x="54" y="87" text-anchor="middle" class="mono vtext" font-size="13" font-weight="600">1</text><text x="42" y="124" class="h" font-size="13.5">Le total recalculé tombe-t-il</text><text x="42" y="143" class="h" font-size="13.5">sur le total imprimé ?</text><text x="42" y="168" class="p" font-size="11.5">attrape l'erreur de chiffre</text><rect x="256" y="52" width="216" height="128" rx="6" class="carte"/><rect x="256" y="52" width="216" height="128" rx="6" class="bord"/><circle cx="286" cy="82" r="15" class="vfill"/><circle cx="286" cy="82" r="15" class="vstroke" stroke-width="1.5"/><text x="286" y="87" text-anchor="middle" class="mono vtext" font-size="13" font-weight="600">2</text><text x="274" y="124" class="h" font-size="13.5">Le nombre de lignes</text><text x="274" y="143" class="h" font-size="13.5">correspond-il ?</text><text x="274" y="168" class="p" font-size="11.5">attrape la ligne sautée</text><rect x="488" y="52" width="216" height="128" rx="6" class="carte"/><rect x="488" y="52" width="216" height="128" rx="6" class="bord"/><circle cx="518" cy="82" r="15" class="vfill"/><circle cx="518" cy="82" r="15" class="vstroke" stroke-width="1.5"/><text x="518" y="87" text-anchor="middle" class="mono vtext" font-size="13" font-weight="600">3</text><text x="506" y="124" class="h" font-size="13.5">Un montant est-il</text><text x="506" y="143" class="h" font-size="13.5">aberrant ?</text><text x="506" y="168" class="p" font-size="11.5">attrape la virgule décalée</text><rect x="24" y="200" width="672" height="96" rx="6" class="rfill"/><text x="46" y="228" class="h" font-size="14" fill="var(--r)">Ce qui se passe si on saute l'étape</text><text x="46" y="252" class="p" font-size="12.5">L'IA lit un 8 comme un 3. La facture tombe à 4 949 000 au lieu de 5 659 000.</text><text x="46" y="272" class="p" font-size="12.5">Rien ne clignote. Aucune erreur. Juste 710 000 CDF qui n'existent pas.</text><text x="46" y="290" class="mono t3" font-size="11">Le contrôle, lui, affiche un écart. Il vous le dit avant votre comptable.</text></svg>

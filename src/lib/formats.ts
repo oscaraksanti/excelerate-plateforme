@@ -97,3 +97,32 @@ export function etatDirect(d: Direct, maintenant = Date.now()) {
   if (maintenant <= fin) return "pendant" as const;
   return "termine" as const;
 }
+
+/* ── Le QCM ─────────────────────────────────────────────────────────── */
+
+export type Proposition = { cle: string; texte: string };
+
+export type Genre =
+  | "concept" | "pepite" | "diagnostic" | "outil" | "verif_ia" | "piege";
+
+export type EntreeQcm = {
+  id: string;
+  numero: number;
+  genre: Genre;
+  enonce: string;
+  propositions: Proposition[];
+  mon_choix: string | null;
+  deja_repondu: boolean;
+  bonne: string | null;
+  explication: string | null;
+};
+
+/** Le libelle affiche a cote d'une question. */
+export const GENRES: Record<Genre, string> = {
+  concept: "Concept",
+  pepite: "Pépite",
+  diagnostic: "Diagnostic",
+  outil: "Choix d'outil",
+  verif_ia: "Vérification IA",
+  piege: "Piège",
+};
