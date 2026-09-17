@@ -121,7 +121,7 @@ Une facture **photographiée de travers**, légèrement floue, 14 lignes d'artic
 
 ## `J02_Budget_SABOTE.xlsx` — module 2, leçon 3
 
-Un classeur hérité qui affiche **43 000 USD** de trop. **Cinq anomalies, et cinq seulement :**
+Un classeur hérité dont le contrôle général affiche **4 272 USD** là où le consolidé en vaut **1 928**, et dont le CA total oublie **5 050 000 CDF**. **Cinq anomalies, et cinq seulement :**
 
 | # | L'anomalie | Ce qui la révèle |
 |:--:|---|---|

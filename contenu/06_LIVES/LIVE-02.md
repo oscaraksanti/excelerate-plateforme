@@ -13,7 +13,7 @@
 | **19:00** | 10 min | **Le mur des résultats.** Les captures postées depuis hier. *« Joseph, à Lubumbashi, a converti son fichier de stock hier soir. Voilà sa capture. »* Puis **la question du QCM ratée par 60 %**, réexpliquée en trois minutes. |
 | **19:10** | 20 min | **🔧 Traduire une règle métier.** L'arbre de décision **avant** la formule. La règle de prime de Serge. 💎 La multiplication booléenne. **Et pourquoi `SIERREUR` partout est une faute professionnelle.** |
 | **19:30** | 15 min | **🔧 Le total de contrôle.** `=SOMME(détail)-SOMME(synthèse)`, en rouge si ≠ 0. *« C'est la seule chose de la soirée que vous devez absolument retenir. »* |
-| **19:45** | 30 min | **🔴 LE CLASSEUR SABOTÉ.** 43 000 USD de trop, cinq anomalies, quinze minutes au chrono à l'écran. 💎💎 **`F5 > Différences entre lignes`.** 💎 `Ctrl+[`. On trouve les cinq. **C'est le moment le plus fort des trois soirées.** |
+| **19:45** | 30 min | **🔴 LE CLASSEUR SABOTÉ.** Un consolidé qui double, 5 millions de francs disparus : cinq anomalies, quinze minutes au chrono à l'écran. 💎💎 **`F5 > Différences entre lignes`.** 💎 `Ctrl+[`. On trouve les cinq. **C'est le moment le plus fort des trois soirées.** |
 | **20:15** | 12 min | **🤖 Le Protocole V4.** Les quatre V, affichés. Et l'IA qui suppose silencieusement que les données sont triées : juste sur dix lignes, faux à la onzième. `V2` l'attrape. |
 | **20:27** | 15 min | **🎯 « TON FICHIER À TOI. »** Cette fois, on lance `F5 > Différences entre lignes` sur **leurs** colonnes de totaux. **Quelqu'un va trouver une vraie erreur, en direct.** C'est presque garanti sur trois volontaires. |
 | **20:42** | 8 min | **Le TP 2.** La feuille `AUDIT` : cinq anomalies, cause, impact chiffré, correction. |

@@ -22,7 +22,7 @@ On affiche une règle de prime écrite en quatre phrases ambiguës par un DRH. P
 | Fichier | Contenu |
 |---|---|
 | `J02_Commissions_BAOBAB.xlsx` | Objectifs et réalisations des 42 commerciaux, 6 agences, 3 devises, avec 5 cas limites |
-| `J02_Budget_SABOTE.xlsx` | Un classeur hérité qui affiche un total faux de 43 000 USD. **5 pièges, et cinq seulement.** |
+| `J02_Budget_SABOTE.xlsx` | Le contrôle général y affiche **4 272 USD** pour un consolidé de **1 928**, et le CA total oublie **5 050 000 CDF**. **5 pièges, et cinq seulement.** |
 
 ---
 
@@ -115,7 +115,7 @@ Ajoute un total de contrôle à ton rapport le plus important. S'il n'est pas nu
 # Leçon 2.3 — Réparer un classeur cassé
 ### 🔧 Classique — **la leçon qui donne l'autorité** · 15 min
 
-**Le problème.** On vous remet `J02_Budget_SABOTE.xlsx`. Il affiche un total de 43 000 USD que Nadège juge impossible. Elle vous laisse quinze minutes. Le collègue qui l'a construit est parti il y a deux ans.
+**Le problème.** On vous remet `J02_Budget_SABOTE.xlsx`. Son contrôle général affiche plus du double du consolidé, et son CA total oublie deux agences. Elle vous laisse quinze minutes. Le collègue qui l'a construit est parti il y a deux ans.
 
 **La mission.** Trouver les cinq anomalies, les expliquer, les corriger. Devant elle.
 
