@@ -1,0 +1,87 @@
+{
+ "lignes_total": 120000,
+ "lignes_extrait": 29046,
+ "commandes_extrait": 12108,
+ "ca_total": 12933861.06,
+ "ca_24_mois": 54040527.65,
+ "mois_fort": "2025-12-01",
+ "ca_mois_fort": 1232376.72,
+ "ca_par_mois": {
+  "2025-10-01": 1052875.19,
+  "2025-11-01": 1066080.4,
+  "2025-12-01": 1232376.72,
+  "2026-01-01": 936498.08,
+  "2026-02-01": 898359.32,
+  "2026-03-01": 1081217.66,
+  "2026-04-01": 1126820.38,
+  "2026-05-01": 1074967.47,
+  "2026-06-01": 1063073.27,
+  "2026-07-01": 1110027.92,
+  "2026-08-01": 1200119.98,
+  "2026-09-01": 1091444.67
+ },
+ "var_sept_vs_aout": -0.090554,
+ "progression_agences": {
+  "Abidjan": {
+   "s1": 2403442.18,
+   "s2": 2594680.94,
+   "var": 0.079569
+  },
+  "Dakar": {
+   "s1": 1798033.92,
+   "s2": 1895438.13,
+   "var": 0.054173
+  },
+  "Douala": {
+   "s1": 2065931.27,
+   "s2": 2176334.62,
+   "var": 0.05344
+  }
+ },
+ "agence_top": "Abidjan",
+ "progression_top": 0.079569,
+ "ca_par_famille": {
+  "Riz": 3519520.43,
+  "Huiles": 2628086.67,
+  "Farine": 2080065.15,
+  "Boissons": 1652109.49,
+  "Conserves": 1312603.09,
+  "Savons": 1118227.88,
+  "Hygiène & entretien": 314916.21,
+  "Épicerie sèche": 308332.14
+ },
+ "famille_top": "Riz",
+ "part_famille_top": 0.272117,
+ "clients_distincts": 1607,
+ "panier_moyen": 1068.21,
+ "ca_cumul_s1": 6267407.37,
+ "refs_une_fois": 37,
+ "ca_abidjan": 4998123.12,
+ "ca_abidjan_local": 3044134673.04,
+ "qte_totale": 519888,
+ "ca_par_agence": {
+  "Abidjan": 4998123.12,
+  "Dakar": 3693472.05,
+  "Douala": 4242265.89
+ },
+ "libelles_famille": [
+  "Boissons",
+  "Conserves",
+  "Farine",
+  "Huiles",
+  "Hygiène & entretien",
+  "Riz",
+  "Savons",
+  "Épicerie sèche"
+ ],
+ "clients_au_fichier": 3600,
+ "douala": {
+  "reel_12m": 4242265.89,
+  "reel_12m_precedents": 4121413.14,
+  "variation_reelle": 0.029323,
+  "familles_historiques_12m": 3619017.54,
+  "familles_historiques_precedents": 4121413.14,
+  "variation_apparente": -0.121899,
+  "reclasse": 623248.35
+ }
+}

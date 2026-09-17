@@ -155,7 +155,11 @@ Un classeur hérité dont le contrôle général affiche **4 272 USD** là où l
 Spécifiés au moment de la production de chaque module. Contraintes déjà arrêtées :
 
 - **M4** — les trois fichiers ont des clés qui ne concordent pas : espaces, casse, préfixes, et **8 commandes livrées jamais facturées, pour 84 320 USD**
-- **M5** — 120 000 lignes, ce qui force le tableau structuré et rend le TCD indispensable
+- **M5** — 120 000 lignes sur 24 mois *(oct. 2024 → sept. 2026)*, ce qui force le tableau structuré et rend le TCD indispensable. **Trois faits construits, pas subis :**
+  - **le reclassement de Douala au 1er mars 2026** — `Savons` → `Hygiène & entretien`, `Conserves` → `Épicerie sèche`. Mêmes produits, mêmes clients, mêmes prix. Une analyse filtrée sur les six familles historiques affiche **−12,2 %** là où l'agence **progresse de +2,9 %**. 623 248,35 USD sortent des tableaux.
+  - **37 références vendues une seule fois** dans l'exercice, exactement.
+  - **9 quantités stockées en texte** sur 29 046 lignes — de quoi faire basculer un TCD en « Nombre de ».
+  - CA consolidé de l'exercice : **28 022 927,06 USD**, conforme aux 28 M du fil rouge.
 - **M7** — les 12 fichiers mensuels ont **des colonnes qui changent de place**, et trois d'entre eux sont des tableaux croisés qu'il faut dépivoter
 - **M8** — schéma en étoile : `f_Ventes`, `d_Client`, `d_Produit`, `d_Agence`, `d_Calendrier`, `d_Taux`
 - **M9** — un business plan avec 14 hypothèses, toutes sur une seule feuille, en bleu

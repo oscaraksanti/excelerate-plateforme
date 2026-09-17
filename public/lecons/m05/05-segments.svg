@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 388" width="704" height="388" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="388" rx="8" class="fond"/><text x="24" y="30" class="eti">Ce qui transforme trois tableaux en un tableau de bord</text><rect x="24" y="58" width="188" height="210" rx="6" class="vfill"/><rect x="24" y="58" width="188" height="210" rx="6" class="bord"/><text x="44" y="84" class="eti" font-size="10.5">SEGMENT</text><text x="44" y="108" class="h" font-size="14">Agence</text><rect x="44" y="128" width="148" height="28" rx="4" class="vstroke" stroke-width="2" fill="var(--c)"/><text x="58" y="147" class="mono vtext" font-size="12">Abidjan</text><rect x="44" y="166" width="148" height="28" rx="4" class="bord2" stroke-width="1" fill="var(--c)"/><text x="58" y="185" class="mono t3" font-size="12">Dakar</text><rect x="44" y="204" width="148" height="28" rx="4" class="bord2" stroke-width="1" fill="var(--c)"/><text x="58" y="223" class="mono t3" font-size="12">Douala</text><path d="M212 163 C 272 163, 272 86, 332 86" class="vstroke" stroke-width="1.5" fill="none"/><rect x="332" y="58" width="348" height="56" rx="6" class="carte"/><rect x="332" y="58" width="348" height="56" rx="6" class="bord"/><text x="352" y="82" class="h" font-size="13">TCD 1 — CA par mois</text><text x="352" y="102" class="mono t3" font-size="11">filtré sur Abidjan, sans y toucher</text><path d="M212 163 C 272 163, 272 158, 332 158" class="vstroke" stroke-width="1.5" fill="none"/><rect x="332" y="130" width="348" height="56" rx="6" class="carte"/><rect x="332" y="130" width="348" height="56" rx="6" class="bord"/><text x="352" y="154" class="h" font-size="13">TCD 2 — CA par famille</text><text x="352" y="174" class="mono t3" font-size="11">filtré sur Abidjan, sans y toucher</text><path d="M212 163 C 272 163, 272 230, 332 230" class="vstroke" stroke-width="1.5" fill="none"/><rect x="332" y="202" width="348" height="56" rx="6" class="carte"/><rect x="332" y="202" width="348" height="56" rx="6" class="bord"/><text x="352" y="226" class="h" font-size="13">TCD 3 — Clients servis</text><text x="352" y="246" class="mono t3" font-size="11">filtré sur Abidjan, sans y toucher</text><rect x="24" y="288" width="656" height="78" rx="6" class="vfill"/><text x="44" y="314" class="h" font-size="13.5">Le geste qui manque à presque tout le monde</text><text x="44" y="338" class="mono t" font-size="11.5">Clic droit sur le segment  →  Connexions de rapport  →  cocher les trois TCD.</text><text x="44" y="358" class="p" font-size="12.5">Un clic pilote désormais toute la page.</text></svg>

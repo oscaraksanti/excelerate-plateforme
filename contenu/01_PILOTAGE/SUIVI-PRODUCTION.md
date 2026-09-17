@@ -72,12 +72,12 @@
 
 | Leçon | CL | SC | TO | MO | YT | AD |
 |---|:--:|:--:|:--:|:--:|:--:|:--:|
-| 5.1 🔧 Le TCD de A à Z | □ | □ | □ | □ | □ | □ |
-| 5.2 🔧 Le TCD de niveau professionnel | □ | □ | □ | □ | □ | □ |
-| 5.3 🔧 Ce qui complète le TCD | □ | □ | □ | □ | □ | □ |
-| 5.4 🤖 De la question métier au bon TCD | □ | □ | □ | □ | □ | □ |
-| 5.5 🤖 Interroger ses données en langage naturel | □ | □ | □ | □ | □ | □ |
-| **TP 5** · **QCM M5** | □ | □ | | | | □ |
+| 5.1 🔧 Le TCD de A à Z | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| 5.2 🔧 Le TCD de niveau professionnel | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| 5.3 🔧 Ce qui complète le TCD | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| 5.4 🤖 De la question métier au bon TCD | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| 5.5 🤖 Interroger ses données en langage naturel | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| **TP 5** · **QCM M5** | ✅ | ✅ | | | | ✅ |
 
 ## 🔒 MODULE 6 — à tourner **jeu. 24 / ven. 25** · publié mer. 30
 
@@ -125,7 +125,7 @@
 | `J03_CRM_Fusion.xlsx` | 5 000 | M3 | □ |
 | `J03_Ventes_12_mois/` | 12 fichiers | M3 L2 | □ |
 | `J04_Commandes/Livraisons/Factures` | 3 × 8 000 | M4 | □ |
-| `J05_Ventes_24_mois.xlsx` | 120 000 | M5 | □ |
+| `J05_Ventes_24_mois.xlsx` | 120 000 | M5 | ✅ 8,3 Mo |
 | `J07_Agences_mensuel/` | 12 fichiers | M7 | □ |
 | `J08_Modele/` | 6 tables | M8 | □ |
 | `J09_BusinessPlan_7e_agence.xlsx` | — | M9 | □ |

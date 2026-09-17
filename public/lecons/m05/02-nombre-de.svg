@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 428" width="704" height="428" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="428" rx="8" class="fond"/><text x="24" y="30" class="eti">Une seule cellule en texte, et la somme disparaît</text><text x="24" y="58" class="h" font-size="13.5">La colonne Quantite</text><rect x="24" y="74" width="280" height="182" rx="3" class="carte"/><rect x="24" y="74" width="280" height="26" rx="3" class="vfill"/><text x="33" y="91.0" class="mono" font-size="10.5" fill="var(--t2)">N_Commande</text><text x="173" y="91.0" class="mono" font-size="10.5" fill="var(--t2)">Quantite</text><line x1="24" y1="74" x2="304" y2="74" class="bord2"/><line x1="24" y1="100" x2="304" y2="100" class="bord2"/><line x1="24" y1="126" x2="304" y2="126" class="bord2"/><line x1="24" y1="152" x2="304" y2="152" class="bord2"/><line x1="24" y1="178" x2="304" y2="178" class="bord2"/><line x1="24" y1="204" x2="304" y2="204" class="bord2"/><line x1="24" y1="230" x2="304" y2="230" class="bord2"/><line x1="24" y1="256" x2="304" y2="256" class="bord2"/><line x1="24" y1="74" x2="24" y2="256" class="bord2"/><line x1="164" y1="74" x2="164" y2="256" class="bord2"/><line x1="304" y1="74" x2="304" y2="256" class="bord2"/><rect x="164" y="152" width="140" height="26" class="vstroke" stroke-width="2" rx="2"/><text x="33" y="117.0" class="mono t3" font-size="11">CMD-ABJ-041</text><text x="173" y="117.0" class="mono t" font-size="11">18</text><text x="33" y="143.0" class="mono t3" font-size="11">CMD-ABJ-042</text><text x="173" y="143.0" class="mono t" font-size="11">7</text><text x="33" y="169.0" class="mono t3" font-size="11">CMD-DKR-118</text><text x="173" y="169.0" class="mono rtext" font-size="11">24</text><text x="33" y="195.0" class="mono t3" font-size="11">CMD-DLA-220</text><text x="173" y="195.0" class="mono t" font-size="11">12</text><text x="33" y="221.0" class="mono t3" font-size="11">CMD-ABJ-044</text><text x="173" y="221.0" class="mono t" font-size="11">31</text><text x="33" y="247.0" class="mono t3" font-size="11">CMD-DKR-119</text><text x="173" y="247.0" class="mono t" font-size="11">9</text><rect x="24" y="74" width="280" height="182" rx="3" class="bord"/><text x="24" y="288" class="p" font-size="12">La troisième est alignée à gauche : c’est du texte.</text><text x="24" y="308" class="mono t3" font-size="11">Rien ne la distingue autrement. Aucune alerte.</text><rect x="360" y="74" width="320" height="100" rx="6" class="rfill"/><rect x="360" y="74" width="320" height="100" rx="6" class="bord"/><text x="380" y="100" class="eti" font-size="10.5">Ce que le TCD affiche</text><text x="380" y="128" class="mono rtext" font-size="13" font-weight="600">Nombre de Quantite</text><text x="380" y="154" class="mono rtext" font-size="20" font-weight="600">29 046</text><rect x="360" y="190" width="320" height="100" rx="6" class="vfill"/><rect x="360" y="190" width="320" height="100" rx="6" class="bord"/><text x="380" y="216" class="eti" font-size="10.5">Ce qu’on attendait</text><text x="380" y="244" class="mono vtext" font-size="13" font-weight="600">Somme de Quantite</text><text x="380" y="270" class="mono vtext" font-size="20" font-weight="600">519 888</text><rect x="24" y="330" width="656" height="78" rx="6" class="vfill"/><text x="44" y="356" class="h" font-size="13.5">La cause, toujours la même</text><text x="44" y="380" class="p" font-size="12.5">Une seule valeur en texte dans la colonne, et Excel bascule l’agrégation en Nombre.</text><text x="44" y="400" class="mono t3" font-size="11">Contrôle : =NBVAL(colonne)-NB(colonne). Il doit valoir 0.</text></svg>

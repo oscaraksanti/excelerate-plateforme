@@ -129,3 +129,46 @@ Cases à cocher, **jamais d'appréciation libre**. Chaque critère est noté *ab
 - [ ] Les valeurs attendues sont écrites dans l'énoncé PDF
 
 > **Le test « le corrigé se note 20/20 » est le seul qui compte.** Il attrape tout : la feuille mal nommée, la formule non recalculée, la matricielle mal posée.
+
+---
+
+# 5. Écrire des formules dans un fichier qu'Excel n'a pas créé
+
+Un `.xlsx` fabriqué par script stocke les formules **en anglais**, avec des virgules pour séparateurs. Excel les retraduit à l'ouverture. Trois pièges s'accumulent là, et chacun a coûté une itération complète.
+
+## Le préfixe `_xlfn.`
+
+Toute fonction absente de la spécification OOXML d'origine doit être écrite **préfixée**, sinon Excel affiche `#NOM?` :
+
+```
+_xlfn.UNIQUE      _xlfn.XLOOKUP     _xlfn.TEXTJOIN
+_xlfn.TAKE        _xlfn.LET         _xlfn.CHOOSECOLS
+_xlfn.UNICHAR     _xlfn.UNICODE     _xlfn.AGGREGATE
+_xlfn._xlws.FILTER                  _xlfn._xlws.SORT
+```
+
+> 🔴 **`AGGREGATE` est dans cette liste, et ce n'est pas intuitif** — la fonction date de 2010. Écrite `AGGREGATE(...)`, elle rend `#NOM?` ; écrite `_xlfn.AGGREGATE(...)`, elle marche. *Trouvé en fabriquant `M05_L03_CORRIGE.xlsx`.* `SUBTOTAL`, du même âge, n'a **pas** besoin du préfixe.
+
+Le correcteur retire ces préfixes avant de comparer : ils n'ont aucun effet sur la notation.
+
+## Le nom d'un tableau, seul, ne se référence pas toujours
+
+```
+=ROWS(t_Ventes)              →  #NOM?
+=ROWS(t_Ventes[Date_Vente])  →  29 046
+```
+
+Une référence structurée avec spécificateur de colonne fonctionne toujours. Le nom nu, non. **Toujours nommer une colonne.**
+
+## L'intersection implicite
+
+Une formule écrite hors d'Excel n'emporte pas les métadonnées de matrice dynamique. Excel lui applique alors `@` et réduit silencieusement un tableau à une seule cellule :
+
+| Ce qu'on écrit | Ce qu'on obtient |
+|---|---|
+| `=MAX(ABS(plage))` | **0** — un nombre faux, pas une erreur |
+| `=XLOOKUP(plage;…)` | la première valeur seulement |
+
+La parade est toujours la même : **une fonction qui attend un tableau par nature.** `SOMMEPROD` et les doubles agrégats (`=MAX(MAX(p);-MIN(p))`) ne sont jamais touchés.
+
+> **Le test qui tranche :** recalculer le corrigé avec `outils/recalculer-excel.sh`, relire les valeurs mises en cache, et les comparer une à une aux références Python. Une formule fausse par intersection implicite ne se voit **que** comme ça — elle ne lève aucune erreur.

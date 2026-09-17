@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 478" width="704" height="478" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="478" rx="8" class="fond"/><text x="24" y="30" class="eti">420 lignes, 5 masquées à la main, 3 marges en #DIV/0!</text><text x="24" y="58" class="h" font-size="13.5">Sur la colonne des montants — qui suit quoi</text><rect x="24" y="76" width="656" height="30" rx="4" class="vfill"/><text x="40" y="96" class="eti" font-size="10.5">Formule</text><text x="300" y="96" class="eti" font-size="10.5">Résultat</text><text x="452" y="96" class="eti" font-size="10.5">le filtre</text><text x="568" y="96" class="eti" font-size="10.5">le masquage</text><line x1="24" y1="138" x2="680" y2="138" class="bord2"/><text x="40" y="127" class="mono t3" font-size="12">=SOMME(plage)</text><text x="300" y="127" class="mono t3" font-size="12">199 773,06</text><text x="452" y="127" class="mono rtext" font-size="12">non</text><text x="568" y="127" class="mono rtext" font-size="12">non</text><line x1="24" y1="170" x2="680" y2="170" class="bord2"/><text x="40" y="159" class="mono t3" font-size="12">=SOUS.TOTAL(9;plage)</text><text x="300" y="159" class="mono t3" font-size="12">199 773,06</text><text x="452" y="159" class="mono vtext" font-size="12">oui</text><text x="568" y="159" class="mono rtext" font-size="12">non</text><line x1="24" y1="202" x2="680" y2="202" class="bord2"/><text x="40" y="191" class="mono vtext" font-size="12">=SOUS.TOTAL(109;plage)</text><text x="300" y="191" class="mono vtext" font-size="12">198 319,07</text><text x="452" y="191" class="mono vtext" font-size="12">oui</text><text x="568" y="191" class="mono vtext" font-size="12">oui</text><line x1="24" y1="234" x2="680" y2="234" class="bord2"/><text x="40" y="223" class="mono vtext" font-size="12">=AGREGAT(9;5;plage)</text><text x="300" y="223" class="mono vtext" font-size="12">198 319,07</text><text x="452" y="223" class="mono vtext" font-size="12">oui</text><text x="568" y="223" class="mono vtext" font-size="12">oui</text><text x="24" y="252" class="h" font-size="13.5">Sur la colonne des marges, qui contient trois erreurs</text><line x1="24" y1="302" x2="680" y2="302" class="bord2"/><text x="40" y="292" class="mono rtext" font-size="12">=SOMME(marges)</text><text x="300" y="292" class="mono rtext" font-size="12">#DIV/0!</text><line x1="24" y1="332" x2="680" y2="332" class="bord2"/><text x="40" y="322" class="mono rtext" font-size="12">=MOYENNE(marges)</text><text x="300" y="322" class="mono rtext" font-size="12">#DIV/0!</text><line x1="24" y1="362" x2="680" y2="362" class="bord2"/><text x="40" y="352" class="mono vtext" font-size="12">=AGREGAT(1;6;marges)</text><text x="300" y="352" class="mono vtext" font-size="12">34,87 %</text><line x1="24" y1="392" x2="680" y2="392" class="bord2"/><text x="40" y="382" class="mono vtext" font-size="12">=AGREGAT(1;7;marges)</text><text x="300" y="382" class="mono vtext" font-size="12">34,91 %</text><text x="452" y="352" class="mono t3" font-size="11">6 = ignorer les erreurs</text><text x="452" y="382" class="mono t3" font-size="11">7 = les erreurs ET le masquage</text><rect x="24" y="404" width="656" height="52" rx="6" class="vfill"/><text x="44" y="434" class="p" font-size="12.5">Aucune fonction classique ne survit à une erreur dans la plage. AGREGAT, si.</text></svg>
