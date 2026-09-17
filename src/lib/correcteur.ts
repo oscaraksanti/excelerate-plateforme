@@ -39,6 +39,15 @@ const FR: Record<string, string> = {
   XOR: "OUX", ABS: "ABS", INT: "ENT", MOD: "MOD", RANK: "RANG",
   TAKE: "PRENDRE", DROP: "EXCLURE", HSTACK: "ASSEMB.H", VSTACK: "ASSEMB.V",
   CHOOSECOLS: "CHOISIRCOLS", CHOOSEROWS: "CHOISIRLIGNES",
+  // Les fonctions financières et d'audit (module 9).
+  NPV: "VAN", IRR: "TRI", XIRR: "TRI.PAIEMENTS", MIRR: "TRIM", XNPV: "VAN.PAIEMENTS",
+  PMT: "VPM", PV: "VA", FV: "VC", NPER: "NPM", RATE: "TAUX",
+  IPMT: "INTPER", PPMT: "PRINCPER", CUMIPMT: "CUMUL.INTER", CUMPRINC: "CUMUL.PRINCPER",
+  SLN: "AMORLIN", DB: "DB", DDB: "DDB", VDB: "VDB",
+  ISFORMULA: "ESTFORMULE", FORMULATEXT: "FORMULETEXTE", CELL: "CELLULE",
+  POWER: "PUISSANCE", CEILING: "PLAFOND", FLOOR: "PLANCHER", TRUNC: "TRONQUE",
+  PRODUCT: "PRODUIT", SIGN: "SIGNE", OFFSET: "DECALER", INDIRECT: "INDIRECT",
+  TRANSPOSE: "TRANSPOSE", CHOOSE: "CHOISIR",
   // Les fonctions de cube, qui lisent le modèle de données (module 8).
   CUBEVALUE: "CUBEVALEUR", CUBEMEMBER: "MEMBRECUBE", CUBESET: "JEUCUBE",
   CUBESETCOUNT: "NBJEUCUBE", CUBERANKEDMEMBER: "RANGMEMBRECUBE",
@@ -151,8 +160,60 @@ function afficher(v: unknown): string | number | boolean | null {
 }
 
 /** Compare une copie au corrige et rend la grille detaillee. */
+/* ──────────────────────────────────────────────────────────────────
+   Les zones de construction libre.
+
+   Une plage nommee « LIBRE_… » dans le corrige designe un endroit ou
+   la disposition appartient a l'apprenant : la projection mensuelle
+   d'un business plan, un bloc de scenarios, un tableau d'amortissement.
+   On ne note pas ces cellules une a une — deux modeles justes peuvent
+   ne pas avoir les memes colonnes — mais les reponses qui s'en
+   nourrissent, elles, sont notees normalement. Le nom lui-meme n'est
+   pas exige de la copie : il n'appartient pas a l'enonce.
+
+   Sans ca, un corrige dont le modele fait trois cents cellules pose
+   trois cents questions de disposition et noie les quinze qui comptent.
+   ────────────────────────────────────────────────────────────────── */
+type Zone = { feuille: string; r: XLSX.Range };
+
+function zonesLibres(ref: XLSX.WorkBook): Zone[] {
+  const zones: Zone[] = [];
+  for (const n of ref.Workbook?.Names ?? []) {
+    if (!/^LIBRE_/i.test(n.Name) || !n.Ref) continue;
+    //  « CALCULS!$A$4:$L$29 »  ou  « 'MON ONGLET'!$A$1 »
+    for (const morceau of String(n.Ref).split(",")) {
+      const m = /^(?:'((?:[^']|'')+)'|([^'!]+))!(.+)$/.exec(morceau.trim());
+      if (!m) continue;
+      const feuille = (m[1] ?? "").replace(/''/g, "'") || m[2] || "";
+      try {
+        zones.push({ feuille, r: XLSX.utils.decode_range(m[3].replace(/\$/g, "")) });
+      } catch {
+        /* une reference cassee n'exclut rien */
+      }
+    }
+  }
+  return zones;
+}
+
+function dansZone(zones: Zone[], feuille: string, adresse: string): boolean {
+  if (!zones.length) return false;
+  let c: XLSX.CellAddress;
+  try {
+    c = XLSX.utils.decode_cell(adresse);
+  } catch {
+    return false;
+  }
+  return zones.some(
+    (z) =>
+      z.feuille === feuille &&
+      c.r >= z.r.s.r && c.r <= z.r.e.r &&
+      c.c >= z.r.s.c && c.c <= z.r.e.c,
+  );
+}
+
 export function analyser(ref: XLSX.WorkBook, copie: XLSX.WorkBook): Resultat {
   const lignes: LigneGrille[] = [];
+  const libres = zonesLibres(ref);
 
   // 1. Les feuilles attendues
   for (const nom of ref.SheetNames) {
@@ -171,7 +232,7 @@ export function analyser(ref: XLSX.WorkBook, copie: XLSX.WorkBook): Resultat {
     (copie.Workbook?.Names ?? []).map((n) => normaliserTexte(n.Name)),
   );
   for (const n of ref.Workbook?.Names ?? []) {
-    if (/^_xlnm\./i.test(n.Name)) continue;
+    if (/^_xlnm\./i.test(n.Name) || /^LIBRE_/i.test(n.Name)) continue;
     const present = nomsCopie.has(normaliserTexte(n.Name));
     lignes.push({
       genre: "nom", ou: `Plage nommée « ${n.Name} »`,
@@ -191,6 +252,7 @@ export function analyser(ref: XLSX.WorkBook, copie: XLSX.WorkBook): Resultat {
       if (adresse.startsWith("!")) continue;
       const celluleRef = feuilleRef[adresse] as XLSX.CellObject | undefined;
       if (!celluleRef?.f) continue;
+      if (dansZone(libres, nomFeuille, adresse)) continue;
 
       const celluleCopie = feuilleCopie[adresse] as XLSX.CellObject | undefined;
       const fnsRef = fonctions(celluleRef.f);

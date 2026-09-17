@@ -1,5 +1,9 @@
-# MODULE 9 — Décider : simulation, finance & modèle professionnel
-## 🔒 Payant · publié **samedi 3 octobre** · à tourner **mer. 30 / jeu. 1er oct.**
+# MODULE 9 — « La question d'après »
+### *Décider : simulation, finance & modèle professionnel*
+## 🔒 Payant · **en ligne** · publié **samedi 3 octobre** · à tourner **mer. 30 / jeu. 1er oct.**
+
+> **Livré.** 5 leçons *(46 325 caractères)* · 8 schémas · 4 classeurs · 3 fichiers de méthode · TP noté **20/20** · 7 questions de QCM.
+> **Aucune limite de plateforme sur ce module** — tout se fait sur Mac comme sur Windows, contrairement au module 8.
 
 > **Promesse :** *Vous construirez un modèle de décision qu'un auditeur validera, et vous répondrez à des questions que personne ne vous avait encore posées.*
 >

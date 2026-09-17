@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 434" width="704" height="434" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="434" rx="8" class="fond"/><style>.c-bl{fill:#1d4ed8}.c-no{fill:#101418}.c-ve{fill:#15803d}.c-ro{fill:#c0392b}.r-bl{fill:#1d4ed8}.r-no{fill:#101418}.r-ve{fill:#15803d}.r-ro{fill:#c0392b}@media (prefers-color-scheme: dark){.c-bl{fill:#8ab4ff}.c-no{fill:#eef1f5}.c-ve{fill:#5fd68f}.c-ro{fill:#f87171}.r-bl{fill:#3b6fd4}.r-no{fill:#c8ced8}.r-ve{fill:#2f9e5d}.r-ro{fill:#d05c56}}</style><text x="24" y="30" class="eti">Valeur cible — la question posée à l’envers</text><rect x="24" y="50" width="316" height="176" rx="6" class="carte"/><rect x="24" y="50" width="316" height="176" rx="6" class="bord"/><text x="44" y="78" class="h" font-size="14">La formule va dans ce sens</text><text x="44" y="112" class="mono t2" font-size="12.5">prix</text><text x="120" y="112" class="mono t3" font-size="14">→</text><text x="152" y="112" class="mono t2" font-size="12.5">marge</text><text x="44" y="148" class="p" font-size="12">On change le prix, on regarde la marge bouger.</text><text x="44" y="172" class="p" font-size="12">C’est ce qu’Excel fait naturellement.</text><text x="44" y="204" class="mono t3" font-size="12">Et on tâtonne.</text><rect x="364" y="50" width="316" height="176" rx="6" class="vfill"/><rect x="364" y="50" width="316" height="176" rx="6" class="bord"/><text x="384" y="78" class="h" font-size="14">Valeur cible le retourne</text><text x="384" y="112" class="mono vtext" font-size="12.5">marge = 15 %</text><text x="520" y="112" class="mono t3" font-size="14">→</text><text x="552" y="112" class="mono vtext" font-size="12.5">prix ?</text><text x="384" y="148" class="p" font-size="12">On fixe le résultat, Excel trouve la saisie.</text><text x="384" y="172" class="p" font-size="12">Une itération, quelques millisecondes.</text><text x="384" y="204" class="mono vtext" font-size="12.5">16,04 USD.</text><rect x="24" y="244" width="656" height="96" rx="6" class="carte"/><rect x="24" y="244" width="656" height="96" rx="6" class="bord"/><text x="44" y="270" class="h" font-size="13.5">Les trois champs, dans cet ordre</text><text x="44" y="296" class="mono t2" font-size="11.5">Cellule à définir  =  celle qui porte la FORMULE  ·  Valeur à atteindre  =  le résultat voulu</text><text x="44" y="318" class="mono t2" font-size="11.5">Cellule à modifier  =  une SAISIE, jamais une formule — sinon Excel refuse</text><rect x="24" y="356" width="656" height="58" rx="6" class="rfill"/><rect x="24" y="356" width="656" height="58" rx="6" class="bord"/><text x="44" y="382" class="p" font-size="12.5">Valeur cible ne déplace qu’UNE cellule. Pour en faire bouger plusieurs sous contraintes :</text><text x="44" y="402" class="p" font-size="12.5">c’est le Solveur, et c’est la leçon suivante.</text></svg>

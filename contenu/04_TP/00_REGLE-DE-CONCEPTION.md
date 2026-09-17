@@ -37,6 +37,23 @@ Un corrigé dont la feuille `Caisse` contient une colonne calculée de 60 lignes
 **④ Les feuilles et les plages nommées rapportent des points gratuits.**
 Exiger `README`, `QUALITE`, `ANNEXE_IA` dans le corrigé donne 3 points structurels faciles. C'est un bon filet : personne ne repart à zéro.
 
+**⑤ Une plage nommée `LIBRE_…` retire ses cellules de la notation.**
+
+Certaines feuilles sont des **constructions libres** : la projection mensuelle d'un business plan, un bloc de scénarios, un tableau d'amortissement. Deux modèles justes n'y ont pas les mêmes colonnes — et noter cellule par cellule reviendrait à noter la *disposition*, pas le résultat.
+
+Une plage nommée dont le nom commence par `LIBRE_` marque cette zone dans le corrigé :
+
+```
+LIBRE_CALCULS   →  CALCULS!$A$1:$M$30
+LIBRE_ANALYSE   →  ANALYSE!$A$1:$U$60
+```
+
+Ses cellules ne sont plus notées une à une, et **le nom lui-même n'est pas exigé de la copie** — il n'appartient pas à l'énoncé. Tout le reste est inchangé : la feuille rapporte toujours son point de présence, et les réponses qui se nourrissent de la zone sont notées normalement.
+
+> **Sans ça, le corrigé du TP 9 posait 300 questions de disposition et noyait les 26 qui comptent.** Avec, la grille fait 107 points : 10 feuilles, 29 plages nommées, 34 cellules.
+
+**La contrepartie :** les réponses doivent alors passer par des **plages nommées** que l'apprenant crée lui-même — `F_FLUX`, `F_CUMUL`, `Z_AUDIT` — et non par des adresses. C'est ce qui permet à `REPONSES` de lire n'importe quelle disposition. Ces noms deviennent donc une partie de l'énoncé, et une partie de la note.
+
 ---
 
 # 2. Les six règles de fabrication
@@ -150,6 +167,18 @@ _xlfn._xlws.FILTER                  _xlfn._xlws.SORT
 > 🔴 **`AGGREGATE` est dans cette liste, et ce n'est pas intuitif** — la fonction date de 2010. Écrite `AGGREGATE(...)`, elle rend `#NOM?` ; écrite `_xlfn.AGGREGATE(...)`, elle marche. *Trouvé en fabriquant `M05_L03_CORRIGE.xlsx`.* `SUBTOTAL`, du même âge, n'a **pas** besoin du préfixe.
 
 Le correcteur retire ces préfixes avant de comparer : ils n'ont aucun effet sur la notation.
+
+## 🔴 `_xlfn.LET` empêche Excel d'enregistrer le classeur
+
+Celui-là ne se voit qu'au dernier moment, et il a coûté une demi-heure de bissection.
+
+Une formule `_xlfn.LET(...)` écrite par openpyxl **se calcule parfaitement** : Excel l'ouvre, l'évalue, rend le bon résultat. Puis `save active workbook` échoue avec **« Erreur de paramètre (-50) »**, et le classeur ne peut plus être enregistré — donc le corrigé n'a pas de valeurs mises en cache, donc la machine ne peut rien noter.
+
+*Trouvé en fabriquant `TP09_CORRIGE.xlsx`, isolé par quatre sondes minimales : `LET` seul reproduit la panne ; la table structurée, `ESTFORMULE` et les plages nommées passent toutes.*
+
+> **La règle : jamais de `LET` dans un classeur fabriqué par script.** On écrit la formule développée — plus longue, mais enregistrable. `LET` reste excellent **quand c'est l'apprenant qui le tape dans Excel** : la limite est celle du fichier fabriqué, pas celle de la fonction.
+
+
 
 ## Le nom d'un tableau, seul, ne se référence pas toujours
 
