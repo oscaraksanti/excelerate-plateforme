@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 478" width="704" height="478" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="478" rx="8" class="fond"/><text x="24" y="30" class="eti">Quatre destinations, et trois erreurs de débutant</text><rect x="24" y="54" width="656" height="70" rx="6" class="carte"/><rect x="24" y="54" width="656" height="70" rx="6" class="bord"/><text x="44" y="80" class="h" font-size="13.5">Tableau dans une feuille</text><text x="44" y="102" class="p" font-size="12">jusqu&#x27;à ~500 000 lignes, et encore</text><text x="392" y="102" class="mono t3" font-size="10.5">on voit les données, le fichier grossit</text><rect x="24" y="136" width="656" height="70" rx="6" class="carte"/><rect x="24" y="136" width="656" height="70" rx="6" class="bord"/><text x="44" y="162" class="h" font-size="13.5">Tableau croisé dynamique</text><text x="44" y="184" class="p" font-size="12">quand on ne veut que la synthèse</text><text x="392" y="184" class="mono t3" font-size="10.5">les lignes de détail ne sont jamais écrites</text><rect x="24" y="218" width="656" height="70" rx="6" class="vfill"/><rect x="24" y="218" width="656" height="70" rx="6" class="bord"/><text x="44" y="244" class="h" font-size="13.5">Connexion seule</text><text x="44" y="266" class="p" font-size="12">la requête existe, rien n&#x27;est chargé</text><text x="392" y="266" class="mono t3" font-size="10.5">le cas le plus fréquent</text><rect x="24" y="300" width="656" height="70" rx="6" class="vfill"/><rect x="24" y="300" width="656" height="70" rx="6" class="bord"/><text x="44" y="326" class="h" font-size="13.5">Connexion seule + modèle de données</text><text x="44" y="348" class="p" font-size="12">des millions de lignes, compressées</text><text x="392" y="348" class="mono t3" font-size="10.5">💎 c&#x27;est ça qui ouvre le module 8</text><rect x="24" y="386" width="656" height="74" rx="6" class="rfill"/><rect x="24" y="386" width="656" height="74" rx="6" class="bord"/><text x="44" y="412" class="h" font-size="13.5">L&#x27;erreur qui coûte le plus cher</text><text x="44" y="436" class="p" font-size="12.5">Charger chaque requête intermédiaire dans une feuille. Le fichier passe de 2 à 60 Mo,</text><text x="44" y="454" class="p" font-size="12.5">l&#x27;actualisation de deux secondes à deux minutes.</text></svg>

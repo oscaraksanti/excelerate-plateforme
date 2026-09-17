@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 426" width="704" height="426" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="426" rx="8" class="fond"/><text x="24" y="30" class="eti">L’actualisation qui se raconte elle-même</text><rect x="24" y="52" width="656" height="40" rx="6" class="vfill"/><rect x="24" y="52" width="656" height="40" rx="6" class="bord"/><text x="44" y="77" class="eti" font-size="10.5">Fichier</text><text x="330" y="77" class="eti" font-size="10.5">Lignes</text><text x="430" y="77" class="eti" font-size="10.5">Sans quantité</text><text x="580" y="77" class="eti" font-size="10.5">Statut</text><line x1="24" y1="126" x2="680" y2="126" class="bord2"/><text x="44" y="114" class="mono t" font-size="11.5">Ventes_2025-10.xlsx</text><text x="330" y="114" class="mono t3" font-size="11.5">36</text><text x="430" y="114" class="mono t3" font-size="11.5">0</text><text x="580" y="114" class="mono vtext" font-size="11.5" font-weight="600">PASS</text><line x1="24" y1="160" x2="680" y2="160" class="bord2"/><text x="44" y="148" class="mono t" font-size="11.5">Ventes_2025-11.xlsx</text><text x="330" y="148" class="mono t3" font-size="11.5">36</text><text x="430" y="148" class="mono t3" font-size="11.5">0</text><text x="580" y="148" class="mono vtext" font-size="11.5" font-weight="600">PASS</text><line x1="24" y1="194" x2="680" y2="194" class="bord2"/><text x="44" y="182" class="mono t" font-size="11.5">Ventes_2025-12.xlsx</text><text x="330" y="182" class="mono t3" font-size="11.5">36</text><text x="430" y="182" class="mono t3" font-size="11.5">36</text><text x="580" y="182" class="mono t" font-size="11.5" font-weight="600">WARNING</text><line x1="24" y1="228" x2="680" y2="228" class="bord2"/><text x="44" y="216" class="mono t" font-size="11.5">Ventes_2026-09.csv</text><text x="330" y="216" class="mono t3" font-size="11.5">36</text><text x="430" y="216" class="mono t3" font-size="11.5">0</text><text x="580" y="216" class="mono vtext" font-size="11.5" font-weight="600">PASS</text><line x1="24" y1="262" x2="680" y2="262" class="bord2"/><text x="44" y="250" class="mono t" font-size="11.5">Ventes_2026-10_NOUVEAU.xlsx</text><text x="330" y="250" class="mono t3" font-size="11.5">36</text><text x="430" y="250" class="mono t3" font-size="11.5">0</text><text x="580" y="250" class="mono vtext" font-size="11.5" font-weight="600">PASS</text><line x1="24" y1="296" x2="680" y2="296" class="bord2"/><text x="44" y="284" class="mono t" font-size="11.5">Ventes_2026-11.xlsx</text><text x="330" y="284" class="mono t3" font-size="11.5">0</text><text x="430" y="284" class="mono t3" font-size="11.5">0</text><text x="580" y="284" class="mono rtext" font-size="11.5" font-weight="600">FAIL</text><rect x="24" y="308" width="656" height="100" rx="6" class="carte"/><rect x="24" y="308" width="656" height="100" rx="6" class="bord"/><text x="44" y="334" class="h" font-size="13.5">Ce qu&#x27;elle remplace</text><text x="44" y="358" class="p" font-size="12.5">« Est-ce que l&#x27;actualisation s&#x27;est bien passée ? » — la question qu&#x27;on se pose</text><text x="44" y="378" class="p" font-size="12.5">chaque mois, et à laquelle on répondait en regardant le total.</text><text x="44" y="400" class="mono vtext" font-size="11.5">R_ECART_SOURCE = total du résultat − total des fichiers → 0</text></svg>

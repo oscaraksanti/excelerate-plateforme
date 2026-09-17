@@ -1,4 +1,5 @@
-# MODULE 7 — Power Query en profondeur
+# MODULE 7 — Un clic, tous les mois
+### *Power Query en profondeur*
 ## 🔒 Payant · publié **jeudi 1er octobre** · à tourner **sam. 26 / dim. 27**
 
 > **Promesse :** *Le rapport mensuel qui vous prend trois heures se fera en un clic. Définitivement — y compris le mois où quelqu'un déplace une colonne.*
@@ -56,4 +57,42 @@ Erreur n° 6 de la liste : **elle mélange le M et le DAX.** Deux langages, deux
 Générée en M · année, trimestre, mois, semaine ISO, jour ouvré, jour férié par pays · **la clé de tout le module 8**.
 
 ## 🧪 TP 7 — « Les 12 agences » → `04_TP/TP-07.md`
-## ❓ QCM → `05_QCM/QCM-M07.md`
+## ❓ QCM → `05_QCM/QCM-M07.md` — **7 questions** *(6 prévues + le piège de type date/datetime)*
+
+---
+
+## ✅ État de production — livré le 17 septembre 2026
+
+| | |
+|---|---|
+| Corps des 5 leçons | **55 800 caractères** |
+| Schémas | **8** — `public/lecons/m07/` |
+| Jeu de données | `J07_Agences_mensuel.zip` — **12 fichiers**, 4 formats différents |
+| Le treizième | `Ventes_2026-10_NOUVEAU.xlsx` — colonnes dans un ordre inédit |
+| Code M livré | `M07_L04_EXEMPLES.m` *(8 morceaux)* · `M07_BONUS_CALENDRIER.m` |
+| Code M **non publié** | `M07_REQUETE_COMPLETE.m` — c'est la solution du TP |
+| TP | 15 cellules · 3 plages nommées · 40 points · **corrigé 20/20** · départ 3,5/20 |
+| QCM | 7 questions en ligne |
+
+### Les formats réellement plantés dans les treize fichiers
+
+| Format | Combien | Ce qu'il impose |
+|---|:--:|---|
+| standard | 7 | l'ordre des colonnes change **onze fois sur treize** |
+| titre + ligne vide avant les en-têtes | 2 | sauter jusqu'à la ligne qui contient « Agence » |
+| tableau croisé | 3 | **dépivoter les autres colonnes** · ni quantité ni remise |
+| CSV en Windows-1252 | 1 | l'encodage : 6 responsables, ou 10 |
+
+La colonne `Remise_Pct` apparaît en **mars 2026**, et jamais à la même place.
+
+### Les chiffres du module, figés
+
+| | |
+|---|---|
+| Après ajout du treizième fichier | **13** fichiers · **468** lignes · **13** mois · **6** responsables |
+| Chiffre d'affaires total | **30 398 871,28 USD** |
+| Le mois ajouté | **2 376 101,86 USD** |
+| Lignes sans quantité *(les 3 tableaux croisés)* | **108** |
+| Lignes avec remise | **141** · remises totales **284 114,90 USD** |
+| Kinshasa | **8 254 116,16 USD** |
+| Écart assumé avec le module 6 | **1,12 USD** sur les 12 mois communs — conversion après agrégation |

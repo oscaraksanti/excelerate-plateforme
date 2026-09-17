@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 466" width="704" height="466" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="466" rx="8" class="fond"/><text x="24" y="30" class="eti">Fusionner : six façons, et une seule répond à votre question</text><rect x="24" y="54" width="656" height="56" rx="6" class="vfill"/><rect x="24" y="54" width="656" height="56" rx="6" class="bord"/><circle cx="62" cy="82" r="17" fill="var(--vb)"/><circle cx="62" cy="82" r="17" fill="none" stroke="var(--t3)" stroke-width="1.2"/><circle cx="88" cy="82" r="17" fill="none" stroke="var(--t3)" stroke-width="1.2"/><text x="126" y="78" class="h" font-size="13">Externe gauche</text><text x="126" y="98" class="p" font-size="11.5">tout A, et ce qui concorde dans B</text><text x="392" y="88" class="mono t3" font-size="10.5">le défaut, et le bon 9 fois sur 10</text><rect x="24" y="120" width="656" height="56" rx="6" class="carte"/><rect x="24" y="120" width="656" height="56" rx="6" class="bord"/><circle cx="88" cy="148" r="17" fill="var(--vb)"/><circle cx="62" cy="148" r="17" fill="none" stroke="var(--t3)" stroke-width="1.2"/><circle cx="88" cy="148" r="17" fill="none" stroke="var(--t3)" stroke-width="1.2"/><text x="126" y="144" class="h" font-size="13">Externe droite</text><text x="126" y="164" class="p" font-size="11.5">tout B, et ce qui concorde dans A</text><text x="392" y="154" class="mono t3" font-size="10.5">rare — on inverse les tables plutôt</text><rect x="24" y="186" width="656" height="56" rx="6" class="carte"/><rect x="24" y="186" width="656" height="56" rx="6" class="bord"/><circle cx="62" cy="214" r="17" fill="var(--vb)"/><circle cx="88" cy="214" r="17" fill="var(--vb)"/><circle cx="62" cy="214" r="17" fill="none" stroke="var(--t3)" stroke-width="1.2"/><circle cx="88" cy="214" r="17" fill="none" stroke="var(--t3)" stroke-width="1.2"/><text x="126" y="210" class="h" font-size="13">Externe complète</text><text x="126" y="230" class="p" font-size="11.5">tout A et tout B</text><text x="392" y="220" class="mono t3" font-size="10.5">pour voir les deux côtés des manques</text><rect x="24" y="252" width="656" height="56" rx="6" class="carte"/><rect x="24" y="252" width="656" height="56" rx="6" class="bord"/><defs><clipPath id="ci3"><circle cx="62" cy="280" r="17"/></clipPath></defs><circle cx="88" cy="280" r="17" fill="var(--vb)" clip-path="url(#ci3)"/><circle cx="62" cy="280" r="17" fill="none" stroke="var(--t3)" stroke-width="1.2"/><circle cx="88" cy="280" r="17" fill="none" stroke="var(--t3)" stroke-width="1.2"/><text x="126" y="276" class="h" font-size="13">Interne</text><text x="126" y="296" class="p" font-size="11.5">seulement ce qui concorde</text><text x="392" y="286" class="mono t3" font-size="10.5">attention : elle fait disparaître des lignes</text><rect x="24" y="318" width="656" height="56" rx="6" class="vfill"/><rect x="24" y="318" width="656" height="56" rx="6" class="bord"/><circle cx="62" cy="346" r="17" fill="var(--vb)"/><defs><clipPath id="ca4"><circle cx="62" cy="346" r="17"/></clipPath></defs><circle cx="88" cy="346" r="17" fill="var(--f)" clip-path="url(#ca4)"/><circle cx="62" cy="346" r="17" fill="none" stroke="var(--t3)" stroke-width="1.2"/><circle cx="88" cy="346" r="17" fill="none" stroke="var(--t3)" stroke-width="1.2"/><text x="126" y="342" class="h" font-size="13">Anti gauche</text><text x="126" y="362" class="p" font-size="11.5">ce qui est dans A et PAS dans B</text><text x="392" y="352" class="mono t3" font-size="10.5">💎 la réconciliation du module 4</text><rect x="24" y="384" width="656" height="56" rx="6" class="carte"/><rect x="24" y="384" width="656" height="56" rx="6" class="bord"/><circle cx="88" cy="412" r="17" fill="var(--vb)"/><defs><clipPath id="ca5"><circle cx="88" cy="412" r="17"/></clipPath></defs><circle cx="62" cy="412" r="17" fill="var(--f)" clip-path="url(#ca5)"/><circle cx="62" cy="412" r="17" fill="none" stroke="var(--t3)" stroke-width="1.2"/><circle cx="88" cy="412" r="17" fill="none" stroke="var(--t3)" stroke-width="1.2"/><text x="126" y="408" class="h" font-size="13">Anti droite</text><text x="126" y="428" class="p" font-size="11.5">ce qui est dans B et PAS dans A</text><text x="392" y="418" class="mono t3" font-size="10.5">les orphelins de l&#x27;autre côté</text></svg>

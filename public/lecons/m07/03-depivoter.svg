@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 436" width="704" height="436" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="436" rx="8" class="fond"/><text x="24" y="30" class="eti">Un mot de différence, des années de tranquillité</text><text x="24" y="58" class="h" font-size="13.5">Le tableau croisé reçu</text><rect x="24" y="74" width="650" height="81" rx="3" class="carte"/><rect x="24" y="74" width="650" height="27" rx="3" class="vfill"/><text x="33" y="91.5" class="mono" font-size="10.5" fill="var(--t2)">Agence</text><text x="163" y="91.5" class="mono" font-size="10.5" fill="var(--t2)">Huiles</text><text x="293" y="91.5" class="mono" font-size="10.5" fill="var(--t2)">Riz</text><text x="423" y="91.5" class="mono" font-size="10.5" fill="var(--t2)">Farine</text><text x="553" y="91.5" class="mono" font-size="10.5" fill="var(--t2)">Boissons</text><line x1="24" y1="74" x2="674" y2="74" class="bord2"/><line x1="24" y1="101" x2="674" y2="101" class="bord2"/><line x1="24" y1="128" x2="674" y2="128" class="bord2"/><line x1="24" y1="155" x2="674" y2="155" class="bord2"/><line x1="24" y1="74" x2="24" y2="155" class="bord2"/><line x1="154" y1="74" x2="154" y2="155" class="bord2"/><line x1="284" y1="74" x2="284" y2="155" class="bord2"/><line x1="414" y1="74" x2="414" y2="155" class="bord2"/><line x1="544" y1="74" x2="544" y2="155" class="bord2"/><line x1="674" y1="74" x2="674" y2="155" class="bord2"/><text x="33" y="118.5" class="mono t" font-size="11">Kinshasa</text><text x="163" y="118.5" class="mono t3" font-size="11">133 920</text><text x="293" y="118.5" class="mono t3" font-size="11">199 205</text><text x="423" y="118.5" class="mono t3" font-size="11">101 608</text><text x="553" y="118.5" class="mono t3" font-size="11">71 475</text><text x="33" y="145.5" class="mono t" font-size="11">Abidjan</text><text x="163" y="145.5" class="mono t3" font-size="11">79 622</text><text x="293" y="145.5" class="mono t3" font-size="11">84 901</text><text x="423" y="145.5" class="mono t3" font-size="11">70 310</text><text x="553" y="145.5" class="mono t3" font-size="11">50 163</text><rect x="24" y="74" width="650" height="81" rx="3" class="bord"/><rect x="24" y="188" width="330" height="150" rx="6" class="rfill"/><rect x="24" y="188" width="330" height="150" rx="6" class="bord"/><text x="44" y="214" class="h" font-size="13.5">Dépivoter les colonnes</text><text x="44" y="240" class="p" font-size="12">On sélectionne Huiles, Riz, Farine,</text><text x="44" y="260" class="p" font-size="12">Boissons. Les quatre noms sont</text><text x="44" y="280" class="p" font-size="12">écrits dans le code de l&#x27;étape.</text><text x="44" y="312" class="mono rtext" font-size="11">Une septième famille arrive →</text><text x="44" y="330" class="mono rtext" font-size="11">elle est ignorée. Sans erreur.</text><rect x="374" y="188" width="306" height="150" rx="6" class="vfill"/><rect x="374" y="188" width="306" height="150" rx="6" class="bord"/><text x="394" y="214" class="h" font-size="13.5">Dépivoter les AUTRES colonnes</text><text x="394" y="240" class="p" font-size="12">On sélectionne Agence, et on dit :</text><text x="394" y="260" class="p" font-size="12">« tout le reste est une famille ».</text><text x="394" y="292" class="mono vtext" font-size="11">Une septième famille arrive →</text><text x="394" y="310" class="mono vtext" font-size="11">elle est reprise toute seule.</text><text x="394" y="330" class="mono t3" font-size="10.5">Table.UnpivotOtherColumns</text><rect x="24" y="356" width="656" height="62" rx="6" class="carte"/><rect x="24" y="356" width="656" height="62" rx="6" class="bord"/><text x="44" y="382" class="h" font-size="13.5">La règle générale du module</text><text x="44" y="404" class="p" font-size="12.5">Entre deux étapes qui font la même chose, choisir celle qui nomme le MOINS de colonnes.</text></svg>

@@ -94,12 +94,12 @@
 
 | Leçon | CL | SC | TO | MO | YT | AD |
 |---|:--:|:--:|:--:|:--:|:--:|:--:|
-| 7.1 🔧 Les fondations de Power Query | □ | □ | □ | □ | □ | □ |
-| 7.2 🔧 Les transformations décisives | □ | □ | □ | □ | □ | □ |
-| 7.3 🔧 Des requêtes qui survivent | □ | □ | □ | □ | □ | □ |
-| 7.4 🤖 Écrire et déboguer du langage M | □ | □ | □ | □ | □ | □ |
-| 7.5 🤖 Quand Power Query n'est pas le bon outil | □ | □ | □ | □ | □ | □ |
-| **TP 7** · **QCM M7** | □ | □ | | | | □ |
+| 7.1 🔧 Les fondations de Power Query | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| 7.2 🔧 Les transformations décisives | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| 7.3 🔧 Des requêtes qui survivent | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| 7.4 🤖 Écrire et déboguer du langage M | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| 7.5 🤖 Quand Power Query n'est pas le bon outil | ✅ | ✅ | ✅ | ✅ | □ | ✅ |
+| **TP 7** · **QCM M7** | ✅ | ✅ | | | | ✅ |
 
 ## 🔒 MODULES 8, 9, 10 — à tourner **lun. 28 → sam. 3 oct.**
 

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 458" width="704" height="458" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="458" rx="8" class="fond"/><text x="24" y="30" class="eti">Deux langages, deux moments — l’erreur n° 6 de l’IA</text><rect x="24" y="54" width="330" height="200" rx="6" class="vfill"/><rect x="24" y="54" width="330" height="200" rx="6" class="bord"/><text x="44" y="80" class="h" font-size="15">Le langage M</text><text x="44" y="104" class="eti" font-size="10.5">AVANT le chargement</text><text x="44" y="134" class="p" font-size="12">· il transforme la donnée</text><text x="44" y="157" class="p" font-size="12">· il vit dans l&#x27;éditeur Power Query</text><text x="44" y="180" class="p" font-size="12">· il s&#x27;exécute à l&#x27;actualisation</text><text x="44" y="203" class="p" font-size="12">· sensible à la casse</text><text x="44" y="226" class="p" font-size="12">· Table.SelectColumns, each, let … in</text><rect x="374" y="54" width="306" height="200" rx="6" class="carte"/><rect x="374" y="54" width="306" height="200" rx="6" class="bord"/><text x="394" y="80" class="h" font-size="15">Le langage DAX</text><text x="394" y="104" class="eti" font-size="10.5">APRÈS le chargement</text><text x="394" y="134" class="p" font-size="12">· il calcule sur la donnée</text><text x="394" y="157" class="p" font-size="12">· il vit dans le modèle de données</text><text x="394" y="180" class="p" font-size="12">· il s&#x27;exécute à chaque clic</text><text x="394" y="203" class="p" font-size="12">· insensible à la casse</text><text x="394" y="226" class="p" font-size="12">· CALCULATE, SUMX, RELATED</text><rect x="24" y="272" width="656" height="96" rx="6" class="rfill"/><rect x="24" y="272" width="656" height="96" rx="6" class="bord"/><text x="44" y="298" class="h" font-size="13.5">Ce que l&#x27;IA propose, et qui ne peut pas marcher</text><text x="44" y="322" class="mono rtext" font-size="11.5">= CALCULATE(SUM(Ventes[Montant]) ; Ventes[Agence] = &quot;Kinshasa&quot;)</text><text x="44" y="346" class="p" font-size="12.5">collé dans l&#x27;éditeur Power Query. Le code est refusé avant même de s&#x27;exécuter.</text><rect x="24" y="384" width="656" height="56" rx="6" class="vfill"/><rect x="24" y="384" width="656" height="56" rx="6" class="bord"/><text x="44" y="418" class="p" font-size="12.5">V1 — Version. La question à se poser : « dans quel éditeur est-ce que je colle ça ? »</text></svg>

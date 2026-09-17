@@ -160,7 +160,7 @@ Spécifiés au moment de la production de chaque module. Contraintes déjà arr�
   - **37 références vendues une seule fois** dans l'exercice, exactement.
   - **9 quantités stockées en texte** sur 29 046 lignes — de quoi faire basculer un TCD en « Nombre de ».
   - CA consolidé de l'exercice : **28 022 768,30 USD**, conforme aux 28 M du fil rouge. *(Relevé sur le fichier livré ; une première mesure annonçait 28 022 927,06 — elle datait d'avant le rattachement des 37 références en fin de vie aux trois agences du TP.)*
-- **M7** — les 12 fichiers mensuels ont **des colonnes qui changent de place**, et trois d'entre eux sont des tableaux croisés qu'il faut dépivoter
+- **M7** — `J07_Agences_mensuel/` : les douze fichiers dont la synthèse du module 6 était issue, ré-émis dans **quatre formats différents**. Sept standard *(mais l'ordre des colonnes change onze fois sur treize)*, deux avec un titre et une ligne vide avant les en-têtes, trois en **tableaux croisés** à dépivoter, un **CSV en Windows-1252**. La colonne `Remise_Pct` apparaît en mars 2026. Un **treizième fichier** — octobre 2026 — est fourni à part, dans un ordre de colonnes inédit : c'est l'épreuve de l'actualisation. Total après ajout : **468 lignes, 30 398 871,28 USD**.
 - **M8** — schéma en étoile : `f_Ventes`, `d_Client`, `d_Produit`, `d_Agence`, `d_Calendrier`, `d_Taux`
 - **M9** — un business plan avec 14 hypothèses, toutes sur une seule feuille, en bleu
 - **M10** — 200 classeurs clients au même format, à traiter en lot

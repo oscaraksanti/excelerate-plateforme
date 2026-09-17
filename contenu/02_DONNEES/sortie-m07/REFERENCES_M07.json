@@ -1,0 +1,22 @@
+{
+ "fichiers": 13,
+ "lignes": 468,
+ "mois_distincts": 13,
+ "responsables_distincts": 6,
+ "ca_usd": 30398871.28,
+ "ca_octobre": 2376101.86,
+ "lignes_sans_quantite": 108,
+ "lignes_avec_remise": 141,
+ "ca_kinshasa": 8254116.16,
+ "remises_usd": 284114.9,
+ "ca_par_agence": {
+  "Kinshasa": 8254116.16,
+  "Lubumbashi": 4768178.49,
+  "Abidjan": 5444307.4,
+  "Dakar": 3997178.53,
+  "Douala": 4619045.54,
+  "Libreville": 3316045.16
+ },
+ "local_total": 53408991912.41,
+ "controle_lignes": 13
+}
