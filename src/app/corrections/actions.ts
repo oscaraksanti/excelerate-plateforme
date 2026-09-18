@@ -71,7 +71,7 @@ export async function enregistrerCorrection(
   }
 
   const notes: Record<string, number> = {};
-  let total = 0;
+  let somme = 0;
   for (const c of criteres) {
     const brut = donnees.get(`note_${c.cle}`);
     const n = Number(brut);
@@ -82,8 +82,15 @@ export async function enregistrerCorrection(
       };
     }
     notes[c.cle] = n;
-    total += n;
+    somme += n;
   }
+
+  // Chaque critère se note de 0 à 4. Six critères donnaient donc un
+  // total sur 24, injecté tel quel dans une note finale sur 20 : une
+  // copie exemplaire partout sortait à 21,6/20. On ramène sur 20 ici,
+  // une fois, et le nombre de critères cesse d'avoir un effet sur
+  // l'échelle — ce qui permet au capstone d'en avoir sept.
+  const total = Math.round((somme / (4 * criteres.length)) * 20 * 100) / 100;
 
   if (commentaire.length < 15) {
     return {

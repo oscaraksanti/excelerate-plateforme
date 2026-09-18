@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 704 616" width="704" height="616" role="img"><style>
+  :root{
+    --f:#fbfcfd; --c:#ffffff; --b:#dfe4ea; --b2:#eef1f4;
+    --t:#101418; --t2:#4d5765; --t3:#8a94a3;
+    --v:#1f9d55; --vf:#e6f6ed; --vb:#7ed4a3;
+    --r:#c0392b; --rf:#fdecea;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --f:#11151b; --c:#171c24; --b:#2b3340; --b2:#222834;
+      --t:#eef1f5; --t2:#a8b2c0; --t3:#6c7686;
+      --v:#4ade80; --vf:#13291d; --vb:#2f6b47;
+      --r:#f87171; --rf:#2a1719;
+    }
+  }
+  .fond{fill:var(--f)} .carte{fill:var(--c)} .bord{stroke:var(--b);fill:none}
+  .bord2{stroke:var(--b2);fill:none}
+  text{font-family:'IBM Plex Sans',ui-sans-serif,system-ui,-apple-system,sans-serif}
+  .t{fill:var(--t)} .t2{fill:var(--t2)} .t3{fill:var(--t3)}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace}
+  .eti{font-size:11px;letter-spacing:.11em;text-transform:uppercase;fill:var(--t3);
+       font-family:'IBM Plex Mono',ui-monospace,monospace}
+  .h{font-size:15px;font-weight:600;fill:var(--t)}
+  .p{font-size:13px;fill:var(--t2)}
+  .vfill{fill:var(--vf)} .vstroke{stroke:var(--vb);fill:none} .vtext{fill:var(--v)}
+  .rfill{fill:var(--rf)} .rtext{fill:var(--r)}
+</style><rect width="704" height="616" rx="8" class="fond"/><style>.ok{fill:#15803d}.ko{fill:#c0392b}.bl{fill:#1d4ed8}@media (prefers-color-scheme: dark){.ok{fill:#5fd68f}.ko{fill:#f87171}.bl{fill:#8ab4ff}}</style><text x="24" y="30" class="eti">Le rapprochement, et les quatre seules façons dont deux sources diffèrent</text><rect x="24" y="52" width="316" height="82" rx="6" class="carte"/><rect x="24" y="52" width="316" height="82" rx="6" class="bord"/><text x="44" y="78" class="h" font-size="14">Vue commerciale</text><text x="44" y="100" class="mono t2" font-size="12">9464 factures</text><text x="44" y="122" class="mono bl" font-size="12">14 563 592 USD</text><rect x="364" y="52" width="316" height="82" rx="6" class="carte"/><rect x="364" y="52" width="316" height="82" rx="6" class="bord"/><text x="384" y="78" class="h" font-size="14">Vue comptable</text><text x="384" y="100" class="mono t2" font-size="12">9465 écritures</text><text x="384" y="122" class="mono bl" font-size="12">14 570 785 USD</text><path d="M 340 93 L 364 93" stroke="var(--b)" stroke-width="2"/><rect x="24" y="146" width="656" height="46" rx="6" class="rfill"/><rect x="24" y="146" width="656" height="46" rx="6" class="bord"/><text x="44" y="175" class="h" font-size="13.5">Écart brut   7 193 USD   — et il faut l&#x27;expliquer en entier</text><rect x="24" y="206" width="656" height="56" rx="6" class="carte"/><rect x="24" y="206" width="656" height="56" rx="6" class="bord"/><text x="48" y="240" class="vtext" font-size="17">①</text><text x="80" y="230" class="h" font-size="13.5">Chez A, pas chez B</text><text x="80" y="250" class="p" font-size="11.5">factures sans écriture comptable</text><text x="508" y="240" class="mono t2" font-size="12" text-anchor="end">12</text><text x="656" y="240" class="mono ko" font-size="12" text-anchor="end">-17 589 USD</text><rect x="24" y="268" width="656" height="56" rx="6" class="carte"/><rect x="24" y="268" width="656" height="56" rx="6" class="bord"/><text x="48" y="302" class="vtext" font-size="17">②</text><text x="80" y="292" class="h" font-size="13.5">Chez B, pas chez A</text><text x="80" y="312" class="p" font-size="11.5">régularisations de clôture</text><text x="508" y="302" class="mono t2" font-size="12" text-anchor="end">8</text><text x="656" y="302" class="mono ok" font-size="12" text-anchor="end">20 860 USD</text><rect x="24" y="330" width="656" height="56" rx="6" class="carte"/><rect x="24" y="330" width="656" height="56" rx="6" class="bord"/><text x="48" y="364" class="vtext" font-size="17">③</text><text x="80" y="354" class="h" font-size="13.5">Montants différents</text><text x="80" y="374" class="p" font-size="11.5">remise de fin d&#x27;année saisie d&#x27;un seul côté</text><text x="508" y="364" class="mono t2" font-size="12" text-anchor="end">23</text><text x="656" y="364" class="mono ko" font-size="12" text-anchor="end">-1 912 USD</text><rect x="24" y="392" width="656" height="56" rx="6" class="carte"/><rect x="24" y="392" width="656" height="56" rx="6" class="bord"/><text x="48" y="426" class="vtext" font-size="17">④</text><text x="80" y="416" class="h" font-size="13.5">Doublons</text><text x="80" y="436" class="p" font-size="11.5">la même facture saisie deux fois en comptabilité</text><text x="508" y="426" class="mono t2" font-size="12" text-anchor="end">5</text><text x="656" y="426" class="mono ok" font-size="12" text-anchor="end">5 833 USD</text><rect x="24" y="454" width="656" height="50" rx="6" class="vfill"/><rect x="24" y="454" width="656" height="50" rx="6" class="bord"/><text x="44" y="485" class="h" font-size="13.5">Somme des quatre</text><text x="656" y="485" class="mono ok" font-size="13" text-anchor="end">7 193 USD</text><rect x="24" y="512" width="656" height="74" rx="6" class="carte"/><rect x="24" y="512" width="656" height="74" rx="6" class="bord"/><text x="44" y="540" class="h" font-size="14">R_RECONCILIATION  =  écart brut − somme des quatre  =  0</text><text x="44" y="564" class="p" font-size="12.5">Tant qu&#x27;il ne vaut pas zéro, une cinquième cause existe et vous ne l&#x27;avez pas trouvée.</text></svg>

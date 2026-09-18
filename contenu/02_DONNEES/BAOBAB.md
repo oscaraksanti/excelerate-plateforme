@@ -167,6 +167,8 @@ Spécifiés au moment de la production de chaque module. Contraintes déjà arr�
   > **Un écart assumé et enseigné :** convertir ligne à ligne ou convertir le total donne **0,54 USD** de différence sur le mois. Les deux méthodes sont défendables ; le classeur porte les deux colonnes et le `README` dit laquelle fait foi.
   > **Une divergence avec le module 8, notée ici :** `d_Taux` y fait dériver XOF et XAF indépendamment. C'est techniquement faux — les deux francs CFA sont arrimés à l'euro à la même parité, donc leur taux face au dollar est identique. Le module 10 utilise la même valeur pour les deux, et l'explique. Le module 8 n'a pas été régénéré : ses corrigés sont figés.
 
+- **CAPSTONE** — `CAPSTONE.zip` *(1,78 Mo)* : **21 fichiers**, périmètre **grands comptes**, exercice du 1er octobre 2025 au 30 septembre 2026. **26 637 lignes de facture · 9 464 factures · 9 465 écritures comptables · 600 clients · 54 références · 14 563 592,32 USD.** Quatre formats de ventes différents, trois stocks croisés, cinq CSV comptables aux encodages et formats de date hétérogènes, une facture photographiée. **18 clients portent un défaut de saisie** — espaces insécables, casse, accents perdus — pour qu'on rapproche sur le code et jamais sur le nom.
+  > **Le rapprochement est le cœur de l'épreuve :** écart brut **7 192,74 USD**, expliqué en entier par les quatre familles *(12 · 8 · 23 · 5)*, résidu **exactement nul**. Les deux côtés convertissent par le même chemin — sans quoi le résidu ne serait l'écart de rien.
 ---
 
 # 5. Règles de fabrication des données

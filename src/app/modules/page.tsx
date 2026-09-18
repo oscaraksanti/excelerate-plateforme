@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { EnteteApp } from "@/components/entete-app";
 import { listerModules, sommaireModule, leconsTerminees } from "@/lib/donnees";
+import { listerTps } from "@/lib/tp";
 import { profilCourant } from "@/lib/profil";
 
 export const metadata: Metadata = { title: "Les modules" };
@@ -10,6 +11,11 @@ export default async function PageModules() {
   const profil = await profilCourant();
   const modules = await listerModules();
   const terminees = await leconsTerminees();
+
+  const dernier = modules.find((m) => m.numero === 10);
+  const capstone = dernier
+    ? (await listerTps(dernier.id)).find((t) => t.numero === 2 && t.publie)
+    : undefined;
 
   const avec = await Promise.all(
     modules.map(async (m) => {
@@ -104,6 +110,28 @@ export default async function PageModules() {
               );
             })}
           </ol>
+        )}
+
+        {capstone && dernier && (
+          <section className="mt-14 border-t-2 border-texte pt-6">
+            <p className="etiquette mb-2">Le projet final</p>
+            <h2 className="titre-l m-0 mb-3 text-[clamp(1.4rem,3vw,1.8rem)]">
+              {capstone.titre}
+            </h2>
+            <p className="mb-6 max-w-[34rem] text-[1.01rem] text-texte-2">
+              Vingt et un fichiers, un brief de quatre phrases, et rien
+              d&apos;autre. C&apos;est la condition du certificat{" "}
+              <strong className="font-semibold text-texte">Avancé</strong> :
+              un capstone rendu, trois corrections faites, et une note
+              d&apos;au moins 12 sur 20.
+            </p>
+            <Link
+              href={`/modules/${dernier.numero}/tp/${capstone.id}`}
+              className="bouton"
+            >
+              Ouvrir le capstone
+            </Link>
+          </section>
         )}
       </main>
     </>

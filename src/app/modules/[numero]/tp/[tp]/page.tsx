@@ -101,7 +101,9 @@ export default async function PageTp({ params }: Params) {
         {tp.fichier_depart && (
           <p className="mt-8">
             <a href={adresseRessource(tp.fichier_depart)} download className="bouton-2">
-              Télécharger le classeur de départ
+              {tp.fichier_depart.endsWith(".zip")
+                ? "Télécharger le dossier de travail"
+                : "Télécharger le classeur de départ"}
             </a>
           </p>
         )}
