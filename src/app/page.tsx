@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PiedPage } from "@/components/pied-page";
 import { InscriptionRapide } from "@/components/inscription-rapide";
-import { lireDirect, formaterDebut } from "@/lib/direct";
+import { lireDirectPublic, formaterDebut } from "@/lib/direct";
 
 export const metadata: Metadata = {
   title: "Excelerate IA — Excel augmenté par l'intelligence artificielle",
@@ -115,7 +115,7 @@ const QUESTIONS = [
 ];
 
 export default async function Accueil() {
-  const direct = await lireDirect();
+  const direct = await lireDirectPublic();
 
   return (
     <>
