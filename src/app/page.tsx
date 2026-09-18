@@ -1,43 +1,130 @@
+import type { Metadata } from "next";
+import Link from "next/link";
 import { PiedPage } from "@/components/pied-page";
+import { InscriptionRapide } from "@/components/inscription-rapide";
+import { lireDirect, formaterDebut } from "@/lib/direct";
 
-const LIEN_INSCRIPTION = "https://formations4data.systeme.io/excel-ia-gratuit";
+export const metadata: Metadata = {
+  title: "Excelerate IA — Excel augmenté par l'intelligence artificielle",
+  description:
+    "Onze modules, cinquante leçons, onze travaux pratiques corrigés automatiquement. "
+    + "Les quatre premiers sont gratuits. Par Oscar Aksanti.",
+};
+
 const LIEN_TELEGRAM = "https://t.me/ExcelPowerBiPourEntreprises";
-
 const COLONNES = "ABCDEFGHIJKLMNOPQRSTUVWX".split("");
 
-const SOIREES = [
+/* ── Ce qu'on sait faire après, dit en gestes, pas en fonctions ─── */
+const AVANT_APRES = [
   {
-    jour: "Lundi 21",
     cell: "B4",
-    titre: "Arrêter de se battre avec ses données",
-    contenu:
-      "Les tableaux structurés, RECHERCHEX, et les trois fonctions qu'Excel 2024 a rendues disponibles sans que personne ne le dise : FILTRE, TRIER, UNIQUE.",
+    avant: "Trois heures chaque lundi à produire les mêmes rapports.",
+    apres: "Un clic. Les douze PDF sortent nommés pendant que vous prenez un café.",
+    ou: "Module 10",
   },
   {
-    jour: "Mardi 22",
     cell: "B5",
-    titre: "L'IA comme copilote, pas comme oracle",
-    contenu:
-      "Faire auditer un fichier existant, structurer une demande pour obtenir une formule juste — et reconnaître les cas où l'IA se trompe avec assurance.",
+    avant: "Un chiffre qu'on vous demande d'expliquer, et que vous ne savez pas défendre.",
+    apres: "Une cellule de contrôle qui vaut zéro — vous savez que c'est juste avant de l'envoyer.",
+    ou: "Module 2",
   },
   {
-    jour: "Mercredi 23",
     cell: "B6",
-    titre: "Ce qui tourne tout seul",
-    contenu:
-      "Power Query pour nettoyer une fois pour toutes, LET pour des formules lisibles, et un tableau de bord qui se met à jour sans qu'on y touche.",
+    avant: "Une IA qui vous donne une formule fausse, avec assurance.",
+    apres: "Un protocole en quatre vérifications qui l'attrape en trois minutes.",
+    ou: "Module 2",
+  },
+  {
+    cell: "B7",
+    avant: "1,2 million de lignes qu'une feuille Excel ne peut pas contenir.",
+    apres: "Un modèle de données en étoile, et une réponse en deux secondes.",
+    ou: "Module 8",
   },
 ];
 
-export default function Accueil() {
+/* ── Le programme, tel qu'il est réellement en ligne ────────────── */
+const MODULES = [
+  [0, "Avant de commencer", "Votre version, le fil rouge, les réglages", true],
+  [1, "Reprendre la main sur ses données", "Tableaux structurés, RECHERCHEX, FILTRE", true],
+  [2, "L'IA comme copilote, pas comme oracle", "Le protocole V4, et le total de contrôle", true],
+  [3, "Ce qui tourne tout seul", "Power Query, LET, le premier tableau de bord", true],
+  [4, "Chercher, croiser, réconcilier", "Les quatre familles d'écarts", false],
+  [5, "Six questions, cinq minutes", "Les tableaux croisés, vraiment", false],
+  [6, "Huit secondes", "Le tableau de bord qu'on lit sans explication", false],
+  [7, "Un clic, tous les mois", "Power Query, treize fichiers, quatre formats", false],
+  [8, "Dépasser le million", "Le schéma en étoile et le DAX", false],
+  [9, "La question d'après", "Simulation, VAN, TRI, modèle professionnel", false],
+  [10, "Le lundi matin d'Aïcha", "Macros, livraison, deux cents classeurs", false],
+] as const;
+
+const RYTHME = [
+  ["Cinq leçons", "15 min chacune", "à lire ou à regarder, dans l'ordre"],
+  ["Un QCM", "5 min", "corrigé et expliqué sur-le-champ"],
+  ["Un travail pratique", "60 à 90 min", "un classeur à trous, chaque réponse est une cellule"],
+  ["Le dépôt", "instantané", "la note automatique s'affiche en quelques secondes"],
+  ["Trois corrections", "15 min chacune", "vous corrigez avant de voir votre note finale"],
+];
+
+const CHIFFRES = [
+  ["11", "modules"],
+  ["55", "leçons"],
+  ["11", "TP corrigés automatiquement"],
+  ["81", "schémas"],
+  ["71", "questions"],
+  ["1", "certificat vérifiable"],
+];
+
+const QUESTIONS = [
+  {
+    q: "Je débute vraiment. C'est pour moi ?",
+    r: "Oui, à une condition : commencez par le module 0, qui vous dit exactement où vous en êtes. "
+      + "Et si vous n'avez jamais écrit une formule, ma formation Excel gratuite de dix heures est "
+      + "sur YouTube — plus de 95 000 personnes l'ont suivie. Le module 0 vous dit combien d'heures "
+      + "en faire avant de revenir.",
+  },
+  {
+    q: "Quelle version d'Excel faut-il ?",
+    r: "Excel 2021 suffit pour neuf modules sur dix ; 2024 ou Microsoft 365 est plus confortable. "
+      + "Avec 2016 ou 2019 vous ferez tout, avec INDEX/EQUIV là où j'écris RECHERCHEX — les leçons "
+      + "donnent l'équivalent à chaque fois. La leçon 0.2 contient un test de dix secondes.",
+  },
+  {
+    q: "Je suis sur Mac.",
+    r: "Tout fonctionne, sauf Power Pivot — que Microsoft n'a jamais porté sur macOS. Le module 8 se "
+      + "fait donc sur un poste Windows, ou en observation : la façon de penser se transpose "
+      + "intégralement, et le module 9 n'en dépend pas. C'est écrit en tête du module.",
+  },
+  {
+    q: "Combien de temps par module ?",
+    r: "Environ deux heures, que vous pouvez étaler. Rien n'est chronométré, rien n'expire, et vous "
+      + "pouvez reprendre une leçon six mois plus tard.",
+  },
+  {
+    q: "C'est un abonnement ?",
+    r: "Non. Les quatre premiers modules sont gratuits et le restent. Les sept suivants, le projet "
+      + "final et le certificat coûtent 37 $, une seule fois. Le prix ne monte jamais, et il n'y a "
+      + "rien à reconduire.",
+  },
+  {
+    q: "Le certificat vaut quelque chose ?",
+    r: "Il porte un code unique et une page de vérification publique : quiconque le reçoit confirme "
+      + "en trois secondes qu'il est réel. Et pour le niveau Avancé, il faut avoir rendu le projet "
+      + "final et l'avoir soutenu dix minutes, écran partagé — donc avoir su expliquer chaque cellule "
+      + "de son propre fichier.",
+  },
+];
+
+export default async function Accueil() {
+  const direct = await lireDirect();
+
   return (
     <>
       <div className="trame" aria-hidden="true" />
 
-      <main className="relative z-1 mx-auto max-w-[1000px] px-6 pb-28">
-        {/* Bandeau des lettres de colonnes */}
+      <main className="relative z-1 mx-auto max-w-[1000px] px-6 pb-24">
+        {/* ── Bandeau des lettres de colonnes ───────────────── */}
         <div
-          className="mb-8 flex overflow-hidden border-b border-bord-2 pt-12 font-mono text-[10.5px] tracking-[0.14em] text-texte-3"
+          className="mb-7 flex overflow-hidden border-b border-bord-2 pt-10 font-mono text-[10.5px] tracking-[0.14em] text-texte-3"
           aria-hidden="true"
         >
           {COLONNES.map((c, i) => (
@@ -52,99 +139,366 @@ export default function Accueil() {
           ))}
         </div>
 
-        <div className="etiquette mb-6 flex items-center gap-[10px]">
-          <i className="h-[7px] w-[7px] rounded-full bg-voltage not-italic" />
-          <span>
-            Excelerate IA · <span className="text-texte">Oscar Aksanti</span>
-          </span>
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+          <div className="etiquette flex items-center gap-[10px]">
+            <i className="h-[7px] w-[7px] rounded-full bg-voltage not-italic" />
+            <span>
+              Excelerate IA · <span className="text-texte">Oscar Aksanti</span>
+            </span>
+          </div>
+          <Link
+            href="/connexion"
+            className="font-mono text-[10.5px] tracking-[0.14em] text-texte-3 uppercase hover:text-texte"
+          >
+            Déjà inscrit ? Se connecter →
+          </Link>
         </div>
 
-        <h1 className="titre-xl m-0 mb-6 text-[clamp(2.4rem,6.2vw,4rem)]">
-          Trois soirées
+        {/* ── Le direct, s'il y en a un d'annoncé ───────────── */}
+        {direct.actif && direct.titre && (
+          <p className="mb-8 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-l-[3px] border-[color:var(--plage-bord)] bg-[color:var(--plage-fond)] px-4 py-3 text-[0.95rem]">
+            <span className="etiquette">En direct</span>
+            <strong className="font-semibold">{direct.titre}</strong>
+            <span className="text-texte-2">{formaterDebut(direct.debut_le)}</span>
+          </p>
+        )}
+
+        {/* ── L'accroche ────────────────────────────────────── */}
+        <h1 className="titre-xl m-0 mb-6 max-w-[18ch] text-[clamp(2.5rem,7vw,4.4rem)]">
+          Excel ne vous
           <br />
-          <span className="text-texte-2 [font-variation-settings:'wdth'_104,'wght'_500]">
-            pour changer de niveau.
-          </span>
+          ralentira plus.
         </h1>
 
-        <p className="mb-8 max-w-[34rem] text-[1.16rem] leading-[1.55] text-texte-2">
-          Du <strong className="font-semibold text-texte">21 au 23 septembre</strong>,
-          de 19 h à 21 h. En direct, gratuit, et conçu pour qu'un utilisateur
-          d'Excel de dix ans reparte avec autant qu'un débutant.
+        <p className="mb-8 max-w-[36rem] text-[1.18rem] leading-[1.55] text-texte-2">
+          Onze modules pour passer de{" "}
+          <span className="text-texte">« je sais faire un tableau »</span> à{" "}
+          <strong className="font-semibold text-texte">
+            « je construis un modèle, je le documente, et j&apos;assume chaque
+            chiffre »
+          </strong>{" "}
+          — avec l&apos;IA comme copilote, jamais comme oracle.
         </p>
 
-        <div className="barre-formule mb-12 max-w-[34rem]">
+        <div className="barre-formule mb-10 max-w-[36rem]">
           <span className="ref">A1</span>
           <span className="fx">fx</span>
           <span className="val">
-            =SI(présent_les_3_soirs;{" "}
-            <b className="font-semibold text-accent-texte">&quot;certificat&quot;</b>;
-            &quot;regrets&quot;)
+            =SI(niveau_8;{" "}
+            <b className="font-semibold text-accent-texte">
+              &quot;irremplaçable&quot;
+            </b>
+            ; &quot;remplaçable&quot;)
           </span>
         </div>
 
-        {/* Le programme */}
-        <section className="border-t-2 border-texte pt-4">
-          <h2 className="titre-l m-0 text-[clamp(1.5rem,3vw,1.9rem)]">
-            Le programme
+        <section id="commencer" className="mb-6 scroll-mt-8">
+          <InscriptionRapide />
+        </section>
+
+        <p className="mb-16 max-w-[34rem] text-[0.95rem] text-texte-2">
+          Vous arrivez directement sur la première leçon.{" "}
+          <strong className="font-semibold text-texte">
+            Les quatre premiers modules sont gratuits
+          </strong>{" "}
+          — et ils le restent.
+        </p>
+
+        {/* ── Ce que ça change ──────────────────────────────── */}
+        <section className="border-t-2 border-texte pt-5">
+          <h2 className="titre-l m-0 text-[clamp(1.6rem,3.4vw,2.1rem)]">
+            Ce que vous saurez faire
           </h2>
-          <p className="mt-3 mb-7 max-w-[34rem] text-texte-2">
-            Trois méthodes, pas trois listes de fonctions. Chaque soir se termine
-            par un travail pratique corrigé par tes pairs.
+          <p className="mt-3 mb-8 max-w-[34rem] text-texte-2">
+            Pas une liste de fonctions. Quatre situations que vous vivez déjà.
           </p>
 
           <ol className="m-0 grid list-none gap-0 border-t border-bord p-0">
-            {SOIREES.map((s) => (
+            {AVANT_APRES.map((x) => (
               <li
-                key={s.jour}
-                className="grid grid-cols-1 gap-x-6 gap-y-2 border-b border-bord py-6 sm:grid-cols-[104px_minmax(0,1fr)]"
+                key={x.cell}
+                className="grid grid-cols-1 gap-x-6 gap-y-3 border-b border-bord py-6 sm:grid-cols-[76px_minmax(0,1fr)]"
               >
-                <div className="flex items-baseline gap-3 sm:flex-col sm:gap-1">
-                  <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-texte-2">
-                    {s.jour}
-                  </span>
+                <span className="flex items-baseline gap-3 sm:flex-col sm:gap-2">
                   <span className="font-mono text-[11px] text-texte-3">
-                    {s.cell}
+                    {x.cell}
                   </span>
-                </div>
-                <div>
-                  <h3 className="titre-m m-0 mb-2 text-[1.2rem]">{s.titre}</h3>
-                  <p className="m-0 max-w-[33rem] text-[0.97rem] text-texte-2">
-                    {s.contenu}
-                  </p>
-                </div>
+                  <span className="font-mono text-[10px] tracking-[0.1em] text-texte-3 uppercase">
+                    {x.ou}
+                  </span>
+                </span>
+                <span className="block">
+                  <span className="block max-w-[33rem] text-[0.98rem] text-texte-3 line-through decoration-texte-3/40">
+                    {x.avant}
+                  </span>
+                  <span className="titre-m mt-2 block max-w-[33rem] text-[1.1rem] text-texte">
+                    {x.apres}
+                  </span>
+                </span>
               </li>
             ))}
           </ol>
         </section>
 
-        {/* L'accès */}
-        <section className="mt-16">
-          <div className="plage inline-block px-6 py-5">
-            <span className="etiquette mb-2 block">L&apos;accès à la plateforme</span>
-            <p className="m-0 max-w-[31rem] text-[1.04rem] leading-[1.5]">
-              Elle ouvre <strong className="font-semibold">dimanche 20 septembre</strong>.
-              Tu recevras ton lien de connexion par email — pas de mot de passe à
-              retenir, pas de compte à créer.
+        {/* ── Le programme ──────────────────────────────────── */}
+        <section className="mt-16 border-t-2 border-texte pt-5">
+          <h2 className="titre-l m-0 text-[clamp(1.6rem,3.4vw,2.1rem)]">
+            Le programme
+          </h2>
+          <p className="mt-3 mb-8 max-w-[34rem] text-texte-2">
+            Une seule entreprise du premier soir au certificat — six agences,
+            trois devises, un reporting en dollars. On ne réapprend pas le
+            contexte à chaque module.
+          </p>
+
+          <ol className="m-0 grid list-none gap-0 border-t border-bord p-0">
+            {MODULES.map(([n, titre, quoi, gratuit]) => (
+              <li
+                key={n}
+                className="grid grid-cols-1 items-baseline gap-x-6 gap-y-1 border-b border-bord py-[18px] sm:grid-cols-[92px_minmax(0,1fr)_auto]"
+              >
+                <span className="font-mono text-[11px] tracking-[0.1em] text-texte-2 uppercase">
+                  Module {n}
+                </span>
+                <span className="block">
+                  <span className="titre-m block text-[1.08rem] text-texte">
+                    {titre}
+                  </span>
+                  <span className="mt-[2px] block max-w-[30rem] text-[0.93rem] text-texte-2">
+                    {quoi}
+                  </span>
+                </span>
+                <span
+                  className={`font-mono text-[10px] tracking-[0.12em] uppercase ${
+                    gratuit ? "text-accent-texte" : "text-texte-3"
+                  }`}
+                >
+                  {gratuit ? "Gratuit" : "Masterclass"}
+                </span>
+              </li>
+            ))}
+            <li className="grid grid-cols-1 items-baseline gap-x-6 gap-y-1 border-b border-bord py-[18px] sm:grid-cols-[92px_minmax(0,1fr)_auto]">
+              <span className="font-mono text-[11px] tracking-[0.1em] text-texte-2 uppercase">
+                🏆 Final
+              </span>
+              <span className="block">
+                <span className="titre-m block text-[1.08rem] text-texte">
+                  Le capstone
+                </span>
+                <span className="mt-[2px] block max-w-[30rem] text-[0.93rem] text-texte-2">
+                  Vingt et un fichiers, un brief de quatre phrases, et rien
+                  d&apos;autre
+                </span>
+              </span>
+              <span className="font-mono text-[10px] tracking-[0.12em] text-texte-3 uppercase">
+                Masterclass
+              </span>
+            </li>
+          </ol>
+        </section>
+
+        {/* ── Comment ça se passe ───────────────────────────── */}
+        <section className="mt-16 border-t-2 border-texte pt-5">
+          <h2 className="titre-l m-0 text-[clamp(1.6rem,3.4vw,2.1rem)]">
+            Comment ça se passe
+          </h2>
+          <p className="mt-3 mb-8 max-w-[34rem] text-texte-2">
+            Chaque module est bâti pareil. Comptez deux heures, que vous pouvez
+            étaler.
+          </p>
+
+          <ol className="m-0 grid list-none gap-0 border-t border-bord p-0">
+            {RYTHME.map(([quoi, duree, note], i) => (
+              <li
+                key={quoi}
+                className="grid grid-cols-1 items-baseline gap-x-5 gap-y-1 border-b border-bord py-[18px] sm:grid-cols-[34px_minmax(0,1fr)_auto]"
+              >
+                <span className="font-mono text-[12px] text-texte-3">
+                  {i + 1}
+                </span>
+                <span className="block">
+                  <span className="titre-m block text-[1.06rem] text-texte">
+                    {quoi}
+                  </span>
+                  <span className="mt-[2px] block max-w-[32rem] text-[0.93rem] text-texte-2">
+                    {note}
+                  </span>
+                </span>
+                <span className="font-mono text-[10.5px] tracking-[0.08em] text-texte-3 uppercase">
+                  {duree}
+                </span>
+              </li>
+            ))}
+          </ol>
+
+          <div className="plage mt-9 px-6 py-5">
+            <span className="etiquette mb-2 block">
+              La correction entre pairs
+            </span>
+            <p className="m-0 max-w-[32rem] text-[1.02rem] leading-[1.5]">
+              Vous corrigez <strong className="font-semibold">trois copies</strong>{" "}
+              avant de voir votre note. Parce qu&apos;on apprend davantage en
+              relisant trois copies qu&apos;en recevant une note — et parce que
+              la lisibilité et la documentation ne se notent pas à la machine.
             </p>
             <span className="poignee" aria-hidden="true" />
           </div>
+        </section>
 
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <a className="bouton" href={LIEN_INSCRIPTION}>
-              Réserver ma place — c&apos;est gratuit
-            </a>
-            <a className="bouton-2" href={LIEN_TELEGRAM}>
-              Rejoindre le groupe Telegram
-            </a>
+        {/* ── Les chiffres ──────────────────────────────────── */}
+        <section className="mt-16 border-t-2 border-texte pt-5">
+          <h2 className="titre-l m-0 mb-8 text-[clamp(1.6rem,3.4vw,2.1rem)]">
+            Ce qui est déjà en ligne
+          </h2>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3">
+            {CHIFFRES.map(([n, quoi]) => (
+              <div key={quoi}>
+                <p className="titre-xl m-0 text-[2.4rem] tabular-nums">{n}</p>
+                <p className="mt-1 mb-0 font-mono text-[10.5px] tracking-[0.1em] text-texte-2 uppercase">
+                  {quoi}
+                </p>
+              </div>
+            ))}
           </div>
-
-          <p className="mt-6 max-w-[34rem] text-[0.92rem] text-texte-3">
-            Déjà inscrit ? Tu n&apos;as rien à refaire. Ton accès arrivera à
-            l&apos;adresse utilisée lors de ton inscription.
+          <p className="mt-8 max-w-[34rem] text-[0.96rem] text-texte-2">
+            Tout est écrit, testé, et en ligne. Les onze travaux pratiques sont
+            corrigés par la machine en quelques secondes — et chacun a été
+            vérifié en déposant son propre corrigé, qui doit obtenir 20 sur 20.
           </p>
         </section>
 
+        {/* ── Le prix ───────────────────────────────────────── */}
+        <section className="mt-16 border-t-2 border-texte pt-5">
+          <h2 className="titre-l m-0 text-[clamp(1.6rem,3.4vw,2.1rem)]">
+            Le prix
+          </h2>
+
+          <div className="mt-8 grid gap-5 sm:grid-cols-2">
+            <div className="rounded-[10px] border border-bord p-6">
+              <p className="etiquette mb-3">Modules 0 à 3</p>
+              <p className="titre-xl m-0 text-[2.6rem]">Gratuit</p>
+              <p className="mt-4 mb-0 text-[0.96rem] leading-[1.55] text-texte-2">
+                Vingt leçons, trois travaux pratiques corrigés, les QCM, et les
+                directs. Sans carte bancaire, et sans limite de durée.
+              </p>
+            </div>
+
+            <div className="rounded-[10px] border-2 border-[color:var(--plage-bord)] bg-[color:var(--plage-fond)] p-6">
+              <p className="etiquette mb-3">Modules 4 à 10 + capstone</p>
+              <p className="titre-xl m-0 text-[2.6rem]">
+                37 $
+                <span className="ml-2 align-middle font-mono text-[11px] tracking-[0.1em] text-texte-2 uppercase">
+                  une seule fois
+                </span>
+              </p>
+              <p className="mt-4 mb-0 text-[0.96rem] leading-[1.55] text-texte-2">
+                Les sept modules restants, le projet final, la correction entre
+                pairs, la soutenance et le certificat{" "}
+                <em>Avancé</em>. Pas d&apos;abonnement, rien à reconduire,{" "}
+                <strong className="font-semibold text-texte">
+                  et le prix ne monte jamais
+                </strong>
+                .
+              </p>
+            </div>
+          </div>
+
+          <p className="mt-6 max-w-[34rem] text-[0.93rem] text-texte-3">
+            Vous décidez après avoir fait les quatre modules gratuits. C&apos;est
+            le bon ordre : personne ne devrait payer pour une formation
+            qu&apos;il n&apos;a pas essayée.
+          </p>
+        </section>
+
+        {/* ── Le certificat ─────────────────────────────────── */}
+        <section className="mt-16 border-t-2 border-texte pt-5">
+          <h2 className="titre-l m-0 text-[clamp(1.6rem,3.4vw,2.1rem)]">
+            Le certificat
+          </h2>
+          <div className="mt-6 grid gap-5 sm:grid-cols-2">
+            <div>
+              <p className="etiquette mb-2">Fondations</p>
+              <p className="m-0 text-[0.98rem] leading-[1.55] text-texte-2">
+                Les modules 1 à 3, leurs trois travaux pratiques rendus, et les
+                corrections faites.
+              </p>
+            </div>
+            <div>
+              <p className="etiquette mb-2">Avancé</p>
+              <p className="m-0 text-[0.98rem] leading-[1.55] text-texte-2">
+                Le programme entier, le capstone rendu, une note d&apos;au moins
+                12 sur 20, et une soutenance de dix minutes — écran partagé,
+                trois questions tirées dans votre propre fichier.
+              </p>
+            </div>
+          </div>
+          <p className="mt-7 max-w-[34rem] text-[1.02rem] leading-[1.55]">
+            Il porte un code unique et une page de vérification publique :
+            quiconque le reçoit confirme en trois secondes qu&apos;il est réel.
+          </p>
+          <p className="mt-4 max-w-[34rem] text-[0.95rem] text-texte-3">
+            La condition qui compte plus que les autres :{" "}
+            <strong className="font-semibold text-texte">
+              savoir expliquer chaque cellule de son fichier
+            </strong>
+            . Jamais « c&apos;est l&apos;IA qui l&apos;a fait ».
+          </p>
+        </section>
+
+        {/* ── Qui ───────────────────────────────────────────── */}
+        <section className="mt-16 border-t-2 border-texte pt-5">
+          <h2 className="titre-l m-0 text-[clamp(1.6rem,3.4vw,2.1rem)]">
+            Qui vous forme
+          </h2>
+          <p className="mt-6 max-w-[36rem] text-[1.06rem] leading-[1.6]">
+            <strong className="font-semibold">Oscar Aksanti</strong>, ingénieur
+            en informatique, analyste de données et formateur, à Kinshasa. Ma
+            formation Excel gratuite sur YouTube — dix heures, une seule vidéo —
+            a servi à{" "}
+            <strong className="font-semibold">plus de 95 000 personnes</strong>.
+            Elle est toujours en ligne, toujours gratuite, et elle le restera.
+          </p>
+          <p className="mt-4 max-w-[36rem] text-[1.02rem] leading-[1.6] text-texte-2">
+            Ce programme-ci n&apos;en est pas la suite : c&apos;est son
+            contraire. La vidéo apprend Excel. Celui-ci apprend à{" "}
+            <em>décider</em> avec Excel — et à travailler avec une IA sans lui
+            faire confiance aveuglément.
+          </p>
+          <p className="mt-6">
+            <a className="bouton-2" href={LIEN_TELEGRAM}>
+              Rejoindre le groupe Telegram
+            </a>
+          </p>
+        </section>
+
+        {/* ── Les questions ─────────────────────────────────── */}
+        <section className="mt-16 border-t-2 border-texte pt-5">
+          <h2 className="titre-l m-0 mb-8 text-[clamp(1.6rem,3.4vw,2.1rem)]">
+            Les questions qu&apos;on me pose
+          </h2>
+          <dl className="m-0 border-t border-bord">
+            {QUESTIONS.map((x) => (
+              <div key={x.q} className="border-b border-bord py-6">
+                <dt className="titre-m m-0 mb-2 text-[1.08rem]">{x.q}</dt>
+                <dd className="m-0 max-w-[36rem] text-[0.98rem] leading-[1.6] text-texte-2">
+                  {x.r}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        {/* ── Le rappel ─────────────────────────────────────── */}
+        <section className="mt-16 border-t-2 border-texte pt-8">
+          <h2 className="titre-l m-0 mb-4 max-w-[20ch] text-[clamp(1.7rem,4vw,2.4rem)]">
+            La première leçon commence dans deux minutes.
+          </h2>
+          <p className="mb-8 max-w-[34rem] text-[1.04rem] text-texte-2">
+            Votre prénom, votre email, et un lien de connexion arrive. Pas de
+            mot de passe, pas de carte bancaire.
+          </p>
+          <InscriptionRapide compact />
+        </section>
       </main>
 
       <PiedPage />

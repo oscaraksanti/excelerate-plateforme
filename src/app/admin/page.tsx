@@ -160,7 +160,7 @@ export default async function TableauDeBordAdmin() {
           <span className="flex flex-col gap-1">
             <span className="etiquette">Modules publiés</span>
             <span className="titre-l text-[1.6rem] tabular-nums">
-              {m.modules_publies} <span className="text-texte-3">/ 10</span>
+              {m.modules_publies} <span className="text-texte-3">/ 11</span>
             </span>
           </span>
           <span className="flex flex-col gap-1">

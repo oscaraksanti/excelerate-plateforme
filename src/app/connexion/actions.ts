@@ -17,9 +17,15 @@ export async function envoyerLien(
 ): Promise<EtatConnexion> {
   const email = String(donnees.get("email") ?? "").trim().toLowerCase();
   const suite = String(donnees.get("suite") ?? "/tableau-de-bord");
+  const nom = String(donnees.get("nom") ?? "").trim().replace(/\s+/g, " ").slice(0, 80);
 
   if (!EMAIL_VALIDE.test(email)) {
     return { ok: false, message: "Cette adresse ne ressemble pas à un email." };
+  }
+  // Le nom n'est demandé que sur la page d'accueil. Quand il l'est, on
+  // le veut utilisable : « a » n'est pas un prénom.
+  if (donnees.has("nom") && nom.length < 2) {
+    return { ok: false, message: "Écris ton prénom, au moins — c'est ce qui figurera sur ton certificat." };
   }
 
   const site = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -39,7 +45,14 @@ export async function envoyerLien(
   const supabase = await clientServeur();
   const { error } = await supabase.auth.signInWithOtp({
     email,
-    options: { shouldCreateUser: true, emailRedirectTo: `${site}/auth/confirmer` },
+    options: {
+      shouldCreateUser: true,
+      emailRedirectTo: `${site}/auth/confirmer`,
+      // creer_profil() lit raw_user_meta_data. Le nom donné ici prime
+      // sur celui d'un éventuel import systeme.io ; s'il est vide, c'est
+      // l'import qui parle, et à défaut le profil reste anonyme.
+      ...(nom ? { data: { nom } } : {}),
+    },
   });
 
   if (error) {

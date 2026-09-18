@@ -41,8 +41,9 @@ export default async function PageModules() {
           Les modules
         </h1>
         <p className="mb-9 max-w-[34rem] text-[1.04rem] text-texte-2">
-          Les trois premiers sont ouverts à tout le monde. Les suivants
-          s&apos;ouvrent avec la masterclass.
+          Commencez par le module 0 : il vous dit où vous en êtes et règle
+          votre machine. Les quatre premiers sont ouverts à tout le monde ; les
+          suivants s&apos;ouvrent avec la masterclass.
         </p>
 
         {avec.length === 0 ? (
