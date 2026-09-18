@@ -14,7 +14,7 @@ export default async function PageReglages() {
       </h1>
       <p className="mb-9 max-w-[34rem] text-[1.01rem] text-texte-2">
         Le bandeau du direct est la première chose que 1 700 personnes
-        chercheront lundi à 19 h. C&apos;est ici qu&apos;il se pilote.
+        chercheront à 19 h GMT. C&apos;est ici qu&apos;il se pilote.
       </p>
 
       <section className="border-t-2 border-texte pt-6">

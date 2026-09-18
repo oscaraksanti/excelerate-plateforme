@@ -172,10 +172,10 @@ c.append(txt(44, y + 72, "la moitié de ce qui compte — la lisibilité, la "
 y += 90
 c.append(carte(24, y, 656, 78, "carte"))
 c.append(txt(44, y + 28, "Les directs", "h", 13.5))
-c.append(txt(44, y + 54, "Sur Teams, de 19 h à 21 h GMT — soit 20 h à 22 h à "
-                         "Kinshasa, Douala et Libreville,", "p", 12.5))
-c.append(txt(44, y + 72, "19 h à 21 h à Abidjan et Dakar. Le lien est sur "
-                         "votre tableau de bord.", "p", 12.5))
+c.append(txt(44, y + 54, "Sur Teams, de 19 h à 21 h GMT. Soit 19 h à Abidjan "
+                         "et Dakar, 20 h à Kinshasa,", "p", 12.5))
+c.append(txt(44, y + 72, "Douala et Libreville, 21 h à Lubumbashi. Le lien est "
+                         "sur votre tableau de bord.", "p", 12.5))
 (OUT / "04-semaine.svg").write_text(svg(704, y + 114, "".join(c)))
 
 print("\n".join(sorted(p.name for p in OUT.glob("*.svg"))))

@@ -57,6 +57,14 @@ const MODULES = [
   [10, "Le lundi matin d'Aïcha", "Macros, livraison, deux cents classeurs", false],
 ] as const;
 
+/* Les directs se tiennent a 19 h GMT. C'est l'heure de reference, et
+   la seule qu'on annonce : chacun lit sa ligne. */
+const FUSEAUX = [
+  ["19 h – 21 h", "Abidjan · Dakar · Bamako", "GMT"],
+  ["20 h – 22 h", "Kinshasa · Douala · Libreville · Lagos", "GMT+1"],
+  ["21 h – 23 h", "Lubumbashi · Kigali · Johannesburg", "GMT+2"],
+];
+
 const RYTHME = [
   ["Cinq leçons", "15 min chacune", "à lire ou à regarder, dans l'ordre"],
   ["Un QCM", "5 min", "corrigé et expliqué sur-le-champ"],
@@ -98,6 +106,13 @@ const QUESTIONS = [
     q: "Combien de temps par module ?",
     r: "Environ deux heures, que vous pouvez étaler. Rien n'est chronométré, rien n'expire, et vous "
       + "pouvez reprendre une leçon six mois plus tard.",
+  },
+  {
+    q: "Les directs, c'est à quelle heure ?",
+    r: "De 19 h à 21 h GMT, sur Microsoft Teams — soit 19 h à Abidjan, Dakar et Bamako, 20 h à "
+      + "Kinshasa, Douala et Libreville, 21 h à Lubumbashi. Le GMT est l'heure de référence : "
+      + "c'est celle que j'annonce partout, chacun lit sa ligne. Et vous n'êtes pas obligé d'y "
+      + "être : tout le programme se suit en autonomie.",
   },
   {
     q: "C'est un abonnement ?",
@@ -342,6 +357,32 @@ export default async function Accueil() {
               la lisibilité et la documentation ne se notent pas à la machine.
             </p>
             <span className="poignee" aria-hidden="true" />
+          </div>
+
+          <div className="mt-9 rounded-[10px] border border-bord p-6">
+            <span className="etiquette mb-3 block">Les directs</span>
+            <p className="m-0 mb-4 max-w-[32rem] text-[1.02rem] leading-[1.5]">
+              Sur Microsoft Teams, de{" "}
+              <strong className="font-semibold">19 h à 21 h GMT</strong>. Vous
+              n&apos;êtes pas obligé d&apos;y être : tout le programme se suit en
+              autonomie.
+            </p>
+            <ul className="m-0 flex list-none flex-col gap-0 border-t border-bord-2 p-0">
+              {FUSEAUX.map(([heure, villes, zone]) => (
+                <li
+                  key={zone}
+                  className="grid grid-cols-[92px_minmax(0,1fr)_auto] items-baseline gap-3 border-b border-bord-2 py-[11px]"
+                >
+                  <span className="font-mono text-[0.93rem] tabular-nums text-texte">
+                    {heure}
+                  </span>
+                  <span className="text-[0.93rem] text-texte-2">{villes}</span>
+                  <span className="font-mono text-[10px] tracking-[0.1em] text-texte-3 uppercase">
+                    {zone}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 

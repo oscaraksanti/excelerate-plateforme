@@ -2,19 +2,41 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { EnteteApp } from "@/components/entete-app";
 import { profilCourant } from "@/lib/profil";
+import { listerModules, sommaireModule, leconsTerminees } from "@/lib/donnees";
 
 export const metadata: Metadata = { title: "Tableau de bord" };
 
-const ETAPES = [
-  { fait: true, texte: "Compte actif" },
-  { fait: false, texte: "Module 1 — disponible lundi 21 au soir" },
-  { fait: false, texte: "TP 1 rendu" },
-  { fait: false, texte: "3 copies corrigées" },
+/* Les directs se tiennent a 19 h GMT. Ces trois lignes sont la seule
+   traduction qui compte pour la promotion : trois fuseaux, six agences. */
+const FUSEAUX = [
+  ["19 h – 21 h", "Abidjan · Dakar · Bamako", "GMT"],
+  ["20 h – 22 h", "Kinshasa · Douala · Libreville · Lagos", "GMT+1"],
+  ["21 h – 23 h", "Lubumbashi · Kigali · Johannesburg", "GMT+2"],
 ];
 
 export default async function TableauDeBord() {
   const profil = await profilCourant();
   const prenom = profil.nom.split(" ")[0];
+
+  const modules = await listerModules();
+  const terminees = await leconsTerminees();
+
+  //  On ne compte que ce que la personne peut reellement ouvrir : un
+  //  module verrouille n'a pas a peser dans son avancement.
+  const parModule = await Promise.all(
+    modules.map(async (m) => {
+      const lecons = await sommaireModule(m.id);
+      const ouvrables = lecons.filter((l) => !l.verrouille);
+      const faites = ouvrables.filter((l) => terminees.has(l.id));
+      const suivante = ouvrables.find((l) => !terminees.has(l.id));
+      return { module: m, total: ouvrables.length, faites: faites.length, suivante };
+    }),
+  );
+
+  const total = parModule.reduce((s, x) => s + x.total, 0);
+  const faites = parModule.reduce((s, x) => s + x.faites, 0);
+  const prochain = parModule.find((x) => x.suivante);
+  const pourcent = total ? Math.round((faites / total) * 100) : 0;
 
   return (
     <>
@@ -26,39 +48,95 @@ export default async function TableauDeBord() {
           {prenom ? `Bonjour ${prenom}.` : "Ton espace."}
         </h1>
 
-        <p className="mb-8 max-w-[33rem] text-[1.06rem] text-texte-2">
-          Ton accès est actif. Le module 1 s&apos;ouvrira ici{" "}
-          <strong className="font-semibold text-texte">
-            lundi 21 septembre à 21 h
-          </strong>
-          , juste après le direct.
-        </p>
+        {prochain?.suivante ? (
+          <>
+            <p className="mb-7 max-w-[33rem] text-[1.06rem] text-texte-2">
+              {faites === 0 ? (
+                <>
+                  Tout est ouvert. Commence par le{" "}
+                  <strong className="font-semibold text-texte">module 0</strong>{" "}
+                  : il te dit où tu en es et règle ta machine.
+                </>
+              ) : (
+                <>
+                  Tu as terminé{" "}
+                  <strong className="font-semibold text-texte">
+                    {faites} leçon{faites > 1 ? "s" : ""} sur {total}
+                  </strong>
+                  . Reprends où tu t&apos;es arrêté.
+                </>
+              )}
+            </p>
 
-        <ol className="m-0 flex max-w-[33rem] list-none flex-col gap-0 border-t border-bord p-0">
-          {ETAPES.map((e) => (
-            <li
-              key={e.texte}
-              className="flex items-center gap-3 border-b border-bord-2 py-[14px]"
-            >
-              <span
-                aria-hidden="true"
-                className={`h-[14px] w-[14px] shrink-0 rounded-[2px] border-2 ${
-                  e.fait
-                    ? "border-[color:var(--plage-bord)] bg-voltage"
-                    : "border-bord"
-                }`}
-              />
-              <span
-                className={`text-[0.98rem] ${e.fait ? "text-texte" : "text-texte-2"}`}
+            <div className="mb-8 max-w-[33rem]">
+              <div
+                className="h-[6px] w-full overflow-hidden rounded-full bg-fond-3"
+                role="img"
+                aria-label={`${pourcent} % du programme ouvert`}
               >
-                {e.texte}
-              </span>
-            </li>
-          ))}
-        </ol>
+                <div
+                  className="h-full rounded-full bg-voltage"
+                  style={{ width: `${Math.max(pourcent, faites ? 3 : 0)}%` }}
+                />
+              </div>
+              <p className="mt-2 mb-0 font-mono text-[10.5px] tracking-[0.1em] text-texte-3 uppercase">
+                {pourcent} % · {faites} / {total} leçons
+              </p>
+            </div>
+
+            <p className="mb-12">
+              <Link
+                href={`/modules/${prochain.module.numero}/${prochain.suivante.numero}`}
+                className="bouton"
+              >
+                {faites === 0 ? "Commencer la première leçon" : "Continuer"} —{" "}
+                {prochain.module.numero}.{prochain.suivante.numero}{" "}
+                {prochain.suivante.titre}
+              </Link>
+            </p>
+          </>
+        ) : (
+          <p className="mb-12 max-w-[33rem] text-[1.06rem] text-texte-2">
+            Tu as terminé toutes les leçons ouvertes.{" "}
+            <Link href="/modules" className="underline underline-offset-4">
+              Reprends-en une
+            </Link>{" "}
+            quand tu veux — rien n&apos;expire.
+          </p>
+        )}
+
+        {/* ── Les directs ───────────────────────────────────── */}
+        <section className="border-t-2 border-texte pt-5">
+          <h2 className="titre-l m-0 text-[1.35rem]">Les directs</h2>
+          <p className="mt-3 mb-6 max-w-[33rem] text-[0.98rem] text-texte-2">
+            Sur Microsoft Teams, de{" "}
+            <strong className="font-semibold text-texte">19 h à 21 h GMT</strong>.
+            Le lien apparaît en haut de la page dès qu&apos;un direct approche.
+          </p>
+          <ul className="m-0 flex max-w-[33rem] list-none flex-col gap-0 border-t border-bord p-0">
+            {FUSEAUX.map(([heure, villes, zone]) => (
+              <li
+                key={zone}
+                className="grid grid-cols-[92px_minmax(0,1fr)_auto] items-baseline gap-3 border-b border-bord-2 py-[13px]"
+              >
+                <span className="font-mono text-[0.95rem] tabular-nums text-texte">
+                  {heure}
+                </span>
+                <span className="text-[0.95rem] text-texte-2">{villes}</span>
+                <span className="font-mono text-[10px] tracking-[0.1em] text-texte-3 uppercase">
+                  {zone}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 mb-0 max-w-[33rem] text-[0.92rem] text-texte-3">
+            Tu n&apos;es pas obligé d&apos;y être : tout le programme se suit en
+            autonomie.
+          </p>
+        </section>
 
         {!profil.nom && (
-          <div className="plage mt-10 px-6 py-5">
+          <div className="plage mt-12 px-6 py-5">
             <span className="etiquette mb-2 block">Une minute à prendre</span>
             <p className="m-0 mb-4 max-w-[30rem] text-[1.02rem] leading-[1.5]">
               Ton nom servira à établir ton certificat. Autant qu&apos;il soit
