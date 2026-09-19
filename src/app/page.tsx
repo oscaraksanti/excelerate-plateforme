@@ -6,10 +6,16 @@ import { lireDirectPublic, formaterDebut } from "@/lib/direct";
 import { SITE } from "./layout";
 
 export const metadata: Metadata = {
-  title: "Excelerate IA — Excel augmenté par l'intelligence artificielle",
+  //  `absolute` : sans lui, le gabarit ajouterait « · Excelerate IA »
+  //  une seconde fois à la fin du titre.
+  title: {
+    absolute: "Formation Excel + IA en ligne — Excelerate IA, par Oscar Aksanti",
+  },
   description:
-    "Onze modules, cinquante leçons, onze travaux pratiques corrigés automatiquement. "
-    + "Les quatre premiers sont gratuits. Par Oscar Aksanti.",
+    "Onze modules, 55 leçons, 11 travaux pratiques corrigés automatiquement et un "
+    + "certificat vérifiable. Tableaux croisés, Power Query, DAX, macros — et l'IA "
+    + "comme copilote. Les quatre premiers modules sont gratuits.",
+  alternates: { canonical: "/" },
 };
 
 const LIEN_TELEGRAM = "https://t.me/ExcelPowerBiPourEntreprises";
