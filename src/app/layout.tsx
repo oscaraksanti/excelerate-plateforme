@@ -24,23 +24,69 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+export const SITE = "https://excelai.oscaraksanti.com";
+
+const DESCRIPTION =
+  "Formation Excel + intelligence artificielle par Oscar Aksanti : onze modules, "
+  + "cinquante-cinq leçons, onze travaux pratiques corrigés automatiquement et un "
+  + "certificat vérifiable. Les quatre premiers modules sont gratuits.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://excelai.oscaraksanti.com"),
+  metadataBase: new URL(SITE),
   title: {
-    default: "Excelerate IA",
+    default: "Excelerate IA — formation Excel + IA par Oscar Aksanti",
     template: "%s · Excelerate IA",
   },
-  description:
-    "Trois soirées pour passer d'Excel « qui marche » à Excel qui travaille pour toi, avec l'IA. Formation en direct par Oscar Aksanti.",
+  description: DESCRIPTION,
+  applicationName: "Excelerate IA",
+  authors: [{ name: "Oscar Aksanti" }],
+  creator: "Oscar Aksanti",
+  publisher: "Eurêka Services",
+  category: "education",
+  keywords: [
+    "formation Excel",
+    "Excel et intelligence artificielle",
+    "formation Excel en ligne",
+    "Excel avancé",
+    "Power Query",
+    "tableau croisé dynamique",
+    "tableau de bord Excel",
+    "RECHERCHEX",
+    "certificat Excel",
+    "Oscar Aksanti",
+    "formation Excel Afrique",
+    "formation Excel Kinshasa",
+  ],
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "fr_FR",
+    url: SITE,
     siteName: "Excelerate IA",
-    title: "Excelerate IA",
-    description:
-      "Trois soirées en direct pour passer au niveau supérieur sur Excel, avec l'IA.",
+    title: "Excelerate IA — formation Excel + IA par Oscar Aksanti",
+    description: DESCRIPTION,
   },
-  robots: { index: false, follow: false },
+  twitter: {
+    card: "summary_large_image",
+    title: "Excelerate IA — formation Excel + IA",
+    description: DESCRIPTION,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  //  Le jeton arrive de la Search Console ; sans variable, rien n'est
+  //  émis — on ne met pas de balise vide dans le <head>.
+  ...(process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION } }
+    : {}),
 };
 
 export const viewport: Viewport = {

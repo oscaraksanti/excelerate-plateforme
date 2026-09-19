@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { listerLecons, listerModules } from "@/lib/donnees";
 
-export const metadata: Metadata = { title: "Le contenu" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Le contenu" };
 
 export default async function PageAdmin() {
   const modules = await listerModules();

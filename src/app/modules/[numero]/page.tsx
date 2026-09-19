@@ -15,7 +15,7 @@ type Params = { params: Promise<{ numero: string }> };
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { numero } = await params;
   const m = await lireModule(Number(numero));
-  return { title: m?.titre ?? "Module" };
+  return { robots: { index: false, follow: false }, title: m?.titre ?? "Module" };
 }
 
 export default async function PageModule({ params }: Params) {

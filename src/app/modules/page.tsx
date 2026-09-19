@@ -5,7 +5,7 @@ import { listerModules, sommaireModule, leconsTerminees } from "@/lib/donnees";
 import { listerTps } from "@/lib/tp";
 import { profilCourant } from "@/lib/profil";
 
-export const metadata: Metadata = { title: "Les modules" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Les modules" };
 
 export default async function PageModules() {
   const profil = await profilCourant();

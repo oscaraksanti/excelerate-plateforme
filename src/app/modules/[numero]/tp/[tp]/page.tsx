@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const m = await lireModule(Number(numero));
   if (!m) return { title: "Travail pratique" };
   const t = await lireTp(m.id, Number(tp));
-  return { title: t?.titre ?? "Travail pratique" };
+  return { robots: { index: false, follow: false }, title: t?.titre ?? "Travail pratique" };
 }
 
 export default async function PageTp({ params }: Params) {

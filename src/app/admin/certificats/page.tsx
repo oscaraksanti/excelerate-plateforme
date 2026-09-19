@@ -5,7 +5,7 @@ import { clientAdmin } from "@/lib/supabase/admin";
 import { clientServeur } from "@/lib/supabase/serveur";
 import { TableauEligibles, type Ligne } from "./formulaire";
 
-export const metadata: Metadata = { title: "Les certificats" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Les certificats" };
 
 export default async function PageCertificats() {
   const supabase = await clientServeur();

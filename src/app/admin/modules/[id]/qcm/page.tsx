@@ -8,7 +8,7 @@ import { GENRES, type Genre } from "@/lib/formats";
 import { clientServeur } from "@/lib/supabase/serveur";
 import { BoutonSupprimer, FormulaireQuestion } from "./formulaire";
 
-export const metadata: Metadata = { title: "Le QCM du module" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Le QCM du module" };
 
 export default async function PageQcmAdmin({
   params,

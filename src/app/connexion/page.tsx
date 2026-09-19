@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FormulaireConnexion } from "./formulaire";
 
-export const metadata: Metadata = { title: "Connexion" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Connexion" };
 
 export default async function PageConnexion({
   searchParams,

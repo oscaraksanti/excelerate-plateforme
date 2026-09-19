@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { clientAdmin } from "@/lib/supabase/admin";
 import { FormulaireImport } from "./formulaire";
 
-export const metadata: Metadata = { title: "Importer les inscrits" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Importer les inscrits" };
 
 export default async function PageImport() {
   const admin = clientAdmin();

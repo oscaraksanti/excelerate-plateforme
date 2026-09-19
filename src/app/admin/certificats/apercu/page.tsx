@@ -3,7 +3,7 @@ import Link from "next/link";
 import QRCode from "qrcode";
 import { Certificat, type DonneesCertificat } from "@/components/certificat";
 
-export const metadata: Metadata = { title: "Aperçu du certificat" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Aperçu du certificat" };
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://excelai.oscaraksanti.com";
 

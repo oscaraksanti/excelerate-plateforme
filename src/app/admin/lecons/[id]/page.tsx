@@ -9,7 +9,7 @@ import { clientServeur } from "@/lib/supabase/serveur";
 import { FormulaireLecon } from "./formulaire";
 import { Ressources } from "./ressources";
 
-export const metadata: Metadata = { title: "Modifier une leçon" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Modifier une leçon" };
 
 export default async function PageLeconAdmin({
   params,

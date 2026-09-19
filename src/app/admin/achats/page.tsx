@@ -7,7 +7,7 @@ import { clientAdmin } from "@/lib/supabase/admin";
 import { listerProduits } from "@/lib/offres";
 import { basculerProduit } from "./actions";
 
-export const metadata: Metadata = { title: "Les ventes" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Les ventes" };
 
 const NET = { certificat27: 24.3, masterclass37: 33.3, coaching97: 87.3, equipe: 0 };
 

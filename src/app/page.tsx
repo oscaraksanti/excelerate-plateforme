@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PiedPage } from "@/components/pied-page";
 import { InscriptionRapide } from "@/components/inscription-rapide";
 import { lireDirectPublic, formaterDebut } from "@/lib/direct";
+import { SITE } from "./layout";
 
 export const metadata: Metadata = {
   title: "Excelerate IA — Excel augmenté par l'intelligence artificielle",
@@ -129,11 +130,123 @@ const QUESTIONS = [
   },
 ];
 
+const ORGANISATION = {
+  "@type": "Organization",
+  "@id": `${SITE}#organisation`,
+  name: "Eurêka Services",
+  alternateName: "Excelerate IA",
+  url: SITE,
+  logo: `${SITE}/icon.png`,
+  areaServed: ["CD", "CI", "SN", "CM", "GA", "ML", "BF", "FR"],
+  sameAs: [
+    "https://www.youtube.com/@oscaraksanti",
+    LIEN_TELEGRAM,
+  ],
+};
+
+const FORMATEUR = {
+  "@type": "Person",
+  "@id": `${SITE}#oscar`,
+  name: "Oscar Aksanti",
+  jobTitle: "Ingénieur en informatique · analyste de données · formateur",
+  worksFor: { "@id": `${SITE}#organisation` },
+  url: SITE,
+};
+
+function donneesStructurees() {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      ORGANISATION,
+      FORMATEUR,
+      {
+        "@type": "WebSite",
+        "@id": `${SITE}#site`,
+        url: SITE,
+        name: "Excelerate IA",
+        inLanguage: "fr",
+        publisher: { "@id": `${SITE}#organisation` },
+      },
+      {
+        "@type": "Course",
+        "@id": `${SITE}#formation`,
+        name: "Excelerate IA — Excel augmenté par l'intelligence artificielle",
+        description:
+          "Onze modules pour passer de « je sais faire un tableau » à « je construis "
+          + "un modèle, je le documente et j'assume chaque chiffre » : tableaux "
+          + "structurés, RECHERCHEX, tableaux croisés dynamiques, tableaux de bord, "
+          + "Power Query, modèle de données et DAX, simulation financière, macros — "
+          + "et l'usage critique de l'IA à chaque étape.",
+        url: SITE,
+        image: `${SITE}/opengraph-image.png`,
+        inLanguage: "fr",
+        provider: { "@id": `${SITE}#organisation` },
+        educationalLevel: "Débutant à avancé",
+        teaches: [
+          "Tableaux structurés et références structurées",
+          "RECHERCHEX, FILTRE, TRIER, UNIQUE",
+          "Tableaux croisés dynamiques",
+          "Tableaux de bord Excel",
+          "Power Query",
+          "Modèle de données et DAX",
+          "Simulation, VAN, TRI et analyse de scénarios",
+          "Macros VBA et automatisation",
+          "Usage critique de l'intelligence artificielle sur Excel",
+        ],
+        hasCourseInstance: [
+          {
+            "@type": "CourseInstance",
+            courseMode: "online",
+            courseWorkload: "PT22H",
+            inLanguage: "fr",
+            instructor: { "@id": `${SITE}#oscar` },
+          },
+        ],
+        offers: [
+          {
+            "@type": "Offer",
+            category: "Free",
+            price: 0,
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+            url: SITE,
+            description: "Les modules 0 à 3, leurs travaux pratiques et leurs QCM.",
+          },
+          {
+            "@type": "Offer",
+            category: "Paid",
+            price: 37,
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+            url: SITE,
+            description:
+              "Les modules 4 à 10, le projet final, la correction entre pairs et "
+              + "le certificat vérifiable. Paiement unique.",
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE}#questions`,
+        mainEntity: QUESTIONS.map((x) => ({
+          "@type": "Question",
+          name: x.q,
+          acceptedAnswer: { "@type": "Answer", text: x.r },
+        })),
+      },
+    ],
+  };
+}
+
 export default async function Accueil() {
   const direct = await lireDirectPublic();
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(donneesStructurees()) }}
+      />
       <div className="trame" aria-hidden="true" />
 
       <main className="relative z-1 mx-auto max-w-[1000px] px-6 pb-24">

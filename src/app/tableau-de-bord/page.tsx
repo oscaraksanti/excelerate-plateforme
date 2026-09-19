@@ -4,7 +4,7 @@ import { EnteteApp } from "@/components/entete-app";
 import { profilCourant } from "@/lib/profil";
 import { listerModules, sommaireModule, leconsTerminees } from "@/lib/donnees";
 
-export const metadata: Metadata = { title: "Tableau de bord" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Tableau de bord" };
 
 /* Les directs se tiennent a 19 h GMT. Ces trois lignes sont la seule
    traduction qui compte pour la promotion : trois fuseaux, six agences. */

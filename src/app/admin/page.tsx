@@ -4,7 +4,7 @@ import { lireMetriques } from "@/lib/metriques";
 import { lireDirect, formaterDebut } from "@/lib/direct";
 import { statsQcm } from "@/lib/qcm";
 
-export const metadata: Metadata = { title: "Tableau de bord" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Tableau de bord" };
 
 const NET: Record<string, number> = {
   certificat27: 24.3,

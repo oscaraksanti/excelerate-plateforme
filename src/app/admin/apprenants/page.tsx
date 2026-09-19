@@ -6,7 +6,7 @@ import { listerApprenants } from "@/lib/metriques";
 import { clientServeur } from "@/lib/supabase/serveur";
 import { Relances } from "./relances";
 
-export const metadata: Metadata = { title: "Les apprenants" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Les apprenants" };
 
 export default async function PageApprenants({
   searchParams,

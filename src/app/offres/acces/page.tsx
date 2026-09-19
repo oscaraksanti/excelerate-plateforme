@@ -4,7 +4,7 @@ import { EnteteApp } from "@/components/entete-app";
 import { profilCourant } from "@/lib/profil";
 import { FormulaireAcces } from "./formulaire";
 
-export const metadata: Metadata = { title: "Retrouver mon paiement" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Retrouver mon paiement" };
 
 export default async function PageAcces() {
   const profil = await profilCourant();

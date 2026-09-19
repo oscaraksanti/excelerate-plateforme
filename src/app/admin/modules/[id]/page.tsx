@@ -11,7 +11,7 @@ import { formaterDuree } from "@/lib/markdown";
 import { clientServeur } from "@/lib/supabase/serveur";
 import { FormulaireModule } from "./formulaire";
 
-export const metadata: Metadata = { title: "Modifier un module" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Modifier un module" };
 
 export default async function PageModuleAdmin({
   params,

@@ -5,7 +5,7 @@ import { PiedPage } from "@/components/pied-page";
 import { certificatMerite, listerProduits, mesAchats, mesConditions } from "@/lib/offres";
 import { profilCourant } from "@/lib/profil";
 
-export const metadata: Metadata = { title: "Aller plus loin" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Aller plus loin" };
 
 export default async function PageOffres() {
   const profil = await profilCourant();

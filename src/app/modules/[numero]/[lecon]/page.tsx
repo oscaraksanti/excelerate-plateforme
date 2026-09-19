@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const m = await lireModule(Number(numero));
   if (!m) return { title: "Leçon" };
   const l = await lireLecon(m.id, Number(lecon));
-  return { title: l?.titre ?? "Leçon" };
+  return { robots: { index: false, follow: false }, title: l?.titre ?? "Leçon" };
 }
 
 export default async function PageLecon({ params }: Params) {

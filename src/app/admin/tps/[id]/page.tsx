@@ -8,7 +8,7 @@ import { clientServeur } from "@/lib/supabase/serveur";
 import { lireCorrige, lireTpParId } from "@/lib/tp";
 import { CorrigeTp, DepartTp, FormulaireTp } from "./formulaire";
 
-export const metadata: Metadata = { title: "Modifier un travail pratique" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Modifier un travail pratique" };
 
 export default async function PageTpAdmin({
   params,

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { lireDirect } from "@/lib/direct";
 import { FormulaireDirect } from "./formulaire";
 
-export const metadata: Metadata = { title: "Réglages" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Réglages" };
 
 export default async function PageReglages() {
   const direct = await lireDirect();

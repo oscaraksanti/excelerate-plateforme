@@ -7,7 +7,7 @@ import { maFile, monAvancement } from "@/lib/pairs";
 import { profilCourant } from "@/lib/profil";
 import { clientServeur } from "@/lib/supabase/serveur";
 
-export const metadata: Metadata = { title: "Corriger" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Corriger" };
 
 export default async function PageCorrections({
   searchParams,

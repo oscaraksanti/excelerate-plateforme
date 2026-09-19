@@ -7,7 +7,7 @@ import { profilCourant } from "@/lib/profil";
 import { clientServeur } from "@/lib/supabase/serveur";
 import { FormulaireCorrection } from "./formulaire";
 
-export const metadata: Metadata = { title: "Corriger une copie" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Corriger une copie" };
 
 export default async function PageCorriger({
   params,

@@ -3,7 +3,7 @@ import { EnteteApp } from "@/components/entete-app";
 import { profilCourant } from "@/lib/profil";
 import { FormulaireProfil } from "./formulaire";
 
-export const metadata: Metadata = { title: "Mon profil" };
+export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Mon profil" };
 
 export default async function PageProfil() {
   const profil = await profilCourant();
