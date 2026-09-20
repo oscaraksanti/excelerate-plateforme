@@ -3,6 +3,7 @@ import Link from "next/link";
 import { EnteteApp } from "@/components/entete-app";
 import { profilCourant } from "@/lib/profil";
 import { listerModules, sommaireModule, leconsTerminees } from "@/lib/donnees";
+import { aVenir, formaterOuverture } from "@/lib/formats";
 
 export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Tableau de bord" };
 
@@ -33,6 +34,14 @@ export default async function TableauDeBord() {
     }),
   );
 
+  //  Le prochain module a s'ouvrir. Quelqu'un qui termine le module 0
+  //  pendant le direct ne doit pas tomber sur « reprends-en une » : il
+  //  doit savoir quand revenir, et c'est ce moment-la qui decide s'il
+  //  revient.
+  const prochaineOuverture = modules
+    .filter((m) => aVenir(m.publie_le))
+    .sort((a, b) => String(a.publie_le).localeCompare(String(b.publie_le)))[0];
+
   const total = parModule.reduce((s, x) => s + x.total, 0);
   const faites = parModule.reduce((s, x) => s + x.faites, 0);
   const prochain = parModule.find((x) => x.suivante);
@@ -53,7 +62,7 @@ export default async function TableauDeBord() {
             <p className="mb-7 max-w-[33rem] text-[1.06rem] text-texte-2">
               {faites === 0 ? (
                 <>
-                  Tout est ouvert. Commence par le{" "}
+                  Commence par le{" "}
                   <strong className="font-semibold text-texte">module 0</strong>{" "}
                   : il te dit où tu en es et règle ta machine.
                 </>
@@ -98,10 +107,30 @@ export default async function TableauDeBord() {
         ) : (
           <p className="mb-12 max-w-[33rem] text-[1.06rem] text-texte-2">
             Tu as terminé toutes les leçons ouvertes.{" "}
-            <Link href="/modules" className="underline underline-offset-4">
-              Reprends-en une
-            </Link>{" "}
-            quand tu veux — rien n&apos;expire.
+            {prochaineOuverture ? (
+              <>
+                Le{" "}
+                <strong className="font-semibold text-texte">
+                  module {prochaineOuverture.numero}
+                </strong>{" "}
+                s&apos;ouvre{" "}
+                <strong className="font-semibold text-texte">
+                  {formaterOuverture(prochaineOuverture.publie_le)}
+                </strong>
+                , juste après le direct. D&apos;ici là tu peux{" "}
+                <Link href="/modules" className="underline underline-offset-4">
+                  voir ce qui t&apos;attend
+                </Link>
+                .
+              </>
+            ) : (
+              <>
+                <Link href="/modules" className="underline underline-offset-4">
+                  Reprends-en une
+                </Link>{" "}
+                quand tu veux — rien n&apos;expire.
+              </>
+            )}
           </p>
         )}
 
