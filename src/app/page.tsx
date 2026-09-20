@@ -19,6 +19,18 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
+/**
+ * La page s'affiche depuis le cache, mais se refait au plus toutes les
+ * minutes.
+ *
+ * Sans cette ligne elle serait figée au moment du build : le bandeau du
+ * direct annoncerait la mauvaise soirée, et le compteur des dix places
+ * ne bougerait jamais — une rareté qui ne décroît pas est un mensonge.
+ * Une minute suffit, et 2 000 visiteurs ne font toujours qu'un seul
+ * rendu par minute.
+ */
+export const revalidate = 60;
+
 const LIEN_TELEGRAM = "https://t.me/ExcelPowerBiPourEntreprises";
 const COLONNES = "ABCDEFGHIJKLMNOPQRSTUVWX".split("");
 
