@@ -33,11 +33,21 @@ export async function enregistrerModule(
     return { ok: false, message: "Donne un titre au module." };
   }
 
+  //  Un champ datetime-local ne transporte aucun fuseau : « 21:00 »
+  //  arrive nu. Le lire au fuseau du serveur donnerait une heure
+  //  différente de celle qu'Oscar a tapée et de celle annoncée aux
+  //  apprenants. Tout le cours parle en GMT — on la lit en GMT.
+  const quand = texte(d, "publie_le");
+  const publie_le = quand
+    ? new Date(`${quand}${quand.length === 16 ? ":00" : ""}Z`).toISOString()
+    : null;
+
   const champs = {
     titre,
     resume: texte(d, "resume"),
     acces: texte(d, "acces") === "gratuit" ? "gratuit" : "paye",
     publie: d.get("publie") === "on",
+    publie_le,
   };
 
   const supabase = await clientServeur();

@@ -24,7 +24,7 @@ export default async function PageModuleAdmin({
   const supabase = await clientServeur();
   const { data: module } = await supabase
     .from("modules")
-    .select("id, numero, titre, resume, acces, publie")
+    .select("id, numero, titre, resume, acces, publie, publie_le")
     .eq("id", id)
     .maybeSingle();
 

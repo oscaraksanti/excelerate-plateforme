@@ -7,7 +7,7 @@ import { lireModule, sommaireModule, leconsTerminees } from "@/lib/donnees";
 import { listerTps } from "@/lib/tp";
 import { monQcm } from "@/lib/qcm";
 import { formaterDuree } from "@/lib/markdown";
-import { formaterDate } from "@/lib/formats";
+import { aVenir, formaterDate, formaterOuverture } from "@/lib/formats";
 import { profilCourant } from "@/lib/profil";
 
 type Params = { params: Promise<{ numero: string }> };
@@ -55,6 +55,21 @@ export default async function PageModule({ params }: Params) {
           <p className="mb-9 max-w-[34rem] text-[1.04rem] text-texte-2">
             {module.resume}
           </p>
+        )}
+
+        {aVenir(module.publie_le) && (
+          <div className="plage mb-9 px-6 py-5">
+            <span className="etiquette mb-2 block">Ce module ouvre bientôt</span>
+            <p className="m-0 max-w-[32rem] text-[1.02rem] leading-[1.5]">
+              Le sommaire ci-dessous est bien le sien : vous pouvez voir ce
+              qui vous attend. Il s&apos;ouvre{" "}
+              <strong className="font-semibold text-texte">
+                {formaterOuverture(module.publie_le)}
+              </strong>
+              , juste après le direct.
+            </p>
+            <span className="poignee" aria-hidden="true" />
+          </div>
         )}
 
         {lecons.length === 0 ? (

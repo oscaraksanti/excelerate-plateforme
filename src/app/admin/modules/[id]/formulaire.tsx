@@ -5,6 +5,7 @@ import { useFormStatus } from "react-dom";
 import { enregistrerModule, type Etat } from "@/app/admin/actions";
 import { AIDE, CHAMP, LABEL } from "@/components/champs";
 import type { Module } from "@/lib/donnees";
+import { pourChampGmt } from "@/lib/formats";
 
 const DEPART: Etat = { ok: false, message: "" };
 
@@ -68,6 +69,27 @@ export function FormulaireModule({ module }: { module: Module }) {
           <option value="gratuit">Gratuit — ouvert à tous les inscrits</option>
           <option value="paye">Masterclass — réservé aux acheteurs</option>
         </select>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <label htmlFor="publie_le" className={LABEL}>
+          Ouverture
+        </label>
+        <input
+          id="publie_le"
+          name="publie_le"
+          type="datetime-local"
+          defaultValue={pourChampGmt(module.publie_le)}
+          className={CHAMP}
+        />
+        <p className={AIDE}>
+          Vide, le module s&apos;ouvre dès qu&apos;il est publié. Avec une date
+          à venir, il devient <strong>« À venir »</strong> : son titre, son
+          résumé et le sommaire de ses leçons restent visibles, mais rien ne
+          s&apos;ouvre — ni leçon, ni TP, ni quiz.{" "}
+          <strong>L&apos;heure se saisit en GMT</strong>, comme tout le reste
+          de la formation.
+        </p>
       </div>
 
       <label className="flex cursor-pointer items-start gap-3 border border-bord bg-fond-2 px-4 py-[14px]">

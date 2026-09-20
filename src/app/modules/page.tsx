@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { EnteteApp } from "@/components/entete-app";
 import { listerModules, sommaireModule, leconsTerminees } from "@/lib/donnees";
+import { aVenir, formaterOuvertureCourt } from "@/lib/formats";
 import { listerTps } from "@/lib/tp";
 import { profilCourant } from "@/lib/profil";
 
@@ -42,8 +43,9 @@ export default async function PageModules() {
         </h1>
         <p className="mb-9 max-w-[34rem] text-[1.04rem] text-texte-2">
           Commencez par le module 0 : il vous dit où vous en êtes et règle
-          votre machine. Les quatre premiers sont ouverts à tout le monde ; les
-          suivants s&apos;ouvrent avec la masterclass.
+          votre machine. Les modules 1 à 3 sont gratuits et s&apos;ouvrent
+          chacun le soir de leur direct ; les suivants s&apos;ouvrent avec la
+          masterclass.
         </p>
 
         {avec.length === 0 ? (
@@ -56,6 +58,10 @@ export default async function PageModules() {
             {avec.map(({ module: m, total, faites, verrouillees }) => {
               const pret = total > 0;
               const fini = pret && faites === total;
+              //  Un module programmé n'est ni ouvert ni payant : c'est un
+              //  troisième état, et il doit dire sa date plutôt qu'un
+              //  cadenas muet.
+              const bientot = aVenir(m.publie_le);
               return (
                 <li key={m.id} className="border-b border-bord">
                   <Link
@@ -68,10 +74,18 @@ export default async function PageModules() {
                       </span>
                       <span
                         className={`font-mono text-[10px] tracking-[0.1em] uppercase ${
-                          m.acces === "gratuit" ? "text-accent-texte" : "text-texte-3"
+                          bientot
+                            ? "text-texte-2"
+                            : m.acces === "gratuit"
+                              ? "text-accent-texte"
+                              : "text-texte-3"
                         }`}
                       >
-                        {m.acces === "gratuit" ? "Ouvert" : "Masterclass"}
+                        {bientot
+                          ? "À venir"
+                          : m.acces === "gratuit"
+                            ? "Ouvert"
+                            : "Masterclass"}
                       </span>
                     </span>
 
@@ -92,7 +106,11 @@ export default async function PageModules() {
                     </span>
 
                     <span className="font-mono text-[11px] whitespace-nowrap tabular-nums text-texte-2">
-                      {pret ? (
+                      {bientot ? (
+                        <span className="text-texte-2">
+                          {formaterOuvertureCourt(m.publie_le)}
+                        </span>
+                      ) : pret ? (
                         fini ? (
                           <span className="text-accent-texte">terminé</span>
                         ) : (

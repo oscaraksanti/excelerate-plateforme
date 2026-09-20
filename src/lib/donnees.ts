@@ -7,6 +7,8 @@ export type Module = {
   resume: string;
   acces: "gratuit" | "paye";
   publie: boolean;
+  /** Nulle = ouvert. Dans le futur = annonce, mais rien ne s'ouvre. */
+  publie_le: string | null;
 };
 
 export type Lecon = {
@@ -41,7 +43,7 @@ export type Commentaire = {
   profils: { nom: string } | null;
 };
 
-const CHAMPS_MODULE = "id, numero, titre, resume, acces, publie";
+const CHAMPS_MODULE = "id, numero, titre, resume, acces, publie, publie_le";
 const CHAMPS_LECON =
   "id, module_id, numero, titre, video_source, video_id, duree_min, corps_md, accroche, acces, publie_le, publie";
 

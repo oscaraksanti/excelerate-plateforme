@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PiedPage } from "@/components/pied-page";
 import { InscriptionRapide } from "@/components/inscription-rapide";
 import { lireDirectPublic, formaterDebut } from "@/lib/direct";
+import { placesBonus } from "@/lib/places";
 import { SITE } from "./layout";
 
 export const metadata: Metadata = {
@@ -229,6 +230,17 @@ function donneesStructurees() {
               "Les modules 4 à 10, le projet final, la correction entre pairs et "
               + "le certificat vérifiable. Paiement unique.",
           },
+          {
+            "@type": "Offer",
+            category: "Paid",
+            price: 97,
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+            url: SITE,
+            description:
+              "Le cercle : toute la masterclass, plus quatre séances de groupe "
+              + "en direct avec l'instructeur et un canal privé.",
+          },
         ],
       },
       {
@@ -246,6 +258,7 @@ function donneesStructurees() {
 
 export default async function Accueil() {
   const direct = await lireDirectPublic();
+  const places = await placesBonus();
 
   return (
     <>
@@ -560,8 +573,75 @@ export default async function Accueil() {
                 </strong>
                 .
               </p>
+              <ul className="mt-5 mb-0 flex list-none flex-col gap-[7px] p-0 text-[0.92rem] leading-[1.45] text-texte-2">
+                {[
+                  "L'accès à vie, et toutes les vidéos à mesure qu'elles sortent",
+                  "La bibliothèque de prompts de la formation",
+                  "Les 11 classeurs corrigés et commentés",
+                  "Le modèle de tableau de bord, à brancher sur vos données",
+                  "Garanti 30 jours, remboursé sans question",
+                ].map((b) => (
+                  <li key={b} className="flex items-baseline gap-[10px]">
+                    <span
+                      aria-hidden="true"
+                      className="mt-[1px] h-[7px] w-[7px] shrink-0 rounded-[1px] bg-voltage"
+                    />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
+
+          {/* ── Le cercle ─────────────────────────────────── */}
+          <div className="mt-5 rounded-[10px] border border-bord p-6 sm:flex sm:items-start sm:justify-between sm:gap-8">
+            <div className="max-w-[34rem]">
+              <p className="etiquette mb-3">La masterclass, accompagnée</p>
+              <p className="titre-m m-0 text-[1.3rem] text-texte">Le cercle</p>
+              <p className="mt-3 mb-0 text-[0.96rem] leading-[1.55] text-texte-2">
+                Tout ce que contient la masterclass, et quatre séances de
+                groupe de 90 minutes avec Oscar, une par semaine à partir du
+                28 septembre. On y corrige des copies réelles à l&apos;écran —
+                on apprend autant de celle des autres que de la sienne. Plus un
+                canal privé où il répond.
+              </p>
+            </div>
+            <p className="titre-xl mt-5 mb-0 shrink-0 text-[2rem] sm:mt-0">
+              97 $
+            </p>
+          </div>
+
+          {places && (
+            <div className="plage mt-8 px-6 py-5">
+              <span className="etiquette mb-2 block">
+                {places.restantes === 0
+                  ? "Les dix places sont prises"
+                  : places.prises === 0
+                    ? `Les ${places.total} premières places`
+                    : `Il reste ${places.restantes} place${places.restantes > 1 ? "s" : ""} sur ${places.total}`}
+              </span>
+              <p className="m-0 max-w-[33rem] text-[1.02rem] leading-[1.55]">
+                {places.restantes === 0 ? (
+                  <>
+                    Oscar a relu personnellement le projet final des dix
+                    premières personnes. Le reste de la masterclass est
+                    inchangé, et le prix aussi.
+                  </>
+                ) : (
+                  <>
+                    Oscar relit <strong className="font-semibold text-texte">
+                    personnellement</strong> le projet final des{" "}
+                    {places.total} premières personnes qui prennent la
+                    masterclass ou le cercle — un retour écrit, sur votre
+                    fichier, pas une note automatique. Elles passent aussi en
+                    premier dans les directs. Dix, parce qu&apos;il ne peut pas
+                    en faire onze.
+                  </>
+                )}
+              </p>
+              <span className="poignee" aria-hidden="true" />
+            </div>
+          )}
 
           <p className="mt-6 max-w-[34rem] text-[0.93rem] text-texte-3">
             Vous décidez après avoir fait les quatre modules gratuits. C&apos;est

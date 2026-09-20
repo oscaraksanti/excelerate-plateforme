@@ -22,6 +22,55 @@ export function formaterDate(iso: string | null): string {
   });
 }
 
+/* ── Les dates d'ouverture ────────────────────────────────────────
+   Toute la formation parle en GMT : les directs, le calendrier, les
+   e-mails. Ces trois fonctions forcent donc UTC au lieu de suivre le
+   fuseau du serveur ou celui du navigateur — sans quoi « 21 h » ne
+   voudrait pas dire la même chose selon qui regarde. */
+
+/** « lundi 21 septembre à 21 h GMT » */
+export function formaterOuverture(iso: string | null): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  const jour = d.toLocaleString("fr-FR", {
+    timeZone: "UTC",
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
+  const m = d.getUTCMinutes();
+  const heure = m === 0
+    ? `${d.getUTCHours()} h`
+    : `${d.getUTCHours()} h ${String(m).padStart(2, "0")}`;
+  return `${jour} à ${heure} GMT`;
+}
+
+/** « 21 sept. · 21 h GMT » — pour une pastille etroite. */
+export function formaterOuvertureCourt(iso: string | null): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  const jour = d.toLocaleString("fr-FR", {
+    timeZone: "UTC",
+    day: "numeric",
+    month: "short",
+  });
+  return `${jour} · ${d.getUTCHours()} h GMT`;
+}
+
+/** Cette date est-elle encore devant nous ? */
+export function aVenir(iso: string | null, maintenant = Date.now()): boolean {
+  return Boolean(iso) && new Date(iso as string).getTime() > maintenant;
+}
+
+/** Format attendu par un champ datetime-local, lu et écrit en GMT. */
+export function pourChampGmt(iso: string | null): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  const p = (n: number) => String(n).padStart(2, "0");
+  return `${d.getUTCFullYear()}-${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())}`
+    + `T${p(d.getUTCHours())}:${p(d.getUTCMinutes())}`;
+}
+
 /** Format attendu par un champ datetime-local. */
 export function pourChampDate(iso: string | null): string {
   if (!iso) return "";
