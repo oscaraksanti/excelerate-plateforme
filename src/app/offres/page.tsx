@@ -3,6 +3,7 @@ import Link from "next/link";
 import { EnteteApp } from "@/components/entete-app";
 import { PiedPage } from "@/components/pied-page";
 import { certificatMerite, listerProduits, mesAchats, mesConditions } from "@/lib/offres";
+import { placesBonus } from "@/lib/places";
 import { profilCourant } from "@/lib/profil";
 
 export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Aller plus loin" };
@@ -15,6 +16,7 @@ export default async function PageOffres() {
     mesAchats(),
   ]);
 
+  const places = await placesBonus();
   const visibles = produits.filter((p) => p.actif || profil.role === "admin");
   const dejaAchete = new Set(achats.map((a) => a.produit));
   const merite = certificatMerite(conditions);
@@ -148,6 +150,29 @@ export default async function PageOffres() {
               );
             })}
           </div>
+
+          {profil.email && (
+            <p className="mt-7 max-w-[35rem] border-l-[3px] border-[color:var(--voltage-2)] bg-fond-2 px-4 py-3 text-[0.95rem] leading-[1.5] text-texte">
+              Au moment de payer, utilisez cette adresse :{" "}
+              <strong className="font-semibold break-all">{profil.email}</strong>.
+              C&apos;est elle qui ouvre vos accès, automatiquement. Avec une
+              autre, il faudra nous écrire — ça se répare, mais ça prend du
+              temps que vous n&apos;avez pas envie de perdre.
+            </p>
+          )}
+
+          {places && places.restantes > 0 && (
+            <p className="mt-5 max-w-[35rem] text-[0.95rem] leading-[1.5] text-texte-2">
+              <strong className="font-semibold text-texte">
+                {places.prises === 0
+                  ? `Les ${places.total} premières places`
+                  : `Il reste ${places.restantes} place${places.restantes > 1 ? "s" : ""} sur ${places.total}`}
+              </strong>{" "}
+              : Oscar relit personnellement le projet final des{" "}
+              {places.total} premiers acheteurs, et ils passent en premier dans
+              les directs.
+            </p>
+          )}
 
           <p className="mt-9 max-w-[35rem] text-[0.92rem] text-texte-3">
             Le paiement passe par Chariow, en mobile money ou par carte. Ton

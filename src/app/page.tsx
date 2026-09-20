@@ -343,13 +343,61 @@ export default async function Accueil() {
           <InscriptionRapide />
         </section>
 
-        <p className="mb-16 max-w-[34rem] text-[0.95rem] text-texte-2">
+        <p className="mb-10 max-w-[34rem] text-[0.95rem] text-texte-2">
           Vous arrivez directement sur la première leçon.{" "}
           <strong className="font-semibold text-texte">
             Les quatre premiers modules sont gratuits
           </strong>{" "}
           — et ils le restent.
         </p>
+
+        {/* ── Comment ça marche ─────────────────────────────── */}
+        {/*  Une chronologie, pas une liste de traits : l'ordre porte
+            l'information. Dire le prix ici, tôt, le transforme en
+            réassurance — c'est l'inverse de le cacher jusqu'au
+            module 4, qui se vit comme une embuscade. */}
+        <section className="mb-16">
+          <ol className="m-0 grid list-none gap-0 border-t border-bord p-0 sm:grid-cols-3">
+            {[
+              {
+                quand: "Maintenant",
+                quoi: "Votre prénom, votre adresse, et vous êtes sur la première leçon. Aucune carte bancaire.",
+              },
+              {
+                quand: "Du 21 au 23 septembre",
+                quoi: "Un module par soir, gratuit. Chacun s'ouvre à 21 h GMT, juste après le direct.",
+              },
+              {
+                quand: "À partir du 24",
+                quoi: "Vous décidez. 37 $ une fois pour les sept modules restants, le projet final et le certificat.",
+              },
+            ].map((e, i) => (
+              <li
+                key={e.quand}
+                className="border-b border-bord py-5 sm:border-b-0 sm:border-r sm:px-5 sm:py-4 sm:first:pl-0 sm:last:border-r-0"
+              >
+                <span className="font-mono text-[10px] tracking-[0.12em] text-texte-3 tabular-nums">
+                  0{i + 1}
+                </span>
+                <span className="mt-[6px] block text-[0.99rem] font-semibold text-texte">
+                  {e.quand}
+                </span>
+                <span className="mt-[5px] block text-[0.92rem] leading-[1.5] text-texte-2">
+                  {e.quoi}
+                </span>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-5 max-w-[36rem] text-[0.92rem] leading-[1.5] text-texte-3">
+            Pas d&apos;abonnement, rien à reconduire, et{" "}
+            <strong className="font-semibold text-texte-2">
+              le prix ne monte jamais
+            </strong>
+            . Vous ne payez qu&apos;après avoir fait quatre modules entiers —
+            personne ne devrait payer pour une formation qu&apos;il n&apos;a
+            pas essayée.
+          </p>
+        </section>
 
         {/* ── Ce que ça change ──────────────────────────────── */}
         <section className="border-t-2 border-texte pt-5">
