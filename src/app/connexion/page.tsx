@@ -25,11 +25,12 @@ export default async function PageConnexion({
         </Link>
 
         <h1 className="titre-xl m-0 mb-5 text-[clamp(2rem,5vw,3rem)]">
-          Se connecter
+          Accéder à la formation
         </h1>
         <p className="mb-9 max-w-[30rem] text-[1.08rem] text-texte-2">
-          Ton compte existe déjà si tu t&apos;es inscrit à l&apos;atelier. Entre
-          la même adresse et tu recevras ton lien.
+          Ton prénom, ton adresse, et tu reçois un lien pour entrer — c&apos;est
+          tout. Si tu t&apos;es déjà inscrit à l&apos;atelier, mets la même
+          adresse : ton compte est déjà là et tu le retrouves.
         </p>
 
         <FormulaireConnexion suite={destination} probleme={probleme} />

@@ -57,6 +57,25 @@ export function FormulaireConnexion({
       <input type="hidden" name="suite" value={suite} />
 
       <div className="flex flex-col gap-2">
+        <label htmlFor="nom" className="etiquette">
+          Ton prénom
+        </label>
+        <input
+          id="nom"
+          name="nom"
+          type="text"
+          autoComplete="given-name"
+          required
+          maxLength={80}
+          placeholder="Aïcha"
+          className="w-full rounded-[2px] border border-bord bg-fond px-[14px] py-[13px] text-[16px] text-texte outline-none placeholder:text-texte-3 focus:border-texte-2"
+        />
+        <p className="m-0 text-[0.88rem] text-texte-3">
+          C&apos;est lui qui figurera sur ton certificat.
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-2">
         <label htmlFor="email" className="etiquette">
           Ton adresse email
         </label>
@@ -72,8 +91,8 @@ export function FormulaireConnexion({
           className="w-full rounded-[2px] border border-bord bg-fond px-[14px] py-[13px] text-[16px] text-texte outline-none placeholder:text-texte-3 focus:border-texte-2"
         />
         <p className="m-0 text-[0.88rem] text-texte-3">
-          Utilise l&apos;adresse avec laquelle tu t&apos;es inscrit à
-          l&apos;atelier.
+          Déjà inscrit à l&apos;atelier ? Mets la même adresse. Sinon, la
+          tienne : le compte se crée tout seul.
         </p>
       </div>
 
