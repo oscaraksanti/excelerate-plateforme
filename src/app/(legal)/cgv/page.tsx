@@ -70,15 +70,23 @@ export default function Cgv() {
         supplément.
       </p>
 
-      <h2>La garantie de satisfaction</h2>
+      <h2>Essayer avant de payer</h2>
       <p>
-        <strong>Quatorze jours.</strong> Si la formation ne te convient pas,
-        écris-nous dans les quatorze jours suivant ton achat et nous te
-        remboursons intégralement, sans avoir à te justifier.
+        <strong>Les modules 0 à 3 sont gratuits et complets</strong> : vingt
+        leçons, leurs travaux pratiques et leurs QCM, sans carte bancaire et
+        sans limite de durée. Tu juges la formation sur un quart de son
+        contenu avant de sortir un centime. L&apos;essai précède l&apos;achat,
+        et c&apos;est le bon ordre.
       </p>
       <p>
-        Une seule limite, de bon sens : la demande doit précéder l&apos;obtention
-        d&apos;un certificat. Un certificat délivré vaut travail validé.
+        L&apos;accès aux modules payants s&apos;ouvre immédiatement et en
+        totalité après le paiement. <strong>La vente est donc ferme</strong>,
+        et nous te le disons avant que tu paies plutôt qu&apos;après.
+      </p>
+      <p>
+        Une exception, qui va de soi : si un problème de notre côté
+        t&apos;empêche d&apos;accéder à ce que tu as payé, écris-nous. Nous le
+        réglons — et si nous n&apos;y parvenons pas, nous te remboursons.
       </p>
 
       <h2>Le certificat</h2>

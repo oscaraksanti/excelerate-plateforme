@@ -639,7 +639,6 @@ export default async function Accueil() {
                   "La bibliothèque de prompts de la formation",
                   "Les 11 classeurs corrigés et commentés",
                   "Le modèle de tableau de bord, à brancher sur vos données",
-                  "Garanti 30 jours, remboursé sans question",
                 ].map((b) => (
                   <li key={b} className="flex items-baseline gap-[10px]">
                     <span
