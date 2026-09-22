@@ -6,11 +6,6 @@ import { statsQcm } from "@/lib/qcm";
 
 export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Tableau de bord" };
 
-const NET: Record<string, number> = {
-  certificat27: 24.3,
-  masterclass37: 33.3,
-  coaching97: 87.3,
-};
 
 function pourcent(a: number, b: number) {
   if (!b) return "—";

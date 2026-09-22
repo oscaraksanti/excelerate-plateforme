@@ -20,9 +20,17 @@ export function BandeauDirect({ direct }: { direct: Direct }) {
   const [maintenant, setMaintenant] = useState<number | null>(null);
 
   useEffect(() => {
-    setMaintenant(Date.now());
-    const t = setInterval(() => setMaintenant(Date.now()), 1000);
-    return () => clearInterval(t);
+    const battre = () => setMaintenant(Date.now());
+    const minuterie = setInterval(battre, 1000);
+    //  La première mesure est différée d'un tour de boucle plutôt que
+    //  posée dans le corps de l'effet : on la veut après la validation
+    //  du rendu, pas pendant — sans quoi le montage déclenche un
+    //  second rendu en cascade. L'écart ne se voit pas.
+    const amorce = setTimeout(battre, 0);
+    return () => {
+      clearInterval(minuterie);
+      clearTimeout(amorce);
+    };
   }, []);
 
   if (maintenant === null) return null;

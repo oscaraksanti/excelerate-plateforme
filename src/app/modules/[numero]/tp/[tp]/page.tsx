@@ -28,10 +28,10 @@ export default async function PageTp({ params }: Params) {
   if (!Number.isInteger(nModule) || !Number.isInteger(nTp)) notFound();
 
   const profil = await profilCourant();
-  const module = await lireModule(nModule);
-  if (!module) notFound();
+  const leModule = await lireModule(nModule);
+  if (!leModule) notFound();
 
-  const tp = await lireTp(module.id, nTp);
+  const tp = await lireTp(leModule.id, nTp);
   if (!tp) notFound();
 
   const copie = await maCopie(tp.id);
@@ -40,7 +40,7 @@ export default async function PageTp({ params }: Params) {
   const leve = copie ? await verrouLeve(tp.id) : false;
   const recues = copie && leve ? await corrections_recues(copie.id) : [];
   const criteres = criteresDe(tp.criteres);
-  const chemin = `/modules/${module.numero}/tp/${tp.numero}`;
+  const chemin = `/modules/${leModule.numero}/tp/${tp.numero}`;
   const resultat = copie?.detail_machine as Resultat | null;
 
   return (
@@ -50,10 +50,10 @@ export default async function PageTp({ params }: Params) {
 
       <main className="relative z-1 mx-auto max-w-[1000px] px-6 pt-12 pb-24">
         <Link
-          href={`/modules/${module.numero}`}
+          href={`/modules/${leModule.numero}`}
           className="etiquette mb-6 inline-block hover:text-texte"
         >
-          ← Module {module.numero} · {module.titre}
+          ← Module {leModule.numero} · {leModule.titre}
         </Link>
 
         <p className="etiquette mb-2">Travail pratique {tp.numero}</p>

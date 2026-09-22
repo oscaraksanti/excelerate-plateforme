@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import * as XLSX from "xlsx";
 import { importerInscrits, type Bilan } from "./actions";
@@ -41,13 +41,19 @@ export function FormulaireImport() {
   const [erreur, setErreur] = useState("");
   const champ = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
+  //  useActionState rend un objet neuf à chaque envoi. On s'en sert
+  //  comme d'un jeton, et on ajuste l'état pendant le rendu : c'est ce
+  //  que React recommande pour dériver un état, et ça évite le rendu
+  //  en cascade d'un setState posé dans un effet.
+  const [vu, setVu] = useState<Bilan>(DEPART);
+  if (etat !== vu) {
+    setVu(etat);
     if (etat.ok) {
       setBrutes([]);
       setEntetes([]);
       setNomFichier("");
     }
-  }, [etat]);
+  }
 
   async function lire(fichier: File) {
     setErreur("");

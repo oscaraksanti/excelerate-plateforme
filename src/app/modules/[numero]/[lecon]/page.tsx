@@ -36,14 +36,13 @@ export default async function PageLecon({ params }: Params) {
   if (!Number.isInteger(nModule) || !Number.isInteger(nLecon)) notFound();
 
   const profil = await profilCourant();
-  const module = await lireModule(nModule);
-  if (!module) notFound();
+  const leModule = await lireModule(nModule);
+  if (!leModule) notFound();
 
-  const courante = await lireLecon(module.id, nLecon);
+  const courante = await lireLecon(leModule.id, nLecon);
   if (!courante) notFound();
 
-  const sommaire = await sommaireModule(module.id);
-  const rang = sommaire.findIndex((l) => l.id === courante.id);
+  const sommaire = await sommaireModule(leModule.id);
   const ouvrables = sommaire.filter((l) => !l.verrouille);
   const place = ouvrables.findIndex((l) => l.id === courante.id);
   const precedente = place > 0 ? ouvrables[place - 1] : null;
@@ -57,7 +56,7 @@ export default async function PageLecon({ params }: Params) {
     enregistrerPassage(courante.id),
   ]);
 
-  const chemin = `/modules/${module.numero}/${courante.numero}`;
+  const chemin = `/modules/${leModule.numero}/${courante.numero}`;
   const corps = rendreMarkdown(courante.corps_md);
 
   return (
@@ -65,15 +64,15 @@ export default async function PageLecon({ params }: Params) {
       <EnteteApp nom={profil.nom} admin={profil.role === "admin"} />
 
       <div className="mx-auto grid max-w-[1160px] grid-cols-1 gap-10 px-6 pt-8 pb-24 lg:grid-cols-[248px_minmax(0,1fr)]">
-        {/* ── Sommaire du module ─────────────────────────────── */}
+        {/* ── Sommaire du leModule ─────────────────────────────── */}
         <aside className="lg:sticky lg:top-[64px] lg:self-start">
           <Link
-            href={`/modules/${module.numero}`}
+            href={`/modules/${leModule.numero}`}
             className="etiquette mb-3 inline-block hover:text-texte"
           >
-            ← Module {module.numero}
+            ← Module {leModule.numero}
           </Link>
-          <p className="titre-m m-0 mb-4 text-[1.02rem]">{module.titre}</p>
+          <p className="titre-m m-0 mb-4 text-[1.02rem]">{leModule.titre}</p>
 
           <ol className="m-0 flex list-none flex-col gap-0 border-t border-bord p-0">
             {sommaire.map((l) => {
@@ -90,7 +89,7 @@ export default async function PageLecon({ params }: Params) {
                     </span>
                   ) : (
                     <Link
-                      href={`/modules/${module.numero}/${l.numero}`}
+                      href={`/modules/${leModule.numero}/${l.numero}`}
                       aria-current={ici ? "page" : undefined}
                       className={`flex items-start gap-[10px] border-b border-bord-2 py-[11px] pr-2 pl-3 text-[0.9rem] transition-colors ${
                         ici
@@ -187,7 +186,7 @@ export default async function PageLecon({ params }: Params) {
             <div className="flex items-center gap-3">
               {precedente && (
                 <Link
-                  href={`/modules/${module.numero}/${precedente.numero}`}
+                  href={`/modules/${leModule.numero}/${precedente.numero}`}
                   className="bouton-2"
                 >
                   ← Précédente
@@ -195,7 +194,7 @@ export default async function PageLecon({ params }: Params) {
               )}
               {suivante && (
                 <Link
-                  href={`/modules/${module.numero}/${suivante.numero}`}
+                  href={`/modules/${leModule.numero}/${suivante.numero}`}
                   className="bouton-2"
                 >
                   Suivante →

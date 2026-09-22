@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 type Choix = "clair" | "sombre" | "systeme";
 const CLE = "excelai-theme";
@@ -17,30 +17,47 @@ export function appliquerTheme(choix: Choix) {
   else racine.setAttribute("data-theme", choix === "clair" ? "light" : "dark");
 }
 
-export function SelecteurTheme() {
-  const [choix, setChoix] = useState<Choix>("systeme");
-  const [monte, setMonte] = useState(false);
+/* ── Le choix, lu là où il vit vraiment ────────────────────────────
+   Le stockage local est un système extérieur à React. Le lire dans un
+   effet pour le recopier dans un état marchait, mais provoquait un
+   second rendu à chaque montage. useSyncExternalStore est fait pour
+   exactement ça — et son troisième argument, « systeme », est ce que
+   rend le serveur, ce qui garantit que l'hydratation coïncide sans
+   avoir à traîner un drapeau « monté ». */
 
-  useEffect(() => {
-    let enregistre: Choix = "systeme";
-    try {
-      const v = localStorage.getItem(CLE);
-      if (v === "clair" || v === "sombre" || v === "systeme") enregistre = v;
-    } catch {
-      /* navigation privée, stockage refusé : on reste sur « système » */
-    }
-    setChoix(enregistre);
-    setMonte(true);
-  }, []);
+const abonnes = new Set<() => void>();
+
+function abonner(prevenir: () => void) {
+  abonnes.add(prevenir);
+  return () => {
+    abonnes.delete(prevenir);
+  };
+}
+
+function lireChoix(): Choix {
+  try {
+    const v = localStorage.getItem(CLE);
+    if (v === "clair" || v === "sombre" || v === "systeme") return v;
+  } catch {
+    /* navigation privée, stockage refusé : on reste sur « système » */
+  }
+  return "systeme";
+}
+
+const DEFAUT: Choix = "systeme";
+const lireDefaut = () => DEFAUT;
+
+export function SelecteurTheme() {
+  const choix = useSyncExternalStore(abonner, lireChoix, lireDefaut);
 
   function changer(v: Choix) {
-    setChoix(v);
     appliquerTheme(v);
     try {
       localStorage.setItem(CLE, v);
     } catch {
       /* sans conséquence : le thème s'applique quand même pour cette visite */
     }
+    for (const prevenir of abonnes) prevenir();
   }
 
   return (
@@ -50,7 +67,7 @@ export function SelecteurTheme() {
       className="flex items-center gap-[2px] rounded-[6px] border border-bord p-[2px]"
     >
       {OPTIONS.map((o) => {
-        const actif = monte && choix === o.valeur;
+        const actif = choix === o.valeur;
         return (
           <button
             key={o.valeur}

@@ -24,15 +24,15 @@ export default async function PageModule({ params }: Params) {
   if (!Number.isInteger(n)) notFound();
 
   const profil = await profilCourant();
-  const module = await lireModule(n);
-  if (!module) notFound();
+  const leModule = await lireModule(n);
+  if (!leModule) notFound();
 
-  const lecons = await sommaireModule(module.id);
+  const lecons = await sommaireModule(leModule.id);
   const terminees = await leconsTerminees();
-  const tps = (await listerTps(module.id)).filter(
+  const tps = (await listerTps(leModule.id)).filter(
     (t) => t.publie || profil.role === "admin",
   );
-  const questions = await monQcm(module.id);
+  const questions = await monQcm(leModule.id);
 
   return (
     <>
@@ -47,24 +47,24 @@ export default async function PageModule({ params }: Params) {
           ← Tous les modules
         </Link>
 
-        <p className="etiquette mb-2">Module {module.numero}</p>
+        <p className="etiquette mb-2">Module {leModule.numero}</p>
         <h1 className="titre-xl m-0 mb-4 text-[clamp(1.8rem,4.4vw,2.6rem)]">
-          {module.titre}
+          {leModule.titre}
         </h1>
-        {module.resume && (
+        {leModule.resume && (
           <p className="mb-9 max-w-[34rem] text-[1.04rem] text-texte-2">
-            {module.resume}
+            {leModule.resume}
           </p>
         )}
 
-        {aVenir(module.publie_le) && (
+        {aVenir(leModule.publie_le) && (
           <div className="plage mb-9 px-6 py-5">
-            <span className="etiquette mb-2 block">Ce module ouvre bientôt</span>
+            <span className="etiquette mb-2 block">Ce leModule ouvre bientôt</span>
             <p className="m-0 max-w-[32rem] text-[1.02rem] leading-[1.5]">
               Le sommaire ci-dessous est bien le sien : vous pouvez voir ce
               qui vous attend. Il s&apos;ouvre{" "}
               <strong className="font-semibold text-texte">
-                {formaterOuverture(module.publie_le)}
+                {formaterOuverture(leModule.publie_le)}
               </strong>
               , juste après le direct.
             </p>
@@ -76,7 +76,7 @@ export default async function PageModule({ params }: Params) {
           <div className="plage px-6 py-5">
             <span className="etiquette mb-2 block">Pas encore de leçon</span>
             <p className="m-0 max-w-[30rem] text-[1.02rem] leading-[1.5]">
-              Le contenu de ce module est publié le soir même, juste après le
+              Le contenu de ce leModule est publié le soir même, juste après le
               direct.
             </p>
             <span className="poignee" aria-hidden="true" />
@@ -130,7 +130,7 @@ export default async function PageModule({ params }: Params) {
                     </span>
                   ) : (
                     <Link
-                      href={`/modules/${module.numero}/${l.numero}`}
+                      href={`/modules/${leModule.numero}/${l.numero}`}
                       className="flex items-center gap-4 py-[18px] transition-colors hover:bg-fond-2"
                     >
                       {corps}
@@ -167,7 +167,7 @@ export default async function PageModule({ params }: Params) {
               {tps.map((t) => (
                 <li key={t.id} className="border-b border-bord">
                   <Link
-                    href={`/modules/${module.numero}/tp/${t.numero}`}
+                    href={`/modules/${leModule.numero}/tp/${t.numero}`}
                     className="flex items-center justify-between gap-4 py-[16px] transition-colors hover:bg-fond-2"
                   >
                     <span className="min-w-0 text-[1.02rem] font-medium text-texte">
