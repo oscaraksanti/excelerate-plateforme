@@ -1,25 +1,47 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { SCRIPT_THEME } from "@/components/theme";
 import "./globals.css";
 
-const archivo = Archivo({
-  subsets: ["latin"],
-  axes: ["wdth"],
+/* ── Les polices, servies depuis le dépôt ──────────────────────────
+   `next/font/google` télécharge les fichiers depuis Google pendant le
+   build. Le 21 septembre à 20 h 51, cette requête a échoué chez Vercel
+   et le déploiement est mort dessus — la plateforme est restée quinze
+   heures sans le correctif qu'elle attendait.
+
+   Les mêmes fichiers sont maintenant dans le dépôt : 204 Ko, latin
+   seul, exactement ceux que Google servait. Le build ne dépend plus
+   d'aucun réseau, et le rendu est identique — l'Archivo rapatriée est
+   bien la variable, axes wght 100-900 et wdth 62-125, dont
+   globals.css se sert pour ses titres. */
+
+const archivo = localFont({
+  src: "./polices/archivo-variable.woff2",
+  weight: "100 900",
+  //  Sans cette déclaration, le navigateur ignore l'axe de largeur et
+  //  `font-variation-settings: "wdth" 108` reste sans effet.
+  declarations: [{ prop: "font-stretch", value: "62% 125%" }],
   variable: "--police-dsp",
   display: "swap",
 });
 
-const plexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const plexSans = localFont({
+  src: [
+    { path: "./polices/plex-sans-400.woff2", weight: "400", style: "normal" },
+    { path: "./polices/plex-sans-500.woff2", weight: "500", style: "normal" },
+    { path: "./polices/plex-sans-600.woff2", weight: "600", style: "normal" },
+    { path: "./polices/plex-sans-700.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--police-sans",
   display: "swap",
 });
 
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+const plexMono = localFont({
+  src: [
+    { path: "./polices/plex-mono-400.woff2", weight: "400", style: "normal" },
+    { path: "./polices/plex-mono-500.woff2", weight: "500", style: "normal" },
+    { path: "./polices/plex-mono-600.woff2", weight: "600", style: "normal" },
+  ],
   variable: "--police-mono",
   display: "swap",
 });
