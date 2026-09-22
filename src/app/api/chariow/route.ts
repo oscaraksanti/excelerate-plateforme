@@ -187,24 +187,37 @@ export async function POST(requete: NextRequest) {
     return NextResponse.json({ erreur: "Champs manquants", recu: true }, { status: 202 });
   }
 
-  //  Quel produit ? La table fait foi, jamais la notification.
-  let produit = "masterclass37";
-  let montantAttendu: number | null = null;
-  let titre = "la masterclass";
-  if (refProduit) {
-    const { data } = await admin
-      .from("produits")
-      .select("produit, montant, titre")
-      .eq("ref", refProduit)
-      .maybeSingle();
-    if (data) {
-      produit = data.produit;
-      montantAttendu = data.montant;
-      titre = data.titre;
-    } else {
-      console.warn(`[pulse] produit inconnu « ${refProduit} » — masterclass par défaut`);
-    }
+  //  Quel produit ? La table fait foi, jamais la notification — et
+  //  un produit qu'elle ne connaît pas n'ouvre RIEN.
+  //
+  //  La version précédente retombait sur la masterclass par défaut.
+  //  C'était une porte grande ouverte : la boutique Chariow vend dix
+  //  produits, dont six étrangers à cette plateforme, et le Pulse se
+  //  déclenche pour tous. Acheter « Introduction au marketing
+  //  digital » à 1 $ aurait ouvert la formation Excel à 37 $.
+  //
+  //  On journalise et on répond 200 — la vente existe, elle n'est
+  //  simplement pas la nôtre. Chariow n'a pas à réessayer.
+  if (!refProduit) {
+    await conclure("aucune référence produit — voir charge_utile", false);
+    return NextResponse.json({ erreur: "Produit absent", recu: true }, { status: 202 });
   }
+
+  const { data: fiche } = await admin
+    .from("produits")
+    .select("produit, montant, titre")
+    .eq("ref", refProduit)
+    .maybeSingle();
+
+  if (!fiche) {
+    console.warn(`[pulse] produit étranger à la plateforme : ${refProduit} — aucun accès ouvert`);
+    await conclure(`produit non reconnu : ${refProduit} — aucun accès ouvert`, false);
+    return NextResponse.json({ ok: true, ignore: "produit inconnu" });
+  }
+
+  const produit = fiche.produit;
+  const montantAttendu: number | null = fiche.montant;
+  const titre = fiche.titre;
 
   const { data: profil } = await admin
     .from("profils")
