@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { nomComplet } from "@/lib/formats";
 import { clientServeur } from "@/lib/supabase/serveur";
 import { normaliserTelephone } from "@/lib/telephone";
 
@@ -13,8 +14,12 @@ export async function enregistrerProfil(
   const nom = String(donnees.get("nom") ?? "").trim().replace(/\s+/g, " ");
   const telBrut = String(donnees.get("telephone") ?? "").trim();
 
-  if (nom.length < 2) {
-    return { ok: false, message: "Indique ton nom complet, tel qu'il doit apparaître sur le certificat." };
+  if (!nomComplet(nom)) {
+    return {
+      ok: false,
+      message:
+        "Indique ton nom complet — prénom et nom — tel qu'il doit apparaître sur le certificat.",
+    };
   }
   if (nom.length > 80) {
     return { ok: false, message: "Ce nom est trop long (80 caractères au maximum)." };

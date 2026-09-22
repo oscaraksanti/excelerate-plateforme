@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { nomComplet } from "@/lib/formats";
 import { clientServeur } from "@/lib/supabase/serveur";
 
 export type EtatConnexion = {
@@ -22,10 +23,15 @@ export async function envoyerLien(
   if (!EMAIL_VALIDE.test(email)) {
     return { ok: false, message: "Cette adresse ne ressemble pas à un email." };
   }
-  // Le nom n'est demandé que sur la page d'accueil. Quand il l'est, on
-  // le veut utilisable : « a » n'est pas un prénom.
-  if (donnees.has("nom") && nom.length < 2) {
-    return { ok: false, message: "Écris ton prénom, au moins — c'est ce qui figurera sur ton certificat." };
+  //  Quand le nom est demandé, on le veut utilisable sur un certificat.
+  //  Sur les 654 premiers comptes, 438 n'avaient qu'un mot et 78 rien
+  //  du tout : la question était posée trop mollement.
+  if (donnees.has("nom") && !nomComplet(nom)) {
+    return {
+      ok: false,
+      message:
+        "Écris ton nom complet — prénom et nom. C'est lui qui sera imprimé sur ton certificat, et un certificat au seul prénom ne vaut rien devant un employeur.",
+    };
   }
 
   const site = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";

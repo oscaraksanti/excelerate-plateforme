@@ -58,20 +58,22 @@ export function FormulaireConnexion({
 
       <div className="flex flex-col gap-2">
         <label htmlFor="nom" className="etiquette">
-          Ton prénom
+          Ton nom complet
         </label>
         <input
           id="nom"
           name="nom"
           type="text"
-          autoComplete="given-name"
+          autoComplete="name"
           required
+          minLength={4}
           maxLength={80}
-          placeholder="Aïcha"
+          placeholder="Aïcha Mbala"
           className="w-full rounded-[2px] border border-bord bg-fond px-[14px] py-[13px] text-[16px] text-texte outline-none placeholder:text-texte-3 focus:border-texte-2"
         />
         <p className="m-0 text-[0.88rem] text-texte-3">
-          C&apos;est lui qui figurera sur ton certificat.
+          <strong className="text-texte-2">Prénom et nom</strong> — c&apos;est
+          exactement ce qui sera imprimé sur ton certificat.
         </p>
       </div>
 

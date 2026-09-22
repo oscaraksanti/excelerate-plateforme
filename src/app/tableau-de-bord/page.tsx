@@ -3,7 +3,7 @@ import Link from "next/link";
 import { EnteteApp } from "@/components/entete-app";
 import { profilCourant } from "@/lib/profil";
 import { listerModules, sommaireModule, leconsTerminees } from "@/lib/donnees";
-import { aVenir, formaterOuverture } from "@/lib/formats";
+import { aVenir, formaterOuverture, nomComplet } from "@/lib/formats";
 
 export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Tableau de bord" };
 
@@ -56,6 +56,39 @@ export default async function TableauDeBord() {
         <h1 className="titre-xl m-0 mb-5 text-[clamp(1.9rem,4.6vw,2.8rem)]">
           {prenom ? `Bonjour ${prenom}.` : "Ton espace."}
         </h1>
+
+        {/*  Sur les 654 premiers comptes, 516 n'avaient pas de nom
+            utilisable. Corriger le formulaire d'inscription ne répare
+            que les suivants : ceux-là, il faut aller les chercher, et
+            avant qu'ils ne demandent leur certificat — pas après. */}
+        {!nomComplet(profil.nom) && (
+          <div className="plage mb-9 px-6 py-5">
+            <span className="etiquette mb-2 block">
+              Ton certificat n&apos;a pas encore de nom
+            </span>
+            <p className="m-0 mb-4 max-w-[33rem] text-[1.02rem] leading-[1.5]">
+              {profil.nom.trim() ? (
+                <>
+                  Il porterait{" "}
+                  <strong className="font-semibold text-texte">
+                    « {profil.nom.trim()} »
+                  </strong>
+                  , ce qui ne désigne personne devant un employeur.
+                </>
+              ) : (
+                <>
+                  Il sortirait <strong className="font-semibold text-texte">sans nom</strong>.
+                </>
+              )}{" "}
+              Écris ton <strong className="font-semibold text-texte">prénom et ton nom</strong>{" "}
+              — c&apos;est exactement ce qui sera imprimé, et ça prend dix secondes.
+            </p>
+            <Link href="/profil" className="bouton">
+              Compléter mon nom
+            </Link>
+            <span className="poignee" aria-hidden="true" />
+          </div>
+        )}
 
         {prochain?.suivante ? (
           <>

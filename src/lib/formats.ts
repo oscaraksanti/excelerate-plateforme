@@ -4,6 +4,19 @@
  * ne l'est pas, puisqu'il ouvre une connexion cote serveur.
  */
 
+/**
+ * Ce nom peut-il figurer sur un certificat ?
+ *
+ * Un certificat qui porte « Elvis » ne vaut rien devant un employeur :
+ * il ne désigne personne. On exige donc deux mots — et on le demande
+ * au moment de l'inscription plutôt qu'au moment de le délivrer, où il
+ * serait trop tard.
+ */
+export function nomComplet(nom: string | null | undefined): boolean {
+  const propre = (nom ?? "").trim().replace(/\s+/g, " ");
+  return propre.length >= 4 && propre.split(" ").filter(Boolean).length >= 2;
+}
+
 export function formaterTaille(octets: number | null): string {
   if (!octets) return "";
   if (octets < 1024) return `${octets} o`;
