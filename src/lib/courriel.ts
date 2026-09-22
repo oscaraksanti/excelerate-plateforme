@@ -192,3 +192,76 @@ Cette page fait foi : n'importe qui peut y vérifier l'authenticité de ton cert
 Eurêka Services — Oscar Aksanti`,
   });
 }
+
+/* ── Le fil de discussion ────────────────────────────────────────── */
+
+/** Quelqu'un a répondu à ta question. */
+export async function courrielReponseAuFil(opts: {
+  a: string;
+  prenom: string;
+  auteurReponse: string;
+  lecon: string;
+  extrait: string;
+  lien: string;
+}) {
+  const { prenom, auteurReponse, lecon, extrait, lien } = opts;
+  const salut = prenom ? `Bonjour ${echapper(prenom)},` : "Bonjour,";
+
+  return envoyer({
+    a: opts.a,
+    sujet: `${auteurReponse} a répondu à ta question`,
+    titre: "Une réponse t'attend",
+    corps: [
+      P(salut),
+      P(
+        `<b style="color:#0b0e13;">${echapper(auteurReponse)}</b> a répondu à ta question sur `
+        + `<b style="color:#0b0e13;">${echapper(lecon)}</b>.`,
+      ),
+      `<p style="margin:0 0 16px 0;padding:12px 16px;border-left:3px solid #c8f04b;background:#f7f9fa;font-size:14px;line-height:1.6;color:#57616d;font-style:italic;">${echapper(extrait)}</p>`,
+      P(
+        "Si elle règle ton problème, marque-la comme la bonne réponse : "
+        + "la prochaine personne qui butera dessus la trouvera tout de suite.",
+      ),
+    ].join(""),
+    bouton: { texte: "Lire la réponse", lien },
+    texte: `${prenom ? `Bonjour ${prenom},` : "Bonjour,"}
+
+${auteurReponse} a répondu à ta question sur « ${lecon} ».
+
+« ${extrait} »
+
+Si elle règle ton problème, marque-la comme la bonne réponse.
+
+${lien}
+
+Eurêka Services — Oscar Aksanti`,
+  });
+}
+
+/** Une question vient d'être posée — pour l'instructeur. */
+export async function courrielNouvelleQuestion(opts: {
+  a: string;
+  auteur: string;
+  lecon: string;
+  extrait: string;
+  lien: string;
+}) {
+  const { auteur, lecon, extrait, lien } = opts;
+
+  return envoyer({
+    a: opts.a,
+    sujet: `Nouvelle question — ${lecon}`,
+    titre: "Une question vient d'arriver",
+    corps: [
+      P(`<b style="color:#0b0e13;">${echapper(auteur)}</b> a posé une question sur <b style="color:#0b0e13;">${echapper(lecon)}</b>.`),
+      `<p style="margin:0 0 16px 0;padding:12px 16px;border-left:3px solid #c8f04b;background:#f7f9fa;font-size:14px;line-height:1.6;color:#57616d;font-style:italic;">${echapper(extrait)}</p>`,
+      P("Une question répondue dans la journée fait un forum vivant. Répondue au bout de trois jours, elle n'en fait plus."),
+    ].join(""),
+    bouton: { texte: "Répondre", lien },
+    texte: `${auteur} a posé une question sur « ${lecon} ».
+
+« ${extrait} »
+
+${lien}`,
+  });
+}

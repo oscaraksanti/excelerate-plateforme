@@ -5,9 +5,12 @@ import { useFormStatus } from "react-dom";
 import {
   accepterReponse,
   basculerUtile,
+  modifierMessage,
   publierCommentaire,
+  supprimerMessage,
   type EtatSimple,
 } from "@/app/modules/actions";
+import { ChampCapture } from "@/components/champ-capture";
 import { TexteRiche } from "@/components/texte-riche";
 import type { Fil, Message } from "@/lib/donnees";
 
@@ -66,11 +69,30 @@ function Signature({ m, petit }: { m: Message; petit?: boolean }) {
   );
 }
 
-function Corps({ texte }: { texte: string }) {
+function Corps({ m }: { m: Message }) {
   return (
-    <p className="m-0 whitespace-pre-wrap text-[0.96rem] leading-[1.55] text-texte-2">
-      <TexteRiche texte={texte} />
-    </p>
+    <>
+      <p className="m-0 whitespace-pre-wrap text-[0.96rem] leading-[1.55] text-texte-2">
+        <TexteRiche texte={m.corps} />
+      </p>
+      {m.a_image && (
+        <a
+          href={`/api/captures/${m.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-[10px] block w-fit"
+          title="Ouvrir en grand"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`/api/captures/${m.id}`}
+            alt="Capture jointe au message"
+            loading="lazy"
+            className="max-h-[320px] max-w-full rounded-[4px] border border-bord"
+          />
+        </a>
+      )}
+    </>
   );
 }
 
@@ -97,6 +119,130 @@ function Utile({ m, chemin }: { m: Message; chemin: string }) {
   );
 }
 
+/**
+ * Le corps d'un message et la rangée d'actions dessous.
+ *
+ * Un seul composant pour les questions et pour les réponses : ce qui
+ * change entre les deux, c'est ce qu'on a le droit d'y faire, pas la
+ * façon de l'afficher.
+ */
+function CorpsEtActions({
+  m,
+  chemin,
+  fil,
+  aDesReponses,
+}: {
+  m: Message;
+  chemin: string;
+  /** Le fil dont ce message est une réponse, s'il en est une. */
+  fil?: Fil;
+  aDesReponses?: boolean;
+}) {
+  const [edition, setEdition] = useState(false);
+  const [etat, modifier] = useActionState(modifierMessage, DEPART);
+
+  //  useActionState rend un objet neuf à chaque envoi. On s'en sert
+  //  comme d'un jeton : dès qu'il change et qu'il est bon, on referme.
+  //  Ajusté pendant le rendu plutôt que dans un effet — c'est ce que
+  //  React recommande pour dériver un état, et ça évite le second
+  //  rendu en cascade.
+  const [vu, setVu] = useState<EtatSimple>(DEPART);
+  if (etat !== vu) {
+    setVu(etat);
+    if (etat.ok) setEdition(false);
+  }
+
+  if (edition) {
+    return (
+      <form action={modifier} className="mt-2 flex flex-col gap-3">
+        <input type="hidden" name="message_id" value={m.id} />
+        <input type="hidden" name="chemin" value={chemin} />
+        <textarea
+          name="corps"
+          rows={3}
+          required
+          autoFocus
+          maxLength={4000}
+          defaultValue={m.corps}
+          className={CHAMP}
+        />
+        {m.a_image && (
+          <label className="flex cursor-pointer items-center gap-2 text-[0.88rem] text-texte-2">
+            <input
+              type="checkbox"
+              name="retirer_image"
+              className="h-[15px] w-[15px] accent-[color:var(--voltage-2)]"
+            />
+            Retirer la capture jointe
+          </label>
+        )}
+        {etat.message && (
+          <p role="alert" className="m-0 text-[0.9rem] text-ko">
+            {etat.message}
+          </p>
+        )}
+        <div className="flex items-center gap-3">
+          <Bouton texte="Enregistrer" />
+          <button
+            type="button"
+            onClick={() => setEdition(false)}
+            className={`${ACTION} text-texte-3 hover:text-texte-2`}
+          >
+            annuler
+          </button>
+        </div>
+      </form>
+    );
+  }
+
+  return (
+    <>
+      <Corps m={m} />
+      <div className="mt-[10px] flex flex-wrap items-center gap-x-4 gap-y-2">
+        <Utile m={m} chemin={chemin} />
+
+        {fil?.je_peux_resoudre && (
+          <form action={accepterReponse} className="contents">
+            <input type="hidden" name="fil_id" value={fil.id} />
+            <input
+              type="hidden"
+              name="reponse_id"
+              value={m.est_acceptee ? "" : m.id}
+            />
+            <input type="hidden" name="chemin" value={chemin} />
+            <button type="submit" className={`${ACTION} text-texte-3 hover:text-texte`}>
+              {m.est_acceptee ? "ce n'était pas la bonne" : "c'est la bonne réponse"}
+            </button>
+          </form>
+        )}
+
+        {m.est_moi && (
+          <button
+            type="button"
+            onClick={() => setEdition(true)}
+            className={`${ACTION} text-texte-3 hover:text-texte`}
+          >
+            modifier
+          </button>
+        )}
+
+        {/*  Supprimer une question qui a des réponses emporterait le
+            travail de ceux qui ont pris le temps d'y répondre. Dans ce
+            cas, il reste « modifier » — et le retrait de la capture. */}
+        {m.est_moi && !aDesReponses && (
+          <form action={supprimerMessage} className="contents">
+            <input type="hidden" name="message_id" value={m.id} />
+            <input type="hidden" name="chemin" value={chemin} />
+            <button type="submit" className={`${ACTION} text-texte-3 hover:text-ko`}>
+              supprimer
+            </button>
+          </form>
+        )}
+      </div>
+    </>
+  );
+}
+
 function Discussion({
   fil,
   leconId,
@@ -110,14 +256,20 @@ function Discussion({
   const [ouvert, setOuvert] = useState(false);
   const form = useRef<HTMLFormElement>(null);
 
-  //  Une fois la réponse partie, on referme et on vide : laisser le
-  //  champ ouvert avec son texte donne l'impression que rien n'est
-  //  parti, et on reçoit le message deux fois.
+  //  Une fois la réponse partie, on referme : laisser le champ ouvert
+  //  avec son texte donne l'impression que rien n'est parti, et on
+  //  reçoit le message deux fois. Même jeton qu'ailleurs, ajusté
+  //  pendant le rendu.
+  const [vu, setVu] = useState<EtatSimple>(DEPART);
+  if (etat !== vu) {
+    setVu(etat);
+    if (etat.ok) setOuvert(false);
+  }
+
+  //  Vider les champs est une action sur le DOM, pas un état : elle
+  //  reste dans un effet, à sa place.
   useEffect(() => {
-    if (etat.ok) {
-      form.current?.reset();
-      setOuvert(false);
-    }
+    if (etat.ok) form.current?.reset();
   }, [etat]);
 
   const resolu = Boolean(fil.reponse_acceptee);
@@ -150,10 +302,11 @@ function Discussion({
               {quand(fil.cree_le)}
             </span>
           </p>
-          <Corps texte={fil.corps} />
-          <div className="mt-[10px] flex flex-wrap items-center gap-x-4 gap-y-2">
-            <Utile m={fil} chemin={chemin} />
-          </div>
+          <CorpsEtActions
+            m={fil}
+            chemin={chemin}
+            aDesReponses={fil.reponses.length > 0}
+          />
         </div>
       </div>
 
@@ -178,29 +331,7 @@ function Discussion({
                   </p>
                 )}
                 <Signature m={r} petit />
-                <Corps texte={r.corps} />
-                <div className="mt-[8px] flex flex-wrap items-center gap-x-4 gap-y-2">
-                  <Utile m={r} chemin={chemin} />
-                  {fil.je_peux_resoudre && (
-                    <form action={accepterReponse} className="contents">
-                      <input type="hidden" name="fil_id" value={fil.id} />
-                      <input
-                        type="hidden"
-                        name="reponse_id"
-                        value={r.est_acceptee ? "" : r.id}
-                      />
-                      <input type="hidden" name="chemin" value={chemin} />
-                      <button
-                        type="submit"
-                        className={`${ACTION} text-texte-3 hover:text-texte`}
-                      >
-                        {r.est_acceptee
-                          ? "ce n'était pas la bonne"
-                          : "c'est la bonne réponse"}
-                      </button>
-                    </form>
-                  )}
-                </div>
+                <CorpsEtActions m={r} chemin={chemin} fil={fil} />
               </div>
             </li>
           ))}
@@ -222,6 +353,7 @@ function Discussion({
               placeholder={`Répondre à ${fil.auteur}…`}
               className={CHAMP}
             />
+            <ChampCapture />
             {etat.message && (
               <p role="alert" className="m-0 text-[0.9rem] text-ko">
                 {etat.message}
@@ -300,6 +432,7 @@ export function Commentaires({
           placeholder="Ta question…"
           className={CHAMP}
         />
+        <ChampCapture />
         {etat.message && (
           <p role="alert" className="m-0 text-[0.9rem] text-ko">
             {etat.message}

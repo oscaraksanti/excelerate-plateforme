@@ -53,6 +53,8 @@ export type Message = {
   est_acceptee: boolean;
   /** L'auteur du fil, ou l'instructeur : ceux qui peuvent la désigner. */
   je_peux_resoudre: boolean;
+  /** Une capture est jointe. Elle se demande à /api/captures/<id>. */
+  a_image: boolean;
 };
 
 /** Un message d'ouverture et ses réponses, dans l'ordre. */
