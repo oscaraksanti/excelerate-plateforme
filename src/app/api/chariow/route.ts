@@ -1,26 +1,33 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
+import { courrielAchat } from "@/lib/courriel";
 import { clientAdmin } from "@/lib/supabase/admin";
 
 /* ══════════════════════════════════════════════════════════════════
-   Le point d'entrée des paiements Chariow.
+   Le point d'entrée des paiements Chariow — un « Pulse ».
 
-   Règle absolue : on n'ouvre jamais un accès sans preuve que la
-   notification vient bien de Chariow. Sans cette preuve, n'importe qui
-   pourrait s'offrir la masterclass avec une requête à trois lignes.
+   Trois règles, dans cet ordre, et aucune n'est facultative :
 
-   Deux preuves acceptées, selon ce que Chariow sait faire :
-     - une signature HMAC-SHA256 du corps, dans un en-tête
-     - une clé dans l'adresse : /api/chariow?cle=…
-   Les deux se comparent au même secret, en temps constant.
+   1. PROUVER que ça vient de Chariow. Signature HMAC-SHA256 du corps
+      BRUT, comparée en temps constant. Sans ça, n'importe qui s'offre
+      la masterclass avec une requête à trois lignes.
+
+   2. NE TRAITER QUE CE QUI EST PAYÉ. Chariow envoie aussi
+      « abandoned.sale » et « failed.sale » sur le même point d'entrée.
+      La version précédente les acceptait toutes : un panier abandonné
+      ouvrait les accès.
+
+   3. NE TRAITER QU'UNE FOIS. Chariow réessaie cinq fois si on ne
+      répond pas 2xx en moins de trente secondes, avec le même
+      « x-pulse-delivery-id ». C'est lui la clé, pas la référence de
+      commande.
    ══════════════════════════════════════════════════════════════════ */
 
-const EN_TETES_SIGNATURE = [
-  "x-chariow-signature",
-  "x-webhook-signature",
-  "x-signature",
-  "signature",
-];
+/** Seul événement qui ouvre un accès. */
+const EVENEMENT_PAYE = "successful.sale";
+
+/** Statuts de vente qu'on accepte comme « l'argent est arrivé ». */
+const STATUTS_PAYES = new Set(["completed", "settled", "paid", "success", "successful"]);
 
 function egalConstant(a: string, b: string) {
   const ba = Buffer.from(a);
@@ -29,19 +36,18 @@ function egalConstant(a: string, b: string) {
   return timingSafeEqual(ba, bb);
 }
 
+/**
+ * La signature porte sur le corps BRUT, jamais sur une version
+ * re-sérialisée : JSON.stringify réordonne et ré-échappe, et le
+ * condensat ne tombe plus juste.
+ */
 function signatureValide(corps: string, entetes: Headers, secret: string) {
-  const attendu = createHmac("sha256", secret).update(corps, "utf8");
-  const hex = attendu.digest("hex");
+  const recu = entetes.get("x-chariow-signature");
+  if (!recu) return false;
+  const propre = recu.replace(/^sha256=/i, "").trim();
+  const hex = createHmac("sha256", secret).update(corps, "utf8").digest("hex");
   const b64 = createHmac("sha256", secret).update(corps, "utf8").digest("base64");
-
-  for (const nom of EN_TETES_SIGNATURE) {
-    const recu = entetes.get(nom);
-    if (!recu) continue;
-    // Certains services préfixent « sha256= ».
-    const propre = recu.replace(/^sha256=/i, "").trim();
-    if (egalConstant(propre, hex) || egalConstant(propre, b64)) return true;
-  }
-  return false;
+  return egalConstant(propre, hex) || egalConstant(propre, b64);
 }
 
 /** Va chercher une valeur à plusieurs endroits plausibles de la charge. */
@@ -67,23 +73,25 @@ export async function POST(requete: NextRequest) {
   const corps = await requete.text();
 
   if (!secret) {
-    // Refus franc plutôt qu'une porte ouverte : c'est de l'argent.
-    console.error("[chariow] CHARIOW_WEBHOOK_SECRET absente — notification refusée");
-    return NextResponse.json(
-      { erreur: "Point d'entrée non configuré" },
-      { status: 503 },
-    );
+    console.error("[pulse] CHARIOW_WEBHOOK_SECRET absente — notification refusée");
+    return NextResponse.json({ erreur: "Point d'entrée non configuré" }, { status: 503 });
   }
 
+  //  Une clé dans l'adresse reste acceptée : elle dépanne si le Pulse
+  //  n'est pas encore configuré côté Chariow. La signature prime.
   const cleUrl = requete.nextUrl.searchParams.get("cle");
   const autorise =
-    (cleUrl !== null && egalConstant(cleUrl, secret)) ||
-    signatureValide(corps, requete.headers, secret);
+    signatureValide(corps, requete.headers, secret) ||
+    (cleUrl !== null && egalConstant(cleUrl, secret));
 
   if (!autorise) {
-    console.warn("[chariow] notification sans preuve d'authenticité — refusée");
+    console.warn("[pulse] notification sans preuve d'authenticité — refusée");
     return NextResponse.json({ erreur: "Signature invalide" }, { status: 401 });
   }
+
+  const evenement = requete.headers.get("x-pulse-event") ?? "inconnu";
+  const livraison =
+    requete.headers.get("x-pulse-delivery-id") ?? `sans-id-${Date.now()}`;
 
   let charge: unknown;
   try {
@@ -92,58 +100,101 @@ export async function POST(requete: NextRequest) {
     return NextResponse.json({ erreur: "Corps illisible" }, { status: 400 });
   }
 
+  const admin = clientAdmin();
+
+  //  Le journal fait office de verrou : la clé primaire refuse la
+  //  seconde tentative, et on répond 200 pour que Chariow cesse.
+  const { error: dejaVu } = await admin
+    .from("pulses")
+    .insert({ livraison_id: livraison, evenement, charge_utile: charge });
+
+  if (dejaVu) {
+    if (dejaVu.code === "23505") {
+      return NextResponse.json({ ok: true, deja: true });
+    }
+    console.error("[pulse] journal indisponible", dejaVu.message);
+    //  On refuse plutôt que de risquer un double traitement : Chariow
+    //  réessaiera.
+    return NextResponse.json({ erreur: "Journal indisponible" }, { status: 503 });
+  }
+
+  const conclure = async (motif: string, traite: boolean) => {
+    await admin.from("pulses").update({ traite, motif }).eq("livraison_id", livraison);
+  };
+
+  if (evenement !== EVENEMENT_PAYE) {
+    await conclure(`événement ignoré : ${evenement}`, false);
+    return NextResponse.json({ ok: true, ignore: evenement });
+  }
+
+  //  Ceinture et bretelles : l'événement dit « vendu », le statut doit
+  //  le confirmer. Si Chariow change un jour de vocabulaire, on
+  //  préfère refuser un accès que d'en ouvrir un qui n'est pas payé.
+  const statut = (
+    pioche(charge, ["status", "data.status", "sale.status", "payment.status", "data.payment.status"]) ?? ""
+  ).toLowerCase();
+  if (statut && !STATUTS_PAYES.has(statut)) {
+    await conclure(`statut non payé : ${statut}`, false);
+    return NextResponse.json({ ok: true, ignore: statut });
+  }
+
   const email = pioche(charge, [
-    "email", "customer_email", "buyer_email", "customer.email",
-    "data.email", "data.customer_email", "data.customer.email", "order.email",
+    "customer.email", "data.customer.email", "sale.customer.email",
+    "email", "customer_email", "buyer_email", "data.email", "order.email",
   ]);
 
   const refProduit = pioche(charge, [
-    "product_id", "product.id", "product_ref", "prd",
-    "data.product_id", "data.product.id", "items.0.product_id",
+    "product.id", "data.product.id", "sale.product.id",
+    "product_id", "data.product_id", "prd",
   ]);
 
   const refCommande = pioche(charge, [
-    "id", "order_id", "transaction_id", "reference", "ref",
-    "data.id", "data.order_id", "data.reference",
+    "id", "data.id", "sale.id",
+    "order_id", "transaction_id", "reference", "data.order_id",
   ]);
 
-  const montant = pioche(charge, ["amount", "total", "price", "data.amount", "data.total"]);
+  const montant = pioche(charge, [
+    "amount.value", "data.amount.value", "sale.amount.value",
+    "payment.amount.value", "amount", "total", "data.amount",
+  ]);
 
-  const admin = clientAdmin();
+  const nom = pioche(charge, [
+    "customer.first_name", "data.customer.first_name",
+    "customer.name", "data.customer.name",
+  ]);
 
   if (!email || !refCommande) {
-    // On garde la trace : c'est elle qui permettra d'ajuster les champs
-    // sans rejouer un paiement.
-    console.error("[chariow] champs manquants", { email: Boolean(email), refCommande: Boolean(refCommande) });
-    await admin.from("achats").insert({
-      email: email ?? "inconnu@chariow",
-      produit: "masterclass37",
-      chariow_ref: `incomplet-${Date.now()}`,
-      charge_utile: charge,
+    console.error("[pulse] champs manquants", {
+      email: Boolean(email), refCommande: Boolean(refCommande),
     });
+    await conclure("champs manquants — voir charge_utile", false);
+    //  202 : on a bien reçu, on ne redemande pas. Le journal garde
+    //  tout, l'accès se règle à la main.
     return NextResponse.json({ erreur: "Champs manquants", recu: true }, { status: 202 });
   }
 
-  // Quel produit ? La table fait foi, pas la notification.
+  //  Quel produit ? La table fait foi, jamais la notification.
   let produit = "masterclass37";
   let montantAttendu: number | null = null;
+  let titre = "la masterclass";
   if (refProduit) {
     const { data } = await admin
       .from("produits")
-      .select("produit, montant")
+      .select("produit, montant, titre")
       .eq("ref", refProduit)
       .maybeSingle();
     if (data) {
       produit = data.produit;
       montantAttendu = data.montant;
+      titre = data.titre;
+    } else {
+      console.warn(`[pulse] produit inconnu « ${refProduit} » — masterclass par défaut`);
     }
   }
 
-  // Le profil existe-t-il déjà ? Sinon l'achat attend, et se rattachera
-  // tout seul à la première connexion avec cette adresse.
   const { data: profil } = await admin
     .from("profils")
-    .select("id")
+    .select("id, nom")
     .ilike("email", email)
     .maybeSingle();
 
@@ -157,17 +208,38 @@ export async function POST(requete: NextRequest) {
   });
 
   if (error) {
-    // 23505 : cette commande est déjà enregistrée. Chariow renvoie
-    // parfois deux fois la même notification — on répond « d'accord »
-    // pour qu'il cesse de réessayer, sans rien compter deux fois.
+    //  23505 : cette commande était déjà enregistrée par un autre
+    //  chemin. L'accès est donc ouvert — on ne le compte pas deux fois
+    //  et on ne renvoie pas de courriel.
     if (error.code === "23505") {
+      await conclure("commande déjà enregistrée", true);
       return NextResponse.json({ ok: true, deja: true });
     }
-    console.error("[chariow] enregistrement impossible", error.message);
+    console.error("[pulse] enregistrement impossible", error.message);
+    await conclure(`enregistrement impossible : ${error.message}`, false);
     return NextResponse.json({ erreur: "Enregistrement impossible" }, { status: 500 });
   }
 
-  console.info(`[chariow] ${produit} enregistré pour ${email}${profil ? "" : " (compte à créer)"}`);
+  //  Le courriel ne peut pas faire échouer le Pulse : l'accès est
+  //  ouvert, c'est le seul point qui compte. Un envoi raté se voit
+  //  dans le journal Resend.
+  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://excelai.oscaraksanti.com";
+  try {
+    await courrielAchat({
+      a: email,
+      prenom: (profil?.nom ?? nom ?? "").trim().split(/\s+/)[0] ?? "",
+      offre: titre,
+      montant: `${montant ?? montantAttendu ?? "—"} $`,
+      reference: refCommande,
+      ouvert: Boolean(profil),
+      lien: profil ? `${site}/modules` : `${site}/connexion`,
+    });
+  } catch (err) {
+    console.error("[pulse] confirmation non envoyée", err);
+  }
+
+  await conclure(`${produit} ouvert pour ${email}`, true);
+  console.info(`[pulse] ${produit} enregistré pour ${email}${profil ? "" : " (compte à créer)"}`);
   return NextResponse.json({ ok: true, rattache: Boolean(profil) });
 }
 

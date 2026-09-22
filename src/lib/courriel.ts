@@ -265,3 +265,52 @@ export async function courrielNouvelleQuestion(opts: {
 ${lien}`,
   });
 }
+
+/* ── Un paiement vient d'aboutir ─────────────────────────────────── */
+
+export async function courrielAchat(opts: {
+  a: string;
+  prenom: string;
+  offre: string;
+  montant: string;
+  reference: string;
+  ouvert: boolean;
+  lien: string;
+}) {
+  const { prenom, offre, montant, reference, ouvert, lien } = opts;
+  const salut = prenom ? `Bonjour ${echapper(prenom)},` : "Bonjour,";
+
+  //  Deux situations, et il faut les distinguer franchement : soit le
+  //  compte existait et tout est déjà ouvert, soit la personne a payé
+  //  avant de s'inscrire — auquel cas son accès l'attend, et elle doit
+  //  savoir qu'il s'ouvrira avec CETTE adresse.
+  const laSuite = ouvert
+    ? "Ton accès est ouvert. Tu peux reprendre là où tu t'étais arrêté — tout est déjà déverrouillé."
+    : `Il ne te reste qu'à entrer sur la plateforme avec <b style="color:#0b0e13;">cette adresse</b> : ton accès s'ouvrira tout seul à ta première connexion.`;
+
+  return envoyer({
+    a: opts.a,
+    sujet: `C'est réglé — ${offre}`,
+    titre: "Paiement reçu",
+    corps: [
+      P(salut),
+      P(`Ton paiement de <b style="color:#0b0e13;">${echapper(montant)}</b> pour <b style="color:#0b0e13;">${echapper(offre)}</b> est bien arrivé.`),
+      P(laSuite),
+      `<p style="margin:0 0 16px 0;font-size:13px;line-height:1.6;color:#8a96a4;">Référence : <span style="font-family:'Courier New',monospace;">${echapper(reference)}</span> — garde-la, c'est elle qui permet de retrouver ton paiement si quelque chose coince.</p>`,
+    ].join(""),
+    bouton: { texte: ouvert ? "Reprendre la formation" : "Entrer sur la plateforme", lien },
+    texte: `${prenom ? `Bonjour ${prenom},` : "Bonjour,"}
+
+Ton paiement de ${montant} pour « ${offre} » est bien arrivé.
+
+${ouvert
+  ? "Ton acces est ouvert. Tu peux reprendre la ou tu t'etais arrete."
+  : "Il ne te reste qu'a entrer sur la plateforme avec cette adresse : ton acces s'ouvrira tout seul a ta premiere connexion."}
+
+Reference : ${reference}
+
+${lien}
+
+Eureka Services — Oscar Aksanti`,
+  });
+}

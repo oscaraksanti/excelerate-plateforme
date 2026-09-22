@@ -174,6 +174,33 @@ export default async function PageOffres() {
             </p>
           )}
 
+          {/* ── Équipe et entreprise : pas un produit, une conversation ── */}
+          <div className="plage mt-9 px-6 py-5">
+            <span className="etiquette mb-2 block">Pour une équipe</span>
+            <p className="m-0 mb-4 max-w-[33rem] text-[1.02rem] leading-[1.5]">
+              Former plusieurs personnes d&apos;une même structure ne se règle
+              pas avec un bouton : le programme se construit sur vos fichiers
+              et vos chiffres à vous. Écrivez à Oscar, il répond lui-même.
+            </p>
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href="https://wa.me/243971601855?text=Bonjour%20Oscar%2C%20je%20souhaite%20un%20programme%20pour%20mon%20%C3%A9quipe."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bouton"
+              >
+                Écrire sur WhatsApp
+              </a>
+              <a
+                href="mailto:oscaraksanti@gmail.com?subject=Programme%20pour%20une%20%C3%A9quipe"
+                className="bouton-2"
+              >
+                Par courriel
+              </a>
+            </div>
+            <span className="poignee" aria-hidden="true" />
+          </div>
+
           <p className="mt-9 max-w-[35rem] text-[0.92rem] text-texte-3">
             Le paiement passe par Chariow, en mobile money ou par carte. Ton
             accès s&apos;ouvre tout seul, en quelques secondes.{" "}
