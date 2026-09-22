@@ -60,13 +60,15 @@ export function InscriptionRapide({
 
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="flex flex-col gap-[6px]">
-          <span className="etiquette">Ton prénom</span>
+          <span className="etiquette">Ton nom complet</span>
           <input
             name="nom"
             type="text"
             required
-            autoComplete="given-name"
-            placeholder="Aïcha"
+            minLength={4}
+            maxLength={80}
+            autoComplete="name"
+            placeholder="Aïcha Mbala"
             className="rounded-[8px] border border-bord bg-fond px-[14px] py-[13px] text-[1rem] text-texte outline-none transition-colors placeholder:text-texte-3 focus:border-texte-2"
           />
         </label>
@@ -94,8 +96,10 @@ export function InscriptionRapide({
       )}
 
       <p className="m-0 text-[0.88rem] leading-[1.5] text-texte-3">
-        Pas de mot de passe à retenir : tu reçois un lien de connexion.
-        Aucune carte bancaire — les quatre premiers modules sont gratuits.
+        <strong className="text-texte-2">Prénom et nom</strong> : c&apos;est
+        exactement ce qui sera imprimé sur ton certificat. Pas de mot de passe
+        à retenir, tu reçois un lien de connexion. Aucune carte bancaire — les
+        quatre premiers modules sont gratuits.
       </p>
     </form>
   );
