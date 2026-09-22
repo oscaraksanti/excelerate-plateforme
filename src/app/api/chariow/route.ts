@@ -228,6 +228,7 @@ export async function POST(requete: NextRequest) {
     await courrielAchat({
       a: email,
       prenom: (profil?.nom ?? nom ?? "").trim().split(/\s+/)[0] ?? "",
+      produit,
       offre: titre,
       montant: `${montant ?? montantAttendu ?? "—"} $`,
       reference: refCommande,
