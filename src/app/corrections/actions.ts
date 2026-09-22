@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { criteresDe } from "@/lib/pairs";
+import { clientAdmin } from "@/lib/supabase/admin";
 import { clientServeur } from "@/lib/supabase/serveur";
 
 export type EtatCorrection = { ok: boolean; message: string };
@@ -37,10 +38,13 @@ export async function enregistrerCorrection(
   const { data: auth } = await supabase.auth.getUser();
   if (!auth.user) return { ok: false, message: "Session expirée. Reconnecte-toi." };
 
-  // On relit l'attribution : elle porte la copie, et elle prouve le droit.
-  const { data: attribution } = await supabase
+  //  On relit l'attribution : elle porte la copie, et elle prouve le
+  //  droit. Avec les droits complets, parce que la copie d'un pair est
+  //  illisible sous les regles d'acces — et on n'en tire que `tp_id`.
+  const admin = clientAdmin();
+  const { data: attribution } = await admin
     .from("attributions")
-    .select("id, copie_id, correcteur_id, statut")
+    .select("id, copie_id, correcteur_id, statut, copies(tp_id)")
     .eq("id", attributionId)
     .maybeSingle();
 
@@ -53,16 +57,12 @@ export async function enregistrerCorrection(
 
   // Les criteres viennent du TP, pas du formulaire : personne ne peut
   // inventer un sixieme critere pour gonfler le total.
-  const { data: copie } = await supabase
-    .from("copies")
-    .select("tp_id")
-    .eq("id", attribution.copie_id)
-    .maybeSingle();
+  const tpId = (attribution.copies as unknown as { tp_id: string } | null)?.tp_id;
 
   const { data: tp } = await supabase
     .from("tps")
     .select("criteres")
-    .eq("id", copie?.tp_id ?? "")
+    .eq("id", tpId ?? "")
     .maybeSingle();
 
   const criteres = criteresDe(tp?.criteres);

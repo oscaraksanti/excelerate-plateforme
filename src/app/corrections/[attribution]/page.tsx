@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { EnteteApp } from "@/components/entete-app";
 import { criteresDe } from "@/lib/pairs";
 import { profilCourant } from "@/lib/profil";
+import { clientAdmin } from "@/lib/supabase/admin";
 import { clientServeur } from "@/lib/supabase/serveur";
 import { FormulaireCorrection } from "./formulaire";
 
@@ -18,25 +19,33 @@ export default async function PageCorriger({
   const profil = await profilCourant();
   const supabase = await clientServeur();
 
-  const { data: ligne } = await supabase
+  //  Les regles d'acces interdisent a un apprenant de lire la copie
+  //  d'un autre : « copies : je lis la mienne ». C'est voulu, c'est ce
+  //  qui tient l'anonymat — mais le correcteur a besoin d'une chose,
+  //  une seule : de quel TP il s'agit. On la lit donc avec les droits
+  //  complets, APRES avoir verifie que l'attribution est bien la
+  //  sienne, et on ne prend que `tp_id` : ni l'auteur, ni sa note
+  //  machine ne sortent d'ici. Meme montage que la route qui sert
+  //  deja le fichier a corriger.
+  const admin = clientAdmin();
+  const { data: ligne } = await admin
     .from("attributions")
-    .select("id, copie_id, correcteur_id, statut")
+    .select("id, copie_id, correcteur_id, statut, copies(tp_id)")
     .eq("id", attribution)
     .maybeSingle();
 
   if (!ligne || ligne.correcteur_id !== profil.id) notFound();
 
-  // On ne lit que le TP : jamais l'auteur, jamais sa note machine.
-  const { data: copie } = await supabase
-    .from("copies")
-    .select("tp_id")
-    .eq("id", ligne.copie_id)
-    .maybeSingle();
+  const tpId = (ligne.copies as unknown as { tp_id: string } | null)?.tp_id;
+  if (!tpId) notFound();
 
+  //  Le TP, lui, se lit avec les droits de la personne : elle a depose
+  //  sur ce TP, donc elle y a acces. Garder cette lecture-la sous les
+  //  regles evite d'ouvrir un enonce paye a quelqu'un qui ne l'a pas.
   const { data: tp } = await supabase
     .from("tps")
     .select("id, titre, criteres, enonce_md")
-    .eq("id", copie?.tp_id ?? "")
+    .eq("id", tpId)
     .maybeSingle();
 
   if (!tp) notFound();
