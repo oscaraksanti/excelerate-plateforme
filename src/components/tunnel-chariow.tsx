@@ -90,6 +90,15 @@ export function TunnelChariow({
           Chargement du paiement sécurisé…
         </p>
       )}
+      {/*  Seul `primary_color` franchit le cadre : le widget transmet
+          primary_color, background_color, border_style et locale — mais
+          pas contrast-color, qui ne sert qu'à sa propre fenêtre. Mettre
+          du presque-noir ici donnait un bouton noir au texte noir. Le
+          voltage de la plateforme, lui, se lit.
+
+          Pour la même raison, `data-custom-cta-text` n'a rien à faire
+          ici : le texte du bouton à l'intérieur du cadre appartient à
+          Chariow. On ne prétend pas le régler.  */}
       <div ref={hote}>
         <div
           id="chariow-widget"
@@ -98,7 +107,8 @@ export function TunnelChariow({
           data-style="frame"
           data-border-style="rounded"
           data-locale="fr"
-          data-primary-color="#0B0E13"
+          data-primary-color="#C8F04B"
+          data-contrast-color="#0B0E13"
           data-background-color="#FFFFFF"
         />
       </div>
