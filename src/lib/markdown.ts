@@ -1,21 +1,38 @@
-import { marked } from "marked";
+import { Marked } from "marked";
 
-marked.setOptions({ gfm: true, breaks: true });
+function echapper(s: string) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
 
 /**
- * Rend le markdown d'une lecon en HTML.
+ * Le moteur markdown des lecons.
  *
- * Seul « < » est neutralise. Aucune balise ne peut donc s'ouvrir, et
- * rien d'ecrit a la main ne s'execute — c'est plus simple et plus sur
- * qu'un nettoyeur, sans dependance lourde cote serveur.
+ * Le HTML brut n'est pas execute : il est echappe, donc AFFICHE tel
+ * quel. `<script>` se lit, ne s'execute pas ; `<une mesure>` — de la
+ * prose, pas une balise — reste visible.
  *
- * « > » est volontairement laisse intact : l'echapper casserait les
- * citations markdown, et seul le chevron ouvrant permet d'injecter du
- * HTML. Un chevron fermant isole est inoffensif.
+ * La version precedente echappait « < » AVANT d'appeler marked. Ca
+ * paraissait plus simple, mais marked re-echappe le « & » a
+ * l'interieur des blocs de code : « A1<>B1 » devenait « A1&amp;lt;>B1 »
+ * et s'affichait « A1&lt;>B1 ». Toutes les formules contenant <, <=
+ * ou <> etaient donc fausses a l'ecran, et recopiees fausses dans
+ * Excel. On laisse desormais marked echapper lui-meme, une seule fois,
+ * et on neutralise le HTML la ou il apparait.
  */
+const moteur = new Marked({ gfm: true, breaks: true });
+
+moteur.use({
+  renderer: {
+    html({ text }) {
+      return echapper(text);
+    },
+  },
+});
+
+/** Rend le markdown d'une lecon en HTML. */
 export function rendreMarkdown(source: string): string {
   if (!source?.trim()) return "";
-  return marked.parse(source.replace(/</g, "&lt;"), { async: false });
+  return moteur.parse(source, { async: false }) as string;
 }
 
 /** Accepte une adresse YouTube complete ou un identifiant nu. */
