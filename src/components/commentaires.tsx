@@ -2,10 +2,22 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
-import { publierCommentaire, type EtatSimple } from "@/app/modules/actions";
+import {
+  accepterReponse,
+  basculerUtile,
+  publierCommentaire,
+  type EtatSimple,
+} from "@/app/modules/actions";
+import { TexteRiche } from "@/components/texte-riche";
 import type { Fil, Message } from "@/lib/donnees";
 
 const DEPART: EtatSimple = { ok: false, message: "" };
+
+const CHAMP =
+  "w-full resize-y rounded-[2px] border border-bord bg-fond px-[14px] py-[12px] text-[16px] text-texte outline-none placeholder:text-texte-3 focus:border-texte-2";
+
+const ACTION =
+  "font-mono text-[10.5px] tracking-[0.1em] uppercase transition-colors";
 
 function Bouton({ texte }: { texte: string }) {
   const { pending } = useFormStatus();
@@ -31,10 +43,6 @@ function initiales(nom: string) {
   return (p[0][0] + (p[1]?.[0] ?? "")).toUpperCase();
 }
 
-const CHAMP =
-  "w-full resize-y rounded-[2px] border border-bord bg-fond px-[14px] py-[12px] text-[16px] text-texte outline-none placeholder:text-texte-3 focus:border-texte-2";
-
-/** L'en-tête d'un message : qui parle, et quand. */
 function Signature({ m, petit }: { m: Message; petit?: boolean }) {
   return (
     <p className="m-0 mb-1 flex flex-wrap items-baseline gap-x-2 text-[0.88rem]">
@@ -58,13 +66,34 @@ function Signature({ m, petit }: { m: Message; petit?: boolean }) {
   );
 }
 
-/* Texte brut, jamais de markdown : le contenu vient des participants,
-   on ne lui donne aucun pouvoir. */
 function Corps({ texte }: { texte: string }) {
   return (
     <p className="m-0 whitespace-pre-wrap text-[0.96rem] leading-[1.55] text-texte-2">
-      {texte}
+      <TexteRiche texte={texte} />
     </p>
+  );
+}
+
+/** « Utile » — posé ou retiré, avec son compte. */
+function Utile({ m, chemin }: { m: Message; chemin: string }) {
+  return (
+    <form action={basculerUtile} className="contents">
+      <input type="hidden" name="commentaire_id" value={m.id} />
+      <input type="hidden" name="chemin" value={chemin} />
+      <button
+        type="submit"
+        aria-pressed={m.moi_utile}
+        title={m.moi_utile ? "Retirer" : "Ce message m'a aidé"}
+        className={`${ACTION} ${
+          m.moi_utile
+            ? "font-semibold text-accent-texte"
+            : "text-texte-3 hover:text-texte"
+        }`}
+      >
+        {m.moi_utile ? "✦ utile" : "utile"}
+        {m.utiles > 0 && <span className="ml-[5px] tabular-nums">{m.utiles}</span>}
+      </button>
+    </form>
   );
 }
 
@@ -91,6 +120,8 @@ function Discussion({
     }
   }, [etat]);
 
+  const resolu = Boolean(fil.reponse_acceptee);
+
   return (
     <li className="border-b border-bord-2 py-[20px]">
       <div className="grid grid-cols-[34px_minmax(0,1fr)] gap-3">
@@ -98,21 +129,78 @@ function Discussion({
           {initiales(fil.auteur)}
         </span>
         <div className="min-w-0">
-          <Signature m={fil} />
+          <p className="m-0 mb-1 flex flex-wrap items-baseline gap-x-2 text-[0.88rem]">
+            <span className="font-semibold text-texte">{fil.auteur}</span>
+            {fil.est_instructeur && (
+              <span className="rounded-[3px] bg-voltage px-[6px] py-[1px] font-mono text-[9px] font-semibold tracking-[0.1em] text-[color:var(--fond)] uppercase">
+                Instructeur
+              </span>
+            )}
+            {fil.est_moi && !fil.est_instructeur && (
+              <span className="font-mono text-[9.5px] tracking-[0.1em] text-texte-3 uppercase">
+                vous
+              </span>
+            )}
+            {resolu && (
+              <span className="rounded-[3px] border border-[color:var(--voltage-2)] px-[6px] py-[1px] font-mono text-[9px] font-semibold tracking-[0.1em] text-accent-texte uppercase">
+                Résolu
+              </span>
+            )}
+            <span className="font-mono text-[10.5px] tracking-[0.08em] text-texte-3 uppercase">
+              {quand(fil.cree_le)}
+            </span>
+          </p>
           <Corps texte={fil.corps} />
+          <div className="mt-[10px] flex flex-wrap items-center gap-x-4 gap-y-2">
+            <Utile m={fil} chemin={chemin} />
+          </div>
         </div>
       </div>
 
       {fil.reponses.length > 0 && (
         <ul className="m-0 mt-4 ml-[17px] flex list-none flex-col gap-4 border-l border-bord p-0 pl-[20px]">
           {fil.reponses.map((r) => (
-            <li key={r.id} className="grid grid-cols-[26px_minmax(0,1fr)] gap-[10px]">
+            <li
+              key={r.id}
+              className={`grid grid-cols-[26px_minmax(0,1fr)] gap-[10px] ${
+                r.est_acceptee
+                  ? "-ml-[21px] border-l-2 border-[color:var(--voltage-2)] pl-[19px]"
+                  : ""
+              }`}
+            >
               <span className="flex h-[26px] w-[26px] items-center justify-center rounded-full bg-fond-3 font-mono text-[9.5px] font-semibold text-texte-2">
                 {initiales(r.auteur)}
               </span>
               <div className="min-w-0">
+                {r.est_acceptee && (
+                  <p className="m-0 mb-[3px] font-mono text-[9px] font-semibold tracking-[0.12em] text-accent-texte uppercase">
+                    ✓ Réponse retenue
+                  </p>
+                )}
                 <Signature m={r} petit />
                 <Corps texte={r.corps} />
+                <div className="mt-[8px] flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <Utile m={r} chemin={chemin} />
+                  {fil.je_peux_resoudre && (
+                    <form action={accepterReponse} className="contents">
+                      <input type="hidden" name="fil_id" value={fil.id} />
+                      <input
+                        type="hidden"
+                        name="reponse_id"
+                        value={r.est_acceptee ? "" : r.id}
+                      />
+                      <input type="hidden" name="chemin" value={chemin} />
+                      <button
+                        type="submit"
+                        className={`${ACTION} text-texte-3 hover:text-texte`}
+                      >
+                        {r.est_acceptee
+                          ? "ce n'était pas la bonne"
+                          : "c'est la bonne réponse"}
+                      </button>
+                    </form>
+                  )}
+                </div>
               </div>
             </li>
           ))}
@@ -144,7 +232,7 @@ function Discussion({
               <button
                 type="button"
                 onClick={() => setOuvert(false)}
-                className="font-mono text-[10.5px] tracking-[0.1em] text-texte-3 uppercase hover:text-texte-2"
+                className={`${ACTION} text-texte-3 hover:text-texte-2`}
               >
                 annuler
               </button>
@@ -154,7 +242,7 @@ function Discussion({
           <button
             type="button"
             onClick={() => setOuvert(true)}
-            className="font-mono text-[10.5px] tracking-[0.1em] text-texte-3 uppercase hover:text-texte"
+            className={`${ACTION} text-texte-3 hover:text-texte`}
           >
             {fil.reponses.length > 0 ? "Ajouter une réponse" : "Répondre"}
           </button>
@@ -194,8 +282,11 @@ export function Commentaires({
       </h2>
       <p className="mt-0 mb-6 max-w-[34rem] text-[0.95rem] text-texte-2">
         Posez votre question ici, et répondez à celles des autres — c&apos;est
-        souvent en expliquant qu&apos;on comprend vraiment. Tout le monde lit ce
-        fil.
+        souvent en expliquant qu&apos;on comprend vraiment. Une formule entre
+        accents graves s&apos;affiche comme une formule&nbsp;:{" "}
+        <code className="rounded-[3px] bg-fond-3 px-[5px] py-[1px] font-mono text-[0.88em] text-texte">
+          =RECHERCHEX(…)
+        </code>
       </p>
 
       <form ref={zone} action={action} className="mb-9 flex flex-col gap-3">

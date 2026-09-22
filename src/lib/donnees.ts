@@ -45,6 +45,14 @@ export type Message = {
   auteur: string;
   est_instructeur: boolean;
   est_moi: boolean;
+  utiles: number;
+  moi_utile: boolean;
+  /** Sur un message d'ouverture : la réponse qui a résolu la question. */
+  reponse_acceptee: string | null;
+  /** Sur une réponse : est-ce celle qui a résolu son fil ? */
+  est_acceptee: boolean;
+  /** L'auteur du fil, ou l'instructeur : ceux qui peuvent la désigner. */
+  je_peux_resoudre: boolean;
 };
 
 /** Un message d'ouverture et ses réponses, dans l'ordre. */
@@ -164,6 +172,13 @@ export async function filDiscussion(leconId: string): Promise<Fil[]> {
     if (!m.parent_id) continue;
     const r = racine(m);
     if (r) fils.get(r)?.reponses.push(m);
+  }
+
+  //  Dans un fil résolu, la réponse retenue passe devant : quelqu'un
+  //  qui arrive avec la même question doit la lire en premier, pas
+  //  dérouler huit messages pour la trouver.
+  for (const f of fils.values()) {
+    f.reponses.sort((a, b) => Number(b.est_acceptee) - Number(a.est_acceptee));
   }
 
   return [...fils.values()].reverse().slice(0, 80);

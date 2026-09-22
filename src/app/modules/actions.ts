@@ -93,3 +93,79 @@ export async function publierCommentaire(
   revalidatePath(chemin);
   return { ok: true, message: "" };
 }
+
+/* ── Le fil de discussion ─────────────────────────────────────────── */
+
+/**
+ * « Utile », posé ou retiré.
+ *
+ * Un vote par personne et par message : la clé primaire de la table le
+ * garantit, on n'a donc pas à s'en méfier ici.
+ */
+export async function basculerUtile(donnees: FormData) {
+  const id = String(donnees.get("commentaire_id") ?? "").trim();
+  const chemin = String(donnees.get("chemin") ?? "/modules");
+  if (!id) return;
+
+  const supabase = await clientServeur();
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return;
+
+  const { data: deja } = await supabase
+    .from("votes_utiles")
+    .select("commentaire_id")
+    .eq("commentaire_id", id)
+    .eq("profil_id", auth.user.id)
+    .maybeSingle();
+
+  if (deja) {
+    await supabase
+      .from("votes_utiles")
+      .delete()
+      .eq("commentaire_id", id)
+      .eq("profil_id", auth.user.id);
+  } else {
+    await supabase
+      .from("votes_utiles")
+      .insert({ commentaire_id: id, profil_id: auth.user.id });
+  }
+
+  revalidatePath(chemin);
+}
+
+/**
+ * Désigne — ou retire — la réponse qui a résolu la question.
+ *
+ * Qui a le droit : l'auteur du fil, et l'instructeur. Ce n'est pas
+ * vérifié ici mais par la règle « commentaires : je modifie les miens »,
+ * qui est le seul endroit où cette question se tranche.
+ */
+export async function accepterReponse(donnees: FormData) {
+  const reponseId = String(donnees.get("reponse_id") ?? "").trim();
+  const filId = String(donnees.get("fil_id") ?? "").trim();
+  const chemin = String(donnees.get("chemin") ?? "/modules");
+  if (!filId) return;
+
+  const supabase = await clientServeur();
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return;
+
+  //  La réponse doit appartenir à CE fil. Sans ce contrôle, on
+  //  désignerait comme solution un message venu d'ailleurs — et il
+  //  s'afficherait en tête d'une question qu'il ne concerne pas.
+  if (reponseId) {
+    const { data: r } = await supabase
+      .from("commentaires")
+      .select("id, parent_id")
+      .eq("id", reponseId)
+      .maybeSingle();
+    if (!r || r.parent_id !== filId) return;
+  }
+
+  await supabase
+    .from("commentaires")
+    .update({ reponse_acceptee: reponseId || null })
+    .eq("id", filId);
+
+  revalidatePath(chemin);
+}
