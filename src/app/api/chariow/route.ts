@@ -26,8 +26,23 @@ import { clientAdmin } from "@/lib/supabase/admin";
 /** Seul événement qui ouvre un accès. */
 const EVENEMENT_PAYE = "successful.sale";
 
-/** Statuts de vente qu'on accepte comme « l'argent est arrivé ». */
-const STATUTS_PAYES = new Set(["completed", "settled", "paid", "success", "successful"]);
+/**
+ * Statuts qui CONTREDISENT l'événement.
+ *
+ * On a d'abord fait l'inverse — une liste de statuts acceptés — et ça
+ * a bloqué un vrai paiement le 22 septembre : Chariow envoie
+ * « successful.sale » avec un statut de vente « awaiting_payment »,
+ * parce que la commission est prélevée mais le versement pas encore
+ * fait. Le statut décrit le reversement au marchand, pas l'argent du
+ * client.
+ *
+ * L'événement fait foi : c'est le contrat documenté, et les paniers
+ * abandonnés comme les échecs ont leurs propres événements. On ne
+ * garde donc qu'un démenti explicite.
+ */
+const STATUTS_DEMENTIS = new Set([
+  "failed", "abandoned", "cancelled", "canceled", "refunded", "chargeback",
+]);
 
 function egalConstant(a: string, b: string) {
   const ba = Buffer.from(a);
@@ -127,14 +142,13 @@ export async function POST(requete: NextRequest) {
     return NextResponse.json({ ok: true, ignore: evenement });
   }
 
-  //  Ceinture et bretelles : l'événement dit « vendu », le statut doit
-  //  le confirmer. Si Chariow change un jour de vocabulaire, on
-  //  préfère refuser un accès que d'en ouvrir un qui n'est pas payé.
+  //  L'événement dit « vendu ». On ne le contredit que si le statut
+  //  le dément franchement — pas parce qu'il dit autre chose.
   const statut = (
-    pioche(charge, ["status", "data.status", "sale.status", "payment.status", "data.payment.status"]) ?? ""
+    pioche(charge, ["status", "sale.status", "data.status", "payment.status"]) ?? ""
   ).toLowerCase();
-  if (statut && !STATUTS_PAYES.has(statut)) {
-    await conclure(`statut non payé : ${statut}`, false);
+  if (statut && STATUTS_DEMENTIS.has(statut)) {
+    await conclure(`statut démenti : ${statut}`, false);
     return NextResponse.json({ ok: true, ignore: statut });
   }
 

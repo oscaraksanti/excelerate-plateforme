@@ -78,12 +78,19 @@ export default async function PagePaiement({
               {offre.detail}
             </p>
 
-            <div className="mb-7 flex items-baseline justify-between border-y-2 border-texte py-4">
+            <div className="mb-3 flex items-baseline justify-between border-y-2 border-texte py-4">
               <span className="etiquette">À régler, une seule fois</span>
               <span className="titre-xl m-0 text-[2rem] tabular-nums">
                 {offre.montant} $
               </span>
             </div>
+            {/*  Le tunnel affiche la monnaie du pays : c'est ce qui rend
+                le mobile money possible. Sans cette phrase, voir
+                « 57 361 RWF » sous « 37 $ » fait douter. */}
+            <p className="mt-0 mb-7 text-[0.88rem] text-texte-3">
+              Converti dans ta monnaie au moment du paiement — francs CFA,
+              francs congolais, naira… Le montant reste le même.
+            </p>
 
             <TunnelChariow
               produitRef={offre.ref}
