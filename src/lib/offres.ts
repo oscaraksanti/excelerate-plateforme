@@ -45,11 +45,34 @@ export async function mesConditions(): Promise<Conditions> {
 
 export async function mesAchats() {
   const supabase = await clientServeur();
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return [];
+
+  //  Le filtre est explicite, et il doit l'être : la règle d'accès dit
+  //  « les miens OU je suis administrateur ». Sans ce `eq`, Oscar
+  //  reçoit les achats de tout le monde comme s'ils étaient les siens
+  //  — sa page de paiement lui répondrait « c'est déjà à toi », et sa
+  //  page de remerciement lui montrerait l'achat d'un autre.
   const { data } = await supabase
     .from("achats")
     .select("produit, montant, paye_le")
+    .eq("profil_id", auth.user.id)
     .order("paye_le", { ascending: false });
   return (data as { produit: string; montant: number | null; paye_le: string }[]) ?? [];
+}
+
+/**
+ * Le dernier achat de cette heure-ci, s'il y en a un.
+ *
+ * La page de remerciement ne sait pas quel produit vient d'être payé :
+ * la redirection ne le dit pas, et on ne veut pas qu'elle le dise —
+ * ce serait une affirmation venue du navigateur. On prend donc le plus
+ * récent, à condition qu'il soit vraiment récent.
+ */
+export async function achatRecent(fenetreMs = 60 * 60 * 1000) {
+  const achats = await mesAchats();
+  const limite = Date.now() - fenetreMs;
+  return achats.find((a) => new Date(a.paye_le).getTime() > limite) ?? null;
 }
 
 /** Les trois conditions du certificat sont-elles remplies ? */

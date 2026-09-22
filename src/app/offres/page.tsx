@@ -138,9 +138,16 @@ export default async function PageOffres() {
                       Déjà à toi
                     </span>
                   ) : p.lien ? (
-                    <a href={p.lien} className={p.phare ? "bouton" : "bouton-2"}>
+                    //  On passe par notre propre page : le paiement s'y
+                    //  affiche dans la plateforme, pré-rempli avec
+                    //  l'adresse du compte. Le lien Chariow reste stocké,
+                    //  il sert à déduire la boutique.
+                    <Link
+                      href={`/offres/payer/${p.ref}`}
+                      className={p.phare ? "bouton" : "bouton-2"}
+                    >
                       {p.montant === 37 ? "Prendre la masterclass" : "Choisir cette offre"}
-                    </a>
+                    </Link>
                   ) : (
                     <a href="mailto:oscaraksanti@gmail.com" className="bouton-2">
                       Écrire à Oscar
