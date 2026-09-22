@@ -50,6 +50,7 @@ export async function publierCommentaire(
   const leconId = String(donnees.get("lecon_id") ?? "");
   const chemin = String(donnees.get("chemin") ?? "/modules");
   const corps = String(donnees.get("corps") ?? "").trim();
+  const repondA = String(donnees.get("parent_id") ?? "").trim();
 
   if (corps.length < 2) {
     return { ok: false, message: "Ton message est vide." };
@@ -62,9 +63,28 @@ export async function publierCommentaire(
   const { data: auth } = await supabase.auth.getUser();
   if (!auth.user) return { ok: false, message: "Session expirée. Reconnecte-toi." };
 
+  let parentId: string | null = null;
+  if (repondA) {
+    //  Le parent doit exister ET appartenir à cette leçon. Sans ce
+    //  contrôle, un identifiant recopié à la main accrocherait une
+    //  réponse sous le fil d'une leçon qu'on n'a pas le droit de voir.
+    const { data: parent } = await supabase
+      .from("commentaires")
+      .select("id, lecon_id, parent_id")
+      .eq("id", repondA)
+      .maybeSingle();
+
+    if (!parent || parent.lecon_id !== leconId) {
+      return { ok: false, message: "Ce message n'existe plus." };
+    }
+    //  Deux niveaux, pas davantage : répondre à une réponse rejoint le
+    //  même fil. Au-delà, ça devient illisible sur un téléphone.
+    parentId = parent.parent_id ?? parent.id;
+  }
+
   const { error } = await supabase
     .from("commentaires")
-    .insert({ lecon_id: leconId, profil_id: auth.user.id, corps });
+    .insert({ lecon_id: leconId, profil_id: auth.user.id, corps, parent_id: parentId });
 
   if (error) {
     return { ok: false, message: "L'envoi a échoué. Réessaie dans un instant." };

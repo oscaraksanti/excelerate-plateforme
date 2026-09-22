@@ -12,7 +12,7 @@ import {
   leconsTerminees,
   lireLecon,
   lireModule,
-  listerCommentaires,
+  filDiscussion,
   sommaireModule,
   listerRessources,
 } from "@/lib/donnees";
@@ -52,7 +52,7 @@ export default async function PageLecon({ params }: Params) {
 
   const [ressources, fils, terminees, dejaTerminee] = await Promise.all([
     listerRessources(courante.id),
-    listerCommentaires(courante.id),
+    filDiscussion(courante.id),
     leconsTerminees(),
     enregistrerPassage(courante.id),
   ]);

@@ -35,13 +35,20 @@ export type Ressource = {
   ordre: number;
 };
 
-export type Commentaire = {
+export type Message = {
   id: string;
+  parent_id: string | null;
   corps: string;
   cree_le: string;
   profil_id: string;
-  profils: { nom: string } | null;
+  /** Prénom et initiale, calculés par la base. Jamais l'identité complète. */
+  auteur: string;
+  est_instructeur: boolean;
+  est_moi: boolean;
 };
+
+/** Un message d'ouverture et ses réponses, dans l'ordre. */
+export type Fil = Message & { reponses: Message[] };
 
 const CHAMPS_MODULE = "id, numero, titre, resume, acces, publie, publie_le";
 const CHAMPS_LECON =
@@ -116,18 +123,50 @@ export async function leconsTerminees(): Promise<Set<string>> {
   return new Set((data ?? []).map((l: { lecon_id: string }) => l.lecon_id));
 }
 
-export async function listerCommentaires(
-  leconId: string,
-): Promise<Commentaire[]> {
+/**
+ * Le fil de discussion d'une leçon : les messages d'ouverture, chacun
+ * avec ses réponses.
+ *
+ * Passe par une fonction de la base plutôt que par la table : « profil :
+ * je lis le mien » empêche un apprenant de lire le profil d'un autre,
+ * et `profils(nom)` revenait donc vide pour tout le monde. La fonction
+ * franchit cette règle une fois, sous contrôle, et ne sort que le nom
+ * d'usage.
+ */
+export async function filDiscussion(leconId: string): Promise<Fil[]> {
   const supabase = await clientServeur();
-  const { data } = await supabase
-    .from("commentaires")
-    .select("id, corps, cree_le, profil_id, profils(nom)")
-    .eq("lecon_id", leconId)
-    .is("parent_id", null)
-    .order("cree_le", { ascending: false })
-    .limit(80);
-  return (data as unknown as Commentaire[]) ?? [];
+  const { data } = await supabase.rpc("fil_commentaires", { p_lecon: leconId });
+  const messages = (data as Message[]) ?? [];
+
+  //  La base trie par date croissante. On garde cet ordre dans les
+  //  réponses — une conversation se lit dans le sens où elle s'est
+  //  tenue — et on inverse les fils, pour que les questions récentes
+  //  soient en haut.
+  const parent = new Map(messages.map((m) => [m.id, m.parent_id]));
+  const racine = (m: Message) => {
+    let id: string | null = m.parent_id;
+    //  Deux niveaux à l'écriture, mais on remonte quand même : une
+    //  donnée ancienne ou bricolée ne doit pas faire disparaître un
+    //  message de l'affichage.
+    for (let garde = 0; id && garde < 20; garde++) {
+      const suivant: string | null = parent.get(id) ?? null;
+      if (!suivant) return id;
+      id = suivant;
+    }
+    return id;
+  };
+
+  const fils = new Map<string, Fil>();
+  for (const m of messages) {
+    if (!m.parent_id) fils.set(m.id, { ...m, reponses: [] });
+  }
+  for (const m of messages) {
+    if (!m.parent_id) continue;
+    const r = racine(m);
+    if (r) fils.get(r)?.reponses.push(m);
+  }
+
+  return [...fils.values()].reverse().slice(0, 80);
 }
 
 /** Adresse publique d'un fichier de l'espace « ressources ». */
