@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { exigerAdmin } from "@/lib/admin";
+import { courrielRelanceCorrections } from "@/lib/courriel";
+import { clientAdmin } from "@/lib/supabase/admin";
 import { clientServeur } from "@/lib/supabase/serveur";
 
 /**
@@ -60,4 +62,42 @@ export async function corrigerMoiMeme(donnees: FormData) {
 
   revalidatePath("/admin/corrections");
   revalidatePath("/corrections");
+}
+
+/**
+ * Relancer une seule personne.
+ *
+ * Le bouton de la page Apprenants relance tout le monde d'un coup ;
+ * ici on vise celui qui bloque, et lui seul. Deux personnes gardant
+ * six copies reservees sans les ouvrir suffisent a figer les notes
+ * d'un TP entier.
+ */
+export async function relancerUn(donnees: FormData) {
+  await exigerAdmin();
+  const profilId = String(donnees.get("profil_id") ?? "").trim();
+  if (!profilId) return;
+
+  const admin = clientAdmin();
+  const { data: gens } = await admin
+    .from("profils")
+    .select("email, nom")
+    .eq("id", profilId)
+    .maybeSingle();
+
+  if (!gens?.email) return;
+
+  const supabase = await clientServeur();
+  const { data } = await supabase.rpc("a_relancer");
+  const ligne = (data as { profil_id: string; restant: number }[] | null)?.find(
+    (g) => g.profil_id === profilId,
+  );
+  if (!ligne) return; // Il n'a plus rien a corriger : rien a envoyer.
+
+  await courrielRelanceCorrections({
+    a: gens.email,
+    prenom: (gens.nom ?? "").split(" ")[0] ?? "",
+    restant: ligne.restant,
+  });
+
+  revalidatePath("/admin/corrections");
 }

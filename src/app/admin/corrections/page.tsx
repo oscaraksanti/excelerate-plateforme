@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { corrigerMoiMeme, liberer, repartir } from "./actions";
+import { corrigerMoiMeme, liberer, relancerUn, repartir } from "./actions";
 import { formaterDate } from "@/lib/formats";
 import { clientServeur } from "@/lib/supabase/serveur";
 
@@ -163,6 +163,17 @@ export default async function PageCorrections() {
                       </td>
                       <td className="py-[11px] pr-4 text-right font-mono tabular-nums text-texte-2">
                         {c.ses_faites} / {c.ses_dues}
+                        {c.ses_faites < c.ses_dues && (
+                          <form action={relancerUn} className="mt-1">
+                            <input type="hidden" name="profil_id" value={c.profil_id} />
+                            <button
+                              type="submit"
+                              className="cursor-pointer font-mono text-[10px] tracking-[0.1em] text-texte-3 uppercase hover:text-texte"
+                            >
+                              relancer
+                            </button>
+                          </form>
+                        )}
                       </td>
                       <td className="py-[11px] text-right font-mono tabular-nums">
                         <span className="text-texte">{nombre(c.note_finale)}</span>
