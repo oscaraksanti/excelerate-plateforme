@@ -4,6 +4,7 @@ import { formaterDate } from "@/lib/formats";
 import { clientAdmin } from "@/lib/supabase/admin";
 import { clientServeur } from "@/lib/supabase/serveur";
 import { TableauEligibles, type Ligne } from "./formulaire";
+import { ACertifier, type Du } from "./a-emettre";
 
 export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Les certificats" };
 
@@ -11,6 +12,9 @@ export default async function PageCertificats() {
   const supabase = await clientServeur();
   const { data } = await supabase.rpc("eligibles_certificat");
   const lignes = (data as Ligne[]) ?? [];
+
+  const { data: dus } = await supabase.rpc("certificats_a_emettre");
+  const aEmettre = (dus as Du[]) ?? [];
 
   const admin = clientAdmin();
   const { data: remis } = await admin
@@ -35,6 +39,24 @@ export default async function PageCertificats() {
           Voir le certificat →
         </a>
       </p>
+
+      {/*  Ceux qui ont payé passent avant tout le reste : un certificat
+          acheté et jamais délivré est une promesse rompue, pas un
+          oubli. La liste « qui y a droit » compte des centaines de
+          lignes — celle-ci en compte autant qu'il y a eu de ventes. */}
+      <section className="mb-14 border-t-2 border-texte pt-6">
+        <h2 className="titre-l m-0 mb-1 text-[1.35rem]">Dus — ils ont payé</h2>
+        <p className="mt-2 mb-5 max-w-[35rem] text-[0.96rem] text-texte-2">
+          Le certificat à 27 $ porte sur les modules gratuits ; la masterclass
+          et le cercle portent sur tout le programme. Les conditions restent
+          les mêmes pour tous.
+        </p>
+        {aEmettre.length === 0 ? (
+          <p className="text-texte-2">Aucun achat pour l&apos;instant.</p>
+        ) : (
+          <ACertifier lignes={aEmettre} />
+        )}
+      </section>
 
       <section className="mb-14 border-t-2 border-texte pt-6">
         <h2 className="titre-l m-0 mb-5 text-[1.35rem]">Qui y a droit</h2>
