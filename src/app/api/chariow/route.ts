@@ -1,6 +1,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
 import { courrielAchat } from "@/lib/courriel";
+import { nomComplet } from "@/lib/formats";
 import { clientAdmin } from "@/lib/supabase/admin";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -177,6 +178,18 @@ export async function POST(requete: NextRequest) {
     "customer.name", "data.customer.name",
   ]);
 
+  //  Le nom ENTIER porté par le paiement. C'est souvent le seul
+  //  endroit où on l'a : à l'inscription beaucoup n'ont tapé qu'un
+  //  prénom, et un certificat ne peut pas être établi là-dessus.
+  const nomPaiement =
+    pioche(charge, ["customer.name", "data.customer.name", "sale.customer.name"]) ??
+    [
+      pioche(charge, ["customer.first_name", "data.customer.first_name"]),
+      pioche(charge, ["customer.last_name", "data.customer.last_name"]),
+    ]
+      .filter(Boolean)
+      .join(" ");
+
   if (!email || !refCommande) {
     console.error("[pulse] champs manquants", {
       email: Boolean(email), refCommande: Boolean(refCommande),
@@ -224,6 +237,21 @@ export async function POST(requete: NextRequest) {
     .select("id, nom")
     .ilike("email", email)
     .maybeSingle();
+
+  //  On complète le nom, jamais on ne l'écrase : un nom déjà complet
+  //  est celui que la personne a choisi d'afficher.
+  if (profil && !nomComplet(profil.nom) && nomComplet(nomPaiement)) {
+    const propre = nomPaiement.trim().replace(/\s+/g, " ");
+    const { error: echec } = await admin
+      .from("profils")
+      .update({ nom: propre })
+      .eq("id", profil.id);
+    if (echec) console.error("[pulse] nom non complété", echec.message);
+    else {
+      profil.nom = propre;
+      console.info(`[pulse] nom complété pour ${email}`);
+    }
+  }
 
   const { error } = await admin.from("achats").insert({
     profil_id: profil?.id ?? null,

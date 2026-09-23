@@ -54,3 +54,24 @@ export async function corrections_recues(copieId: string) {
     }[]) ?? []
   );
 }
+
+export type EtatCopie = { recues: number; en_lecture: number; definitive: boolean };
+
+/** Ou en est MA copie : qui l'a lue, qui la lit. Sans nommer personne. */
+export async function etatDeMaCopie(tpId: string): Promise<EtatCopie> {
+  const supabase = await clientServeur();
+  const { data } = await supabase.rpc("etat_de_ma_copie", { p_tp: tpId });
+  const l = Array.isArray(data) ? data[0] : data;
+  return {
+    recues: l?.recues ?? 0,
+    en_lecture: l?.en_lecture ?? 0,
+    definitive: Boolean(l?.definitive),
+  };
+}
+
+/** Combien de copies attendent encore un deuxieme lecteur, et me sont prenables. */
+export async function copiesEnSouffrance(tpId: string): Promise<number> {
+  const supabase = await clientServeur();
+  const { data } = await supabase.rpc("copies_en_souffrance", { p_tp: tpId });
+  return Number(data ?? 0);
+}

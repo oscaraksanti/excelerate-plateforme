@@ -9,6 +9,7 @@ export type Tp = {
   fichier_depart: string | null;
   criteres: unknown;
   corrections_requises: number;
+  poids_machine: number;
   ouvre_le: string | null;
   ferme_le: string | null;
   publie: boolean;
@@ -24,11 +25,12 @@ export type Copie = {
   detail_machine: unknown;
   note_pairs: number | null;
   note_finale: number | null;
+  note_definitive: boolean;
   depose_le: string;
 };
 
 const CHAMPS_TP =
-  "id, module_id, numero, titre, enonce_md, fichier_depart, criteres, corrections_requises, ouvre_le, ferme_le, publie";
+  "id, module_id, numero, titre, enonce_md, fichier_depart, criteres, corrections_requises, poids_machine, ouvre_le, ferme_le, publie";
 
 export async function listerTps(moduleId: string): Promise<Tp[]> {
   const supabase = await clientServeur();
@@ -66,7 +68,7 @@ export async function maCopie(tpId: string): Promise<Copie | null> {
   const { data } = await supabase
     .from("copies")
     .select(
-      "id, tp_id, profil_id, chemin, nom_fichier, note_machine, detail_machine, note_pairs, note_finale, depose_le",
+      "id, tp_id, profil_id, chemin, nom_fichier, note_machine, detail_machine, note_pairs, note_finale, note_definitive, depose_le",
     )
     .eq("tp_id", tpId)
     .eq("profil_id", auth.user.id)

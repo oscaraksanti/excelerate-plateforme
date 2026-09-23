@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { demanderFile } from "@/app/corrections/actions";
+import { demanderFile, prendreUneDePlus } from "@/app/corrections/actions";
 import { EnteteApp } from "@/components/entete-app";
 import { formaterDate } from "@/lib/formats";
-import { maFile, monAvancement } from "@/lib/pairs";
+import { copiesEnSouffrance, maFile, monAvancement } from "@/lib/pairs";
 import { profilCourant } from "@/lib/profil";
 import { clientServeur } from "@/lib/supabase/serveur";
 
@@ -36,6 +36,7 @@ export default async function PageCorrections({
       tp: t,
       file: await maFile(t.id),
       avancement: await monAvancement(t.id),
+      souffrance: await copiesEnSouffrance(t.id),
     })),
   );
 
@@ -74,7 +75,7 @@ export default async function PageCorrections({
             <span className="poignee" aria-hidden="true" />
           </div>
         ) : (
-          blocs.map(({ tp, file, avancement }) => {
+          blocs.map(({ tp, file, avancement, souffrance }) => {
             const restant = Math.max(0, avancement.requises - avancement.faites);
             const cheminTp = `/modules/${tp.modules?.numero ?? 1}/tp/${tp.numero}`;
             return (
@@ -162,6 +163,30 @@ export default async function PageCorrections({
                         : "Recevoir une copie de plus"}
                     </button>
                   </form>
+                )}
+
+                {restant === 0 && avancement.attribuees === 0 && souffrance > 0 && (
+                  <div className="plage px-6 py-5">
+                    <span className="etiquette mb-2 block">
+                      {souffrance} copie{souffrance > 1 ? "s" : ""} sans deuxième
+                      lecteur
+                    </span>
+                    <p className="m-0 mb-5 max-w-[34rem] text-[0.98rem] leading-[1.5]">
+                      Il faut deux lectures pour qu&apos;une note devienne
+                      définitive. {souffrance > 1 ? "Ces copies n'en ont" : "Cette copie n'en a"}{" "}
+                      qu&apos;une — leurs auteurs ont rendu leur travail et
+                      attendent quelqu&apos;un. Tu as déjà fait ta part ; celle-ci
+                      serait un coup de main.
+                    </p>
+                    <form action={prendreUneDePlus}>
+                      <input type="hidden" name="tp_id" value={tp.id} />
+                      <input type="hidden" name="chemin_page" value="/corrections" />
+                      <button type="submit" className="bouton-2">
+                        En corriger une de plus
+                      </button>
+                    </form>
+                    <span className="poignee" aria-hidden="true" />
+                  </div>
                 )}
               </section>
             );

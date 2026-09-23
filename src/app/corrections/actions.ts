@@ -122,3 +122,22 @@ export async function enregistrerCorrection(
   revalidatePath("/corrections");
   redirect("/corrections?fait=1");
 }
+
+/**
+ * Prendre une copie de plus, au-dela du quota.
+ *
+ * Quand chacun a rendu ses trois corrections et qu'il reste des copies
+ * sans deuxieme lecteur, le quota devient le probleme : personne ne
+ * peut plus rien prendre, et ces notes ne seront jamais definitives.
+ * C'est la seule sortie, et elle est volontaire.
+ */
+export async function prendreUneDePlus(donnees: FormData) {
+  const tpId = String(donnees.get("tp_id") ?? "").trim();
+  const retour = String(donnees.get("chemin_page") ?? "/corrections");
+  if (!tpId) return;
+
+  const supabase = await clientServeur();
+  await supabase.rpc("attribuer_une_de_plus", { p_tp: tpId });
+
+  revalidatePath(retour);
+}

@@ -8,6 +8,7 @@ const SECTIONS = [
   { href: "/admin/contenu", libelle: "Contenu" },
   { href: "/admin/apprenants", libelle: "Apprenants" },
   { href: "/admin/questions", libelle: "Questions" },
+  { href: "/admin/corrections", libelle: "Corrections" },
   { href: "/admin/import", libelle: "Import" },
   { href: "/admin/achats", libelle: "Ventes" },
   { href: "/admin/certificats", libelle: "Certificats" },

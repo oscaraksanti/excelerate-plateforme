@@ -8,7 +8,13 @@ import { adresseRessource, lireModule } from "@/lib/donnees";
 import { rendreMarkdown } from "@/lib/markdown";
 import { profilCourant } from "@/lib/profil";
 import { etatTp, formaterDate, lireTp, maCopie } from "@/lib/tp";
-import { corrections_recues, criteresDe, monAvancement, verrouLeve } from "@/lib/pairs";
+import {
+  corrections_recues,
+  criteresDe,
+  etatDeMaCopie,
+  monAvancement,
+  verrouLeve,
+} from "@/lib/pairs";
 import { DepotCopie } from "./depot";
 
 type Params = { params: Promise<{ numero: string; tp: string }> };
@@ -39,6 +45,8 @@ export default async function PageTp({ params }: Params) {
   const avancement = copie ? await monAvancement(tp.id) : null;
   const leve = copie ? await verrouLeve(tp.id) : false;
   const recues = copie && leve ? await corrections_recues(copie.id) : [];
+  const etatCopie = copie && leve ? await etatDeMaCopie(tp.id) : null;
+  const partMachine = Math.round((tp.poids_machine ?? 0.6) * 100);
   const criteres = criteresDe(tp.criteres);
   const chemin = `/modules/${leModule.numero}/tp/${tp.numero}`;
   const resultat = copie?.detail_machine as Resultat | null;
@@ -179,7 +187,9 @@ export default async function PageTp({ params }: Params) {
               <>
                 <div className="mt-6 grid grid-cols-1 items-start gap-6 sm:grid-cols-[auto_minmax(0,1fr)]">
                   <div className="plage px-6 py-5">
-                    <span className="etiquette mb-2 block">Note finale</span>
+                    <span className="etiquette mb-2 block">
+                      {copie.note_definitive ? "Note finale" : "Note provisoire"}
+                    </span>
                     <span className="titre-xl block text-[3rem] tabular-nums">
                       {copie.note_finale !== null
                         ? String(copie.note_finale).replace(".", ",")
@@ -187,7 +197,9 @@ export default async function PageTp({ params }: Params) {
                       <span className="text-[1.3rem] text-texte-2">/20</span>
                     </span>
                     <span className="mt-[10px] block font-mono text-[11.5px] tabular-nums text-texte-2">
-                      60 % machine · 40 % pairs
+                      {copie.note_definitive
+                        ? `${partMachine} % machine · ${100 - partMachine} % pairs`
+                        : "la machine seule, pour l'instant"}
                     </span>
                     <span className="poignee" aria-hidden="true" />
                   </div>
@@ -206,17 +218,44 @@ export default async function PageTp({ params }: Params) {
                       pairs (médiane) :{" "}
                       <span className="text-texte">
                         {copie.note_pairs !== null
-                          ? String(copie.note_pairs).replace(".", ",")
-                          : "en attente d'une deuxième correction"}{" "}
-                        {copie.note_pairs !== null ? "/ 20" : ""}
+                          ? `${String(copie.note_pairs).replace(".", ",")} / 20`
+                          : "pas encore"}
                       </span>
                     </span>
                     <span>
                       corrections reçues :{" "}
                       <span className="text-texte">{recues.length}</span>
                     </span>
+                    {!copie.note_definitive && (etatCopie?.en_lecture ?? 0) > 0 && (
+                      <span>
+                        copie entre les mains de :{" "}
+                        <span className="text-texte">
+                          {etatCopie?.en_lecture} correcteur
+                          {(etatCopie?.en_lecture ?? 0) > 1 ? "s" : ""}
+                        </span>
+                      </span>
+                    )}
                   </div>
                 </div>
+
+                {!copie.note_definitive && (
+                  <p className="m-0 mt-6 max-w-[38rem] border-l-[3px] border-ambre bg-fond-2 px-4 py-3 text-[0.94rem] leading-[1.55] text-texte-2">
+                    <strong className="font-semibold text-texte">
+                      Tu as fait ta part.
+                    </strong>{" "}
+                    Cette note est celle de la machine seule. Il faut deux
+                    lectures de pairs pour en tirer une médiane — un seul avis
+                    ferait la note à lui tout seul, et ce ne serait pas juste.
+                    {(etatCopie?.en_lecture ?? 0) > 0
+                      ? ` Ta copie est déjà attribuée à ${etatCopie?.en_lecture} correcteur${
+                          (etatCopie?.en_lecture ?? 0) > 1 ? "s" : ""
+                        } : dès que deux auront rendu, leur médiane entrera pour ${
+                          100 - partMachine
+                        } % et la note deviendra définitive.`
+                      : " Ta copie est en tête de file : elle partira au prochain qui vient corriger."}{" "}
+                    Tu n&apos;as plus rien à faire de ton côté.
+                  </p>
+                )}
 
                 {recues.length > 0 && (
                   <ol className="m-0 mt-9 flex list-none flex-col gap-0 border-t border-bord p-0">

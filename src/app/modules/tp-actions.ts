@@ -122,6 +122,18 @@ export async function deposerCopie(
     return { ok: false, message: "L'enregistrement a échoué. Réessaie dans un instant." };
   }
 
+  //  La copie entre tout de suite dans les files de ceux qui ont encore
+  //  de la place. Sans ça, une copie déposée tard n'était jamais lue :
+  //  elle n'entrait dans une file que si quelqu'un réclamait des copies,
+  //  et ceux qui en réclamaient avaient déjà les leurs. Les deux
+  //  derniers dépôts du TP 1 n'avaient aucun correcteur.
+  const { error: echecRepartition } = await admin.rpc("repartir_copies", {
+    p_tp: tpId,
+  });
+  if (echecRepartition) {
+    console.error("[depot] répartition impossible", echecRepartition.message);
+  }
+
   // Le courriel part après coup et n'a aucun droit de faire échouer le
   // dépôt : la copie est enregistrée, c'est ce qui compte.
   try {
