@@ -46,7 +46,14 @@ export function TableauEligibles({ lignes }: { lignes: Ligne[] }) {
     l.corrections >= l.corrections_dues &&
     (l.moyenne ?? 0) >= 12;
 
-  const attente = lignes.filter((l) => !l.a_certificat);
+  //  874 comptes, dont 850 qui n'ont jamais rien déposé : les
+  //  afficher tous rendait la page illisible et enterrait la liste des
+  //  certificats délivrés. On ne montre que ceux qui ont commencé —
+  //  pour tous les autres, la fiche de l'apprenant permet de délivrer
+  //  au cas par cas.
+  const commences = lignes.filter((l) => l.tps_rendus > 0);
+  const caches = lignes.length - commences.length;
+  const attente = commences.filter((l) => !l.a_certificat);
   const tousMeritants = attente.filter(merite).map((l) => l.profil_id);
 
   return (
@@ -83,6 +90,16 @@ export function TableauEligibles({ lignes }: { lignes: Ligne[] }) {
         </p>
       )}
 
+      {caches > 0 && (
+        <p className="mb-4 text-[0.9rem] text-texte-2">
+          {caches} compte{caches > 1 ? "s" : ""} n&apos;{caches > 1 ? "ont" : "a"}{" "}
+          rien déposé et {caches > 1 ? "sont" : "est"} masqué
+          {caches > 1 ? "s" : ""} ici. Pour délivrer à l&apos;un d&apos;eux
+          malgré tout, passe par sa fiche depuis{" "}
+          <span className="text-texte">Apprenants</span>.
+        </p>
+      )}
+
       <div className="overflow-x-auto rounded-[10px] border border-bord">
         <table className="w-full min-w-[720px] border-collapse text-[0.89rem]">
           <thead>
@@ -98,7 +115,7 @@ export function TableauEligibles({ lignes }: { lignes: Ligne[] }) {
             </tr>
           </thead>
           <tbody>
-            {lignes.map((l) => {
+            {commences.map((l) => {
               const bon = merite(l);
               return (
                 <tr key={l.profil_id} className={l.a_certificat ? "opacity-55" : ""}>

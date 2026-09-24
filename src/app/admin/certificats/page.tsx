@@ -60,15 +60,6 @@ export default async function PageCertificats() {
       </section>
 
       <section className="mb-14 border-t-2 border-texte pt-6">
-        <h2 className="titre-l m-0 mb-5 text-[1.35rem]">Qui y a droit</h2>
-        {lignes.length === 0 ? (
-          <p className="text-texte-2">Aucun apprenant pour l&apos;instant.</p>
-        ) : (
-          <TableauEligibles lignes={lignes} />
-        )}
-      </section>
-
-      <section>
         <h2 className="titre-l m-0 mb-1 text-[1.35rem]">
           Délivrés — {(remis ?? []).length}
         </h2>
@@ -165,6 +156,20 @@ export default async function PageCertificats() {
           </ul>
         )}
       </section>
+      <section className="mb-14 border-t-2 border-texte pt-6">
+        <h2 className="titre-l m-0 mb-1 text-[1.35rem]">Qui y a droit</h2>
+        <p className="mt-2 mb-5 max-w-[35rem] text-[0.96rem] text-texte-2">
+          Ceux qui ont rendu au moins un travail. Sélection multiple pour
+          délivrer en lot ; pour un cas particulier, la fiche de l&apos;apprenant
+          fait la même chose et montre tout le dossier.
+        </p>
+        {lignes.length === 0 ? (
+          <p className="text-texte-2">Aucun apprenant pour l&apos;instant.</p>
+        ) : (
+          <TableauEligibles lignes={lignes} />
+        )}
+      </section>
+
     </>
   );
 }
