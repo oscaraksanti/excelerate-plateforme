@@ -150,7 +150,7 @@ export default async function MonParcours() {
                     Ouvrir mon certificat
                   </a>
                   <span className="font-mono text-[11px] text-texte-3">
-                    pour le PDF : Fichier → Imprimer → Enregistrer au format PDF
+                    le bouton « Télécharger en PDF » est sur la page
                   </span>
                 </span>
                 <span className="poignee" aria-hidden="true" />

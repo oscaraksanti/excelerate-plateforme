@@ -203,7 +203,7 @@ export async function courrielCertificat(opts: {
       `<p style="margin:0 0 18px 0;padding:14px 16px;border:1px solid #d7dde3;border-radius:8px;font-size:15px;line-height:1.6;">Code du certificat&nbsp;: <b style="color:#0b0e13;font-family:'Courier New',monospace;font-size:17px;letter-spacing:1px;">${echapper(code)}</b><br><span style="font-size:12.5px;color:#8a96a4;">N'importe qui peut vérifier son authenticité sur la page publique, sans compte et en trois secondes.</span></p>`,
       `<p style="margin:0 0 10px 0;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#57616d;">Ce que tu peux en faire</p>`,
       LISTE([
-        "L'enregistrer en PDF : depuis la page, Fichier → Imprimer → Enregistrer au format PDF. Le format A4 paysage est déjà réglé.",
+        "Le télécharger en PDF : le bouton est sur la page, et le format A4 paysage est déjà réglé.",
         "Le publier sur LinkedIn — le bouton de partage est sur la page.",
         "Donner le code à un recruteur : la page de vérification fait foi, pas le fichier.",
       ]),
@@ -235,7 +235,7 @@ Page officielle : ${lien}
 N'importe qui peut y verifier son authenticite, sans compte.
 
 CE QUE TU PEUX EN FAIRE
-- L'enregistrer en PDF : Fichier > Imprimer > Enregistrer au format PDF.
+- Le telecharger en PDF : le bouton est sur la page.
 - Le publier sur LinkedIn : ${partage}
 - Donner le code a un recruteur ; la page de verification fait foi.
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import QRCode from "qrcode";
 import { Certificat, type DonneesCertificat } from "@/components/certificat";
+import { TelechargerPdf } from "@/components/telecharger-pdf";
 import { clientAdmin } from "@/lib/supabase/admin";
 
 type Params = { params: Promise<{ code: string }> };
@@ -96,19 +97,27 @@ export default async function PageCertificat({ params }: Params) {
           </dl>
 
           {!revoque && (
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a
-                href={partage}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bouton"
-              >
-                Partager sur LinkedIn
-              </a>
-              <Link href="/" className="bouton-2">
-                Obtenir le mien
-              </Link>
-            </div>
+            <>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <TelechargerPdf nom={c.nom_affiche} code={c.code} />
+                <a
+                  href={partage}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bouton-2"
+                >
+                  Partager sur LinkedIn
+                </a>
+                <Link href="/" className="bouton-2">
+                  Obtenir le mien
+                </Link>
+              </div>
+              <p className="mt-3 mb-0 text-[0.86rem] text-texte-3">
+                Une fenêtre s&apos;ouvre : choisis{" "}
+                <span className="text-texte-2">« Enregistrer au format PDF »</span>{" "}
+                comme destination. Le format A4 paysage est déjà réglé.
+              </p>
+            </>
           )}
         </div>
       </section>
@@ -117,11 +126,6 @@ export default async function PageCertificat({ params }: Params) {
       <div className="cadre-certificat">
         <Certificat c={c} urlVerification={url} qrSvg={qrSvg} />
       </div>
-
-      <p className="no-print mx-auto mt-8 max-w-[52rem] text-[0.9rem] text-texte-3">
-        Pour l&apos;enregistrer en PDF : Fichier → Imprimer, puis « Enregistrer
-        au format PDF ». Le format A4 paysage est déjà réglé.
-      </p>
 
       {/*  Quelqu'un qui arrive ici arrive par le partage d'un lauréat :
           c'est le visiteur le mieux disposé qu'on verra de la journée.
