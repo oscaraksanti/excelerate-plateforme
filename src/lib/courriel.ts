@@ -163,33 +163,124 @@ Eurêka Services — Oscar Aksanti`,
 export async function courrielCertificat(opts: {
   a: string;
   prenom: string;
+  nomAffiche: string;
   code: string;
   mention: string;
+  niveau: string;
+  note: number | null;
+  tps: number;
+  corrections: number;
 }) {
-  const { prenom, code, mention } = opts;
+  const { prenom, nomAffiche, code, mention, niveau, note, tps, corrections } = opts;
   const lien = `${SITE}/c/${code}`;
+  const partage = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(lien)}`;
+  const salut = prenom ? `Bonjour ${echapper(prenom)},` : "Bonjour,";
+  const portee =
+    niveau === "avance" ? "l'ensemble du programme" : "les modules fondamentaux";
 
   return envoyer({
     a: opts.a,
-    sujet: "Ton certificat est délivré",
-    titre: "Ton certificat est là",
+    sujet: `Ton certificat ${mention}`,
+    titre: "Félicitations — ton certificat est délivré",
     corps: [
-      P(prenom ? `Bonjour ${echapper(prenom)},` : "Bonjour,"),
-      P(`Tu as rempli les trois conditions — tous les travaux rendus, toutes les corrections faites, et la moyenne. Ton certificat <b style="color:#0b0e13;">${echapper(mention)}</b> est établi à ton nom.`),
-      P(`Son code est <b style="color:#0b0e13;font-family:'Courier New',monospace;">${echapper(code)}</b>. La page ci-dessous fait foi : n'importe qui peut y vérifier son authenticité, et tu peux l'imprimer ou l'enregistrer en PDF depuis ton navigateur.`),
-      P("Partage-le sur LinkedIn si le cœur t'en dit — le bouton est sur la page."),
+      P(salut),
+      P(
+        `Tu as rempli les trois conditions sur ${portee} : les travaux rendus, `
+        + "les corrections de tes pairs effectuées, et la moyenne. Ton "
+        + `certificat <b style="color:#0b0e13;">${echapper(mention)}</b> est `
+        + `établi au nom de <b style="color:#0b0e13;">${echapper(nomAffiche)}</b>.`,
+      ),
+      `<p style="margin:0 0 10px 0;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#57616d;">Ce qu'il atteste</p>`,
+      LISTE(
+        [
+          `${tps} travail${tps > 1 ? "x" : ""} pratique${tps > 1 ? "s" : ""} rendu${tps > 1 ? "s" : ""} et corrigé${tps > 1 ? "s" : ""}.`,
+          `${corrections} copie${corrections > 1 ? "s" : ""} de tes pairs corrigée${corrections > 1 ? "s" : ""}.`,
+          note !== null
+            ? `Une moyenne de ${String(note).replace(".", ",")} sur 20.`
+            : "Les travaux validés du programme.",
+        ].filter(Boolean),
+      ),
+      `<p style="margin:0 0 18px 0;padding:14px 16px;border:1px solid #d7dde3;border-radius:8px;font-size:15px;line-height:1.6;">Code du certificat&nbsp;: <b style="color:#0b0e13;font-family:'Courier New',monospace;font-size:17px;letter-spacing:1px;">${echapper(code)}</b><br><span style="font-size:12.5px;color:#8a96a4;">N'importe qui peut vérifier son authenticité sur la page publique, sans compte et en trois secondes.</span></p>`,
+      `<p style="margin:0 0 10px 0;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#57616d;">Ce que tu peux en faire</p>`,
+      LISTE([
+        "L'enregistrer en PDF : depuis la page, Fichier → Imprimer → Enregistrer au format PDF. Le format A4 paysage est déjà réglé.",
+        "Le publier sur LinkedIn — le bouton de partage est sur la page.",
+        "Donner le code à un recruteur : la page de vérification fait foi, pas le fichier.",
+      ]),
+      `<p style="margin:0 0 16px 0;font-size:15px;line-height:1.65;color:#57616d;"><a href="${partage}" style="color:#0b0e13;font-weight:700;">Partager sur LinkedIn &rarr;</a></p>`,
+      P(
+        "<b style=\"color:#0b0e13;\">Une erreur sur ton nom ?</b> Réponds "
+        + "simplement à ce message en indiquant l'orthographe exacte : "
+        + "je réémets le certificat, l'ancien code est retiré et le nouveau "
+        + "prend sa place le jour même.",
+      ),
+      P(
+        "Bonne route — et si ce que tu as appris ici te fait gagner une heure "
+        + "par semaine sur tes fichiers, l'essentiel est fait.",
+      ),
     ].join(""),
     bouton: { texte: "Voir mon certificat", lien },
     texte: `${prenom ? `Bonjour ${prenom},` : "Bonjour,"}
 
-Tu as rempli les trois conditions. Ton certificat « ${mention} » est établi à ton nom.
+Felicitations. Tu as rempli les trois conditions sur ${portee} : les travaux rendus, les corrections de tes pairs effectuees, et la moyenne. Ton certificat « ${mention} » est etabli au nom de ${nomAffiche}.
 
-Code : ${code}
+CE QU'IL ATTESTE
+- ${tps} travail(x) pratique(s) rendu(s) et corrige(s).
+- ${corrections} copie(s) de tes pairs corrigee(s).
+${note !== null ? `- Une moyenne de ${String(note).replace(".", ",")} sur 20.` : "- Les travaux valides du programme."}
+
+Code du certificat : ${code}
 Page officielle : ${lien}
 
-Cette page fait foi : n'importe qui peut y vérifier l'authenticité de ton certificat. Tu peux l'imprimer ou l'enregistrer en PDF depuis ton navigateur.
+N'importe qui peut y verifier son authenticite, sans compte.
 
-Eurêka Services — Oscar Aksanti`,
+CE QUE TU PEUX EN FAIRE
+- L'enregistrer en PDF : Fichier > Imprimer > Enregistrer au format PDF.
+- Le publier sur LinkedIn : ${partage}
+- Donner le code a un recruteur ; la page de verification fait foi.
+
+UNE ERREUR SUR TON NOM ?
+Reponds a ce message avec l'orthographe exacte : je reemets le certificat le jour meme.
+
+Bonne route.
+
+Eureka Services — Oscar Aksanti`,
+  });
+}
+
+/* ── Un message écrit à la main, dans l'enveloppe de la plateforme ─ */
+
+/**
+ * Pour repondre a une situation que rien d'automatique ne couvre.
+ * Le texte est celui d'Oscar ; l'enveloppe reste celle de la
+ * plateforme, pour que le destinataire reconnaisse l'expediteur.
+ */
+export async function courrielLibre(opts: {
+  a: string;
+  sujet: string;
+  message: string;
+  lien?: string | null;
+  texteBouton?: string | null;
+}) {
+  const { sujet, message, lien, texteBouton } = opts;
+  const paragraphes = message
+    .split(/\n{2,}/)
+    .map((t) => t.trim())
+    .filter(Boolean);
+
+  return envoyer({
+    a: opts.a,
+    sujet,
+    titre: sujet,
+    corps: paragraphes
+      .map((t) => P(echapper(t).replace(/\n/g, "<br>")))
+      .join(""),
+    bouton: lien ? { texte: texteBouton || "Ouvrir la plateforme", lien } : undefined,
+    texte: `${message}
+
+${lien ?? SITE}
+
+Eureka Services — Oscar Aksanti`,
   });
 }
 

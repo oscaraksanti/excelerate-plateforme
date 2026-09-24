@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { SEGMENTS } from "@/app/api/export/[segment]/route";
 import { CHAMP } from "@/components/champs";
 import { formaterDate } from "@/lib/formats";
@@ -139,14 +140,17 @@ export default async function PageApprenants({
                 {gens.map((g) => (
                   <tr key={g.id}>
                     <td className="border-b border-bord-2 px-[13px] py-[10px]">
-                      <span className="block font-medium text-texte">
-                        {g.nom || "—"}
+                      <Link
+                        href={`/admin/apprenants/${g.id}`}
+                        className="block font-medium text-texte underline decoration-bord underline-offset-[3px] hover:decoration-[color:var(--voltage-2)]"
+                      >
+                        {g.nom || g.email || "—"}
                         {g.role === "admin" && (
                           <span className="ml-2 rounded-[3px] bg-fond-3 px-[5px] py-[1px] font-mono text-[9px] tracking-[0.1em] text-texte-2 uppercase">
                             admin
                           </span>
                         )}
-                      </span>
+                      </Link>
                       <span className="font-mono text-[10.5px] text-texte-3">
                         {g.email}
                       </span>

@@ -122,6 +122,35 @@ export default async function PageCertificat({ params }: Params) {
         Pour l&apos;enregistrer en PDF : Fichier → Imprimer, puis « Enregistrer
         au format PDF ». Le format A4 paysage est déjà réglé.
       </p>
+
+      {/*  Quelqu'un qui arrive ici arrive par le partage d'un lauréat :
+          c'est le visiteur le mieux disposé qu'on verra de la journée.
+          Le laisser repartir sans savoir d'où vient ce certificat
+          serait du gâchis. */}
+      {!revoque && (
+        <section className="no-print mx-auto mt-14 max-w-[52rem] border-t-2 border-texte pt-7">
+          <p className="etiquette mb-3">Et le tien ?</p>
+          <h2 className="titre-l m-0 mb-3 text-[1.5rem]">
+            Ce certificat s&apos;est mérité, pas acheté
+          </h2>
+          <p className="mt-0 mb-6 max-w-[36rem] text-[1.01rem] text-texte-2">
+            {c.nom_affiche.split(" ")[0]} a rendu {c.tps_rendus} travail
+            {c.tps_rendus > 1 ? "x" : ""} pratique{c.tps_rendus > 1 ? "s" : ""} sur
+            des fichiers réels, et corrigé {c.corrections} copie
+            {c.corrections > 1 ? "s" : ""} de {c.corrections > 1 ? "ses pairs" : "pair"}
+            {" "}— anonymement, comme on a corrigé la sienne. Les trois premiers
+            modules de la formation sont ouverts à tout le monde.
+          </p>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link href="/" className="bouton">
+              Commencer la formation
+            </Link>
+            <span className="font-mono text-[11px] tracking-[0.1em] text-texte-3 uppercase">
+              {SITE.replace(/^https?:\/\//, "")}
+            </span>
+          </div>
+        </section>
+      )}
     </main>
   );
 }

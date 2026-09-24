@@ -26,6 +26,9 @@ export async function EnteteApp({ nom, admin }: { nom: string; admin: boolean })
             <Link href="/corrections" className="hover:text-texte">
               Corriger
             </Link>
+            <Link href="/mon-parcours" className="hover:text-texte">
+              Mon parcours
+            </Link>
             <Link href="/offres" className="hover:text-texte">
               Offres
             </Link>
