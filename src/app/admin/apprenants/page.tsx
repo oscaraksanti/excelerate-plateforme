@@ -4,6 +4,7 @@ import { CHAMP } from "@/components/champs";
 import { formaterDate } from "@/lib/formats";
 import { listerApprenants } from "@/lib/metriques";
 import { clientServeur } from "@/lib/supabase/serveur";
+import { RelancesDepot } from "./depots";
 import { Relances } from "./relances";
 
 export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Les apprenants" };
@@ -21,6 +22,12 @@ export default async function PageApprenants({
   const { data: enRetard } = await supabase.rpc("a_relancer");
   const aRelancer =
     (enRetard as { profil_id: string; email: string; nom: string; restant: number }[]) ?? [];
+
+  const { data: sansCopie } = await supabase.rpc("a_relancer_depot");
+  const aDeposer =
+    (sansCopie as {
+      profil_id: string; email: string; nom: string; finies: number; a_paye: boolean;
+    }[]) ?? [];
 
   return (
     <>
@@ -72,6 +79,21 @@ export default async function PageApprenants({
           qui s&apos;est passé ici.
         </p>
         <Relances gens={aRelancer} />
+      </section>
+
+      {/* ── Ceux qui n'ont rien déposé ───────────────────── */}
+      <section className="mb-12 border-t-2 border-texte pt-6">
+        <h2 className="titre-l m-0 mb-1 text-[1.35rem]">
+          Les copies jamais déposées
+        </h2>
+        <p className="mt-2 mb-6 max-w-[35rem] text-[0.96rem] text-texte-2">
+          Seulement ceux à qui la phrase veut dire quelque chose : une leçon du
+          module 1 terminée, ou un achat de plus d&apos;un jour. Écrire à tous
+          les comptes sans copie serait un envoi de masse — ça reste le travail
+          de systeme.io. Ceux qui ont payé reçoivent une autre lettre : leur
+          certificat dépend des travaux rendus, pas du paiement.
+        </p>
+        <RelancesDepot gens={aDeposer} />
       </section>
 
       {/* ── La liste ─────────────────────────────────────── */}

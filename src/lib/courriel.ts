@@ -396,3 +396,127 @@ ${lien}
 Eureka Services — Oscar Aksanti`,
   });
 }
+
+/* ── La copie n'est pas déposée ──────────────────────────────────── */
+
+/**
+ * Pour ceux qui ont travaille le module 1 et se sont arretes avant le
+ * travail pratique.
+ *
+ * On ne parle pas de certificat ici : il se vend, et la plupart de ces
+ * gens ne l'ont pas achete. Promettre ce qu'on ne donnera pas est le
+ * plus court chemin vers une desinscription.
+ */
+export async function courrielRelanceDepot(opts: {
+  a: string;
+  prenom: string;
+  finies: number;
+}) {
+  const { prenom, finies } = opts;
+  const lien = `${SITE}/modules/1/tp/1`;
+  const salut = prenom ? `Bonjour ${echapper(prenom)},` : "Bonjour,";
+
+  return envoyer({
+    a: opts.a,
+    sujet: "Il te reste le travail pratique du module 1",
+    titre: "Le TP 1 t'attend",
+    corps: [
+      P(salut),
+      P(
+        finies >= 5
+          ? "Tu as fini le module 1 en entier. Il ne te manque que le travail pratique."
+          : `Tu as terminé <b style="color:#0b0e13;">${finies} leçon${finies > 1 ? "s" : ""}</b> du module 1, puis tu t'es arrêté avant le travail pratique.`,
+      ),
+      P(
+        "C'est pourtant là que ça devient le tien. Regarder quelqu'un nettoyer "
+        + "un fichier, c'est confortable ; le faire soi-même sur un fichier "
+        + "piégé, c'est autre chose — et c'est ce qu'on retient.",
+      ),
+      `<p style="margin:0 0 10px 0;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#57616d;">Ce qui t'attend</p>`,
+      LISTE([
+        "Le classeur de départ à télécharger, et le tien à déposer.",
+        "Une note automatique en quelques secondes, dès le dépôt.",
+        "Trois copies de tes pairs à corriger — anonymement, comme on corrige la tienne.",
+      ]),
+      P("Compte quarante minutes. Il n'y a pas de date limite, mais plus tu déposes tôt, plus tu es lu tôt."),
+    ].join(""),
+    bouton: { texte: "Ouvrir le TP 1", lien },
+    texte: `${prenom ? `Bonjour ${prenom},` : "Bonjour,"}
+
+${finies >= 5
+  ? "Tu as fini le module 1 en entier. Il ne te manque que le travail pratique."
+  : `Tu as termine ${finies} lecon(s) du module 1, puis tu t'es arrete avant le travail pratique.`}
+
+C'est pourtant la que ca devient le tien. Regarder quelqu'un nettoyer un fichier, c'est confortable ; le faire soi-meme sur un fichier piege, c'est autre chose.
+
+CE QUI T'ATTEND
+- Le classeur de depart a telecharger, et le tien a deposer.
+- Une note automatique en quelques secondes, des le depot.
+- Trois copies de tes pairs a corriger, anonymement.
+
+Compte quarante minutes. Il n'y a pas de date limite, mais plus tu deposes tot, plus tu es lu tot.
+
+${lien}
+
+Eureka Services — Oscar Aksanti`,
+  });
+}
+
+/**
+ * Pour ceux qui ont PAYE et n'ont encore rien rendu.
+ *
+ * Ce n'est pas la meme lettre : eux ont acquis un certificat, et un
+ * certificat ne s'obtient pas sans travaux rendus. Le leur dire est
+ * un service, pas une relance commerciale.
+ */
+export async function courrielRelanceDepotClient(opts: {
+  a: string;
+  prenom: string;
+}) {
+  const { prenom } = opts;
+  const lien = `${SITE}/modules/1/tp/1`;
+  const salut = prenom ? `Bonjour ${echapper(prenom)},` : "Bonjour,";
+
+  return envoyer({
+    a: opts.a,
+    sujet: "Ton certificat commence par le TP 1",
+    titre: "Ton certificat commence ici",
+    corps: [
+      P(salut),
+      P(
+        "Ton accès est ouvert et rien ne presse — mais je préfère te le dire "
+        + "maintenant plutôt qu'à la fin : <b style=\"color:#0b0e13;\">le certificat "
+        + "ne s'achète pas, il se mérite</b>. Il tient à trois conditions, et "
+        + "aucune ne se rattrape en une soirée.",
+      ),
+      `<p style="margin:0 0 10px 0;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#57616d;">Les trois conditions</p>`,
+      LISTE([
+        "Tous les travaux pratiques rendus.",
+        "Toutes les corrections de tes pairs effectuées.",
+        "Une moyenne d'au moins 12 sur 20.",
+      ]),
+      P(
+        "Tu n'as encore rendu aucun travail. Le premier est ouvert, il demande "
+        + "quarante minutes, et il donne une note automatique dès le dépôt.",
+      ),
+      P("Si quelque chose bloque — un fichier qui ne passe pas, un énoncé qui n'est pas clair — réponds à ce message, je regarde."),
+    ].join(""),
+    bouton: { texte: "Commencer le TP 1", lien },
+    texte: `${prenom ? `Bonjour ${prenom},` : "Bonjour,"}
+
+Ton acces est ouvert et rien ne presse, mais je prefere te le dire maintenant plutot qu'a la fin : le certificat ne s'achete pas, il se merite. Il tient a trois conditions.
+
+LES TROIS CONDITIONS
+- Tous les travaux pratiques rendus.
+- Toutes les corrections de tes pairs effectuees.
+- Une moyenne d'au moins 12 sur 20.
+
+Tu n'as encore rendu aucun travail. Le premier est ouvert, il demande quarante minutes, et il donne une note automatique des le depot.
+
+Si quelque chose bloque, reponds a ce message, je regarde.
+
+${lien}
+
+Eureka Services — Oscar Aksanti`,
+  });
+}
