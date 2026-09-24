@@ -327,8 +327,10 @@ export async function courrielAchat(opts: {
   reference: string;
   ouvert: boolean;
   lien: string;
+  /** Le rendez-vous privé du cercle. Ignoré pour les autres offres. */
+  appel?: string | null;
 }) {
-  const { prenom, produit, offre, montant, reference, ouvert, lien } = opts;
+  const { prenom, produit, offre, montant, reference, ouvert, lien, appel } = opts;
   const salut = prenom ? `Bonjour ${echapper(prenom)},` : "Bonjour,";
   const contenu = CE_QUI_OUVRE[produit] ?? CE_QUI_OUVRE.masterclass37;
 
@@ -343,6 +345,28 @@ export async function courrielAchat(opts: {
         + "<b style=\"color:#0b0e13;\">cette adresse</b>. Ton accès s'ouvrira tout seul "
         + "à ta première connexion — avec une autre adresse, il ne se trouvera pas.",
       );
+
+  //  97 $, ce n'est pas sept modules de plus : c'est du temps avec
+  //  Oscar. Le lien de réservation passe donc AVANT la liste de ce qui
+  //  s'ouvre — c'est la seule chose à faire aujourd'hui.
+  const leRendezVous =
+    produit === "coaching97" && appel
+      ? [
+          `<p style="margin:0 0 10px 0;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#57616d;">Ton appel privé</p>`,
+          P(
+            "Ton accompagnement commence par <b style=\"color:#0b0e13;\">trente "
+            + "minutes en tête à tête</b> avec moi. Choisis ton créneau "
+            + "maintenant — c'est la seule chose à faire aujourd'hui, le reste "
+            + "suit tout seul.",
+          ),
+          `<p style="margin:0 0 18px 0;padding:14px 16px;border:1px solid #d7dde3;border-radius:8px;font-size:15px;line-height:1.5;"><a href="${appel}" style="color:#0b0e13;font-weight:700;text-decoration:none;">Réserver mon appel &rarr;</a><br><span style="font-size:12px;color:#8a96a4;font-family:'Courier New',monospace;">${echapper(appel)}</span></p>`,
+        ].join("")
+      : "";
+
+  const texteRendezVous =
+    produit === "coaching97" && appel
+      ? `\nTON APPEL PRIVE\nTon accompagnement commence par trente minutes en tete a tete avec moi. Choisis ton creneau maintenant :\n${appel}\n`
+      : "";
 
   const leCertificat = contenu.certificat
     ? [
@@ -372,6 +396,7 @@ export async function courrielAchat(opts: {
       P(salut),
       P(`Ton paiement de <b style="color:#0b0e13;">${echapper(montant)}</b> pour <b style="color:#0b0e13;">${echapper(offre)}</b> est bien arrivé.`),
       acces,
+      leRendezVous,
       `<p style="margin:0 0 10px 0;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#57616d;">Ce qui est à toi</p>`,
       LISTE(contenu.ouvre),
       leCertificat,
@@ -385,7 +410,7 @@ Ton paiement de ${montant} pour « ${offre} » est bien arrive.
 ${ouvert
   ? "Ton acces est deja ouvert. Connecte-toi, tout est deverrouille."
   : "Il ne te reste qu'a entrer sur la plateforme avec CETTE adresse : ton acces s'ouvrira tout seul a ta premiere connexion. Avec une autre, il ne se trouvera pas."}
-
+${texteRendezVous}
 CE QUI EST A TOI
 ${contenu.ouvre.map((t) => `- ${t}`).join("\n")}
 ${texteCertificat}
@@ -516,6 +541,51 @@ Tu n'as encore rendu aucun travail. Le premier est ouvert, il demande quarante m
 Si quelque chose bloque, reponds a ce message, je regarde.
 
 ${lien}
+
+Eureka Services — Oscar Aksanti`,
+  });
+}
+
+/* ── Le rendez-vous du cercle, envoye a part ─────────────────────── */
+
+/**
+ * Pour un acheteur a 97 $ qui n'a pas encore reserve son appel — ou
+ * qui a paye avant que le lien existe, comme Jean Loua.
+ */
+export async function courrielAppelCercle(opts: {
+  a: string;
+  prenom: string;
+  appel: string;
+}) {
+  const { prenom, appel } = opts;
+  const salut = prenom ? `Bonjour ${echapper(prenom)},` : "Bonjour,";
+
+  return envoyer({
+    a: opts.a,
+    sujet: "Réserve ton appel privé avec Oscar",
+    titre: "Ton appel t'attend",
+    corps: [
+      P(salut),
+      P(
+        "Tu as pris le cercle, et il y manquait une chose dans mon message : "
+        + "<b style=\"color:#0b0e13;\">le moyen de réserver ton appel</b>. "
+        + "Le voici, et c'est de ma faute qu'il arrive en deux fois.",
+      ),
+      P(
+        "Trente minutes en tête à tête. Viens avec un fichier réel — un vrai "
+        + "classeur de ton travail, même en désordre, même incomplet. On part "
+        + "de là plutôt que d'un cas d'école.",
+      ),
+      P("Les quatre séances de groupe et le canal privé suivent ; l'appel, lui, se prend quand tu veux."),
+    ].join(""),
+    bouton: { texte: "Choisir mon créneau", lien: appel },
+    texte: `${prenom ? `Bonjour ${prenom},` : "Bonjour,"}
+
+Tu as pris le cercle, et il manquait une chose dans mon message : le moyen de reserver ton appel. Le voici, et c'est de ma faute qu'il arrive en deux fois.
+
+Trente minutes en tete a tete. Viens avec un fichier reel — un vrai classeur de ton travail, meme en desordre, meme incomplet. On part de la plutot que d'un cas d'ecole.
+
+${appel}
 
 Eureka Services — Oscar Aksanti`,
   });

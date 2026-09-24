@@ -56,3 +56,52 @@ export async function enregistrerDirect(_p: Etat, d: FormData): Promise<Etat> {
       : "Bandeau éteint.",
   };
 }
+
+/**
+ * Le rendez-vous prive du cercle.
+ *
+ * Il vit ici et non dans le code : le jour ou Oscar change d'agenda,
+ * il le change lui-meme, sans deploiement. Il part dans le courriel
+ * de confirmation de chaque achat a 97 $, et s'affiche sur /offres.
+ */
+export async function enregistrerAppel(_p: Etat, d: FormData): Promise<Etat> {
+  await exigerAdmin();
+
+  const lien = String(d.get("lien") ?? "").trim();
+  const duree = Number(String(d.get("duree_min") ?? "30"));
+  const actif = d.get("actif") === "on";
+
+  if (lien && !/^https:\/\//i.test(lien)) {
+    return { ok: false, message: "Le lien doit commencer par https://" };
+  }
+  if (actif && !lien) {
+    return {
+      ok: false,
+      message:
+        "Sans lien, l'acheteur à 97 $ reçoit une promesse sans moyen de la tenir. Colle le lien d'abord.",
+    };
+  }
+  if (!Number.isFinite(duree) || duree < 15 || duree > 180) {
+    return { ok: false, message: "La durée doit être comprise entre 15 et 180 minutes." };
+  }
+
+  const supabase = await clientServeur();
+  const { error } = await supabase.from("reglages").upsert(
+    {
+      cle: "appel_cercle",
+      valeur: { lien, actif, duree_min: Math.trunc(duree) },
+      maj_le: new Date().toISOString(),
+    },
+    { onConflict: "cle" },
+  );
+
+  if (error) return { ok: false, message: `Échec : ${error.message}` };
+
+  revalidatePath("/offres");
+  return {
+    ok: true,
+    message: actif
+      ? "Lien enregistré. Il part désormais avec chaque achat à 97 $."
+      : "Rendez-vous éteint. Plus aucun lien n'est envoyé.",
+  };
+}

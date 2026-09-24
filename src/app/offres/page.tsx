@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { EnteteApp } from "@/components/entete-app";
 import { PiedPage } from "@/components/pied-page";
+import { lienAppel } from "@/lib/appel";
 import { certificatMerite, listerProduits, mesAchats, mesConditions } from "@/lib/offres";
 import { placesBonus } from "@/lib/places";
 import { profilCourant } from "@/lib/profil";
@@ -17,6 +18,10 @@ export default async function PageOffres() {
   ]);
 
   const places = await placesBonus();
+  const dansLeCercle = achats.some((a) => a.produit === "coaching97");
+  //  Un courriel se perd. Le lien doit exister quelque part où l'on
+  //  peut toujours revenir.
+  const appel = dansLeCercle ? await lienAppel() : null;
   const visibles = produits.filter((p) => p.actif || profil.role === "admin");
   const dejaAchete = new Set(achats.map((a) => a.produit));
   const merite = certificatMerite(conditions);
@@ -53,6 +58,30 @@ export default async function PageOffres() {
           Les trois soirées t&apos;ont montré des méthodes. La suite les
           installe pour de bon — et te donne de quoi le prouver.
         </p>
+
+        {/* ── Le rendez-vous du cercle ─────────────────────── */}
+        {appel && (
+          <section className="mb-14">
+            <div className="plage px-6 py-5">
+              <span className="etiquette mb-2 block">Ton appel privé</span>
+              <p className="m-0 mb-5 max-w-[34rem] text-[1.02rem] leading-[1.5]">
+                Trente minutes en tête à tête avec Oscar, comprises dans le
+                cercle. Viens avec un fichier réel — un vrai classeur de ton
+                travail, même en désordre. On part de là plutôt que d&apos;un
+                cas d&apos;école.
+              </p>
+              <a
+                href={appel}
+                target="_blank"
+                rel="noreferrer"
+                className="bouton"
+              >
+                Choisir mon créneau
+              </a>
+              <span className="poignee" aria-hidden="true" />
+            </div>
+          </section>
+        )}
 
         {/* ── Les conditions du certificat ─────────────────── */}
         <section className="mb-14">
