@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { EnteteApp } from "@/components/entete-app";
 import { exigerAdmin } from "@/lib/admin";
 import { formaterDate } from "@/lib/formats";
 import { clientAdmin } from "@/lib/supabase/admin";
 import { listerProduits } from "@/lib/offres";
 import { basculerProduit } from "./actions";
+import { PaiementDirect } from "./direct";
 
 export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Les ventes" };
 
 const NET = { certificat27: 24.3, masterclass37: 33.3, coaching97: 87.3, equipe: 0 };
 
 export default async function PageAchats() {
-  const profil = await exigerAdmin();
+  await exigerAdmin();
   const produits = await listerProduits();
 
   const admin = clientAdmin();
@@ -24,22 +23,17 @@ export default async function PageAchats() {
 
   const lignes = achats ?? [];
   const brut = lignes.reduce((s, a) => s + Number(a.montant ?? 0), 0);
-  const net = lignes.reduce(
-    (s, a) => s + (NET[a.produit as keyof typeof NET] ?? 0),
-    0,
-  );
+  //  Une vente arrivée hors Chariow ne paie pas sa commission : la
+  //  compter au net du Pulse sous-estimait l'encaissement réel.
+  const net = lignes.reduce((s, a) => {
+    const parChariow = String(a.chariow_ref ?? "").startsWith("SALE");
+    return s + (parChariow ? (NET[a.produit as keyof typeof NET] ?? 0) : Number(a.montant ?? 0));
+  }, 0);
+  const directes = lignes.filter((a) => !String(a.chariow_ref ?? "").startsWith("SALE")).length;
   const orphelins = lignes.filter((a) => !a.profil_id).length;
 
   return (
     <>
-      <div className="trame" aria-hidden="true" />
-      <EnteteApp nom={profil.nom} admin />
-
-      <main className="relative z-1 mx-auto max-w-[1000px] px-6 pt-12 pb-24">
-        <Link href="/admin" className="etiquette mb-6 inline-block hover:text-texte">
-          ← Administration
-        </Link>
-
         <h1 className="titre-xl m-0 mb-8 text-[clamp(1.8rem,4.4vw,2.5rem)]">
           Les ventes
         </h1>
@@ -48,7 +42,8 @@ export default async function PageAchats() {
           {[
             { etiq: "Ventes", val: String(lignes.length) },
             { etiq: "Encaissé brut", val: `${brut.toFixed(0)} $` },
-            { etiq: "Net après Chariow", val: `${net.toFixed(0)} $` },
+            { etiq: "Net encaissé", val: `${net.toFixed(0)} $` },
+            { etiq: "Hors Chariow", val: String(directes) },
             { etiq: "Sans compte", val: String(orphelins) },
           ].map((s) => (
             <span key={s.etiq} className="flex flex-col gap-1">
@@ -57,6 +52,20 @@ export default async function PageAchats() {
             </span>
           ))}
         </div>
+
+        <section className="mb-14 border-t-2 border-texte pt-6">
+          <h2 className="titre-l m-0 mb-1 text-[1.4rem]">
+            Un paiement reçu en direct
+          </h2>
+          <p className="mt-2 mb-6 max-w-[36rem] text-[0.96rem] text-texte-2">
+            Western Union, Airtel Money, espèces : une vente sur quatre arrive
+            comme ça. Elle s&apos;enregistre exactement comme une vente Chariow
+            — même accès, même courriel de confirmation — mais sa référence dit
+            d&apos;où vient l&apos;argent, pour que l&apos;écart avec le relevé
+            Chariow s&apos;explique au lieu de ressembler à une erreur.
+          </p>
+          <PaiementDirect />
+        </section>
 
         <section className="mb-14">
           <h2 className="titre-l m-0 mb-1 text-[1.4rem]">Les offres</h2>
@@ -161,7 +170,6 @@ export default async function PageAchats() {
             seul à sa première connexion.
           </p>
         </section>
-      </main>
     </>
   );
 }
