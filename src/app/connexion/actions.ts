@@ -30,7 +30,7 @@ export async function envoyerLien(
     return {
       ok: false,
       message:
-        "Écris ton nom complet — prénom et nom. C'est lui qui sera imprimé sur ton certificat, et un certificat au seul prénom ne vaut rien devant un employeur.",
+        "Écrivez votre nom complet — prénom et nom. C'est lui qui sera imprimé sur votre certificat, et un certificat au seul prénom ne vaut rien devant un employeur.",
     };
   }
 

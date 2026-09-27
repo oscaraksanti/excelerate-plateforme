@@ -382,7 +382,7 @@ const CE_QUI_OUVRE: Record<string, { ouvre: string[]; certificat: boolean }> = {
       "Les onze modules et leurs cinquante-cinq leçons, du premier au dernier.",
       "Les onze travaux pratiques, corrigés par la machine en quelques secondes.",
       "Le projet final et la correction entre pairs.",
-      "Les quatre séances du cercle, en direct, et le canal privé où Oscar répond.",
+      "Ton appel en tête à tête avec Oscar, et le canal privé où il répond.",
       "L'accès à vie, et toutes les vidéos à mesure qu'elles sortent.",
     ],
     certificat: true,
@@ -667,7 +667,7 @@ export async function courrielAppelCercle(opts: {
         + "classeur de ton travail, même en désordre, même incomplet. On part "
         + "de là plutôt que d'un cas d'école.",
       ),
-      P("Les quatre séances de groupe et le canal privé suivent ; l'appel, lui, se prend quand tu veux."),
+      P("Le canal privé est ouvert en parallèle : tu peux y poser une question à tout moment, sans attendre l'appel."),
     ].join(""),
     bouton: { texte: "Choisir mon créneau", lien: appel },
     texte: `${prenom ? `Bonjour ${prenom},` : "Bonjour,"}
@@ -675,6 +675,8 @@ export async function courrielAppelCercle(opts: {
 Tu as pris le cercle, et il manquait une chose dans mon message : le moyen de reserver ton appel. Le voici, et c'est de ma faute qu'il arrive en deux fois.
 
 Trente minutes en tete a tete. Viens avec un fichier reel — un vrai classeur de ton travail, meme en desordre, meme incomplet. On part de la plutot que d'un cas d'ecole.
+
+Le canal prive est ouvert en parallele : tu peux y poser une question a tout moment.
 
 ${appel}
 

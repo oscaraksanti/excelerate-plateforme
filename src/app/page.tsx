@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
+import { ApercuCorrection } from "@/components/apercu-correction";
 import { PiedPage } from "@/components/pied-page";
 import { InscriptionRapide } from "@/components/inscription-rapide";
+import { nombreApprenants } from "@/lib/audience";
 import { lireDirectPublic, formaterDebut } from "@/lib/direct";
-import { placesBonus } from "@/lib/places";
 import { SITE } from "./layout";
 
 export const metadata: Metadata = {
@@ -23,11 +25,10 @@ export const metadata: Metadata = {
  * La page s'affiche depuis le cache, mais se refait au plus toutes les
  * minutes.
  *
- * Sans cette ligne elle serait figée au moment du build : le bandeau du
- * direct annoncerait la mauvaise soirée, et le compteur des dix places
- * ne bougerait jamais — une rareté qui ne décroît pas est un mensonge.
- * Une minute suffit, et 2 000 visiteurs ne font toujours qu'un seul
- * rendu par minute.
+ * Sans cette ligne elle serait figée au moment du build : le nombre
+ * d'inscrits et le bandeau du direct resteraient sur leur valeur du
+ * jour de la mise en ligne. Une minute suffit, et 2 000 visiteurs ne
+ * font toujours qu'un seul rendu par minute.
  */
 export const revalidate = 60;
 
@@ -77,13 +78,6 @@ const MODULES = [
   [10, "Le lundi matin d'Aïcha", "Macros, livraison, deux cents classeurs", false],
 ] as const;
 
-/* Les directs se tiennent a 19 h GMT. C'est l'heure de reference, et
-   la seule qu'on annonce : chacun lit sa ligne. */
-const FUSEAUX = [
-  ["19 h – 21 h", "Abidjan · Dakar · Bamako", "GMT"],
-  ["20 h – 22 h", "Kinshasa · Douala · Libreville · Lagos", "GMT+1"],
-  ["21 h – 23 h", "Lubumbashi · Kigali · Johannesburg", "GMT+2"],
-];
 
 const RYTHME = [
   ["Cinq leçons", "15 min chacune", "à lire ou à regarder, dans l'ordre"],
@@ -107,7 +101,7 @@ const QUESTIONS = [
     q: "Je débute vraiment. C'est pour moi ?",
     r: "Oui, à une condition : commencez par le module 0, qui vous dit exactement où vous en êtes. "
       + "Et si vous n'avez jamais écrit une formule, ma formation Excel gratuite de dix heures est "
-      + "sur YouTube — plus de 95 000 personnes l'ont suivie. Le module 0 vous dit combien d'heures "
+      + "sur YouTube — plus de 100 000 personnes l'ont suivie. Le module 0 vous dit combien d'heures "
       + "en faire avant de revenir.",
   },
   {
@@ -128,17 +122,24 @@ const QUESTIONS = [
       + "pouvez reprendre une leçon six mois plus tard.",
   },
   {
-    q: "Les directs, c'est à quelle heure ?",
-    r: "De 19 h à 21 h GMT, sur Microsoft Teams — soit 19 h à Abidjan, Dakar et Bamako, 20 h à "
-      + "Kinshasa, Douala et Libreville, 21 h à Lubumbashi. Le GMT est l'heure de référence : "
-      + "c'est celle que j'annonce partout, chacun lit sa ligne. Et vous n'êtes pas obligé d'y "
-      + "être : tout le programme se suit en autonomie.",
+    q: "Il faut être là à une heure précise ?",
+    r: "Non, jamais. Tout est en ligne et rien n'expire : vous commencez ce soir ou dans trois "
+      + "mois, vous avancez au rythme qui vous arrange. Les soirées d'ouverture, elles, ont été "
+      + "filmées et sont dans la formation — vous les regardez quand vous voulez.",
   },
   {
     q: "C'est un abonnement ?",
     r: "Non. Les quatre premiers modules sont gratuits et le restent. Les sept suivants, le projet "
       + "final et le certificat coûtent 37 $, une seule fois. Le prix ne monte jamais, et il n'y a "
       + "rien à reconduire.",
+  },
+  {
+    q: "Je n'ai pas de carte bancaire. Je peux payer autrement ?",
+    r: "Oui, et c'est le cas d'une bonne partie des gens qui paient ici. Airtel Money, Orange "
+      + "Money, M-Pesa, Wave, Western Union ou un virement : écrivez-moi sur WhatsApp au "
+      + "+243 971 601 855 ou à oscaraksanti@gmail.com, je vous donne le numéro et j'ouvre votre "
+      + "accès dès réception. La page de paiement, elle, accepte la carte et affiche le prix dans "
+      + "votre monnaie.",
   },
   {
     q: "Le certificat vaut quelque chose ?",
@@ -250,8 +251,8 @@ function donneesStructurees() {
             availability: "https://schema.org/InStock",
             url: SITE,
             description:
-              "Le cercle : toute la masterclass, plus quatre séances de groupe "
-              + "en direct avec l'instructeur et un canal privé.",
+              "Le cercle : toute la masterclass, plus un appel personnel de "
+              + "trente minutes avec l'instructeur et un canal privé.",
           },
         ],
       },
@@ -270,7 +271,7 @@ function donneesStructurees() {
 
 export default async function Accueil() {
   const direct = await lireDirectPublic();
-  const places = await placesBonus();
+  const inscrits = await nombreApprenants();
 
   return (
     <>
@@ -339,7 +340,7 @@ export default async function Accueil() {
           — avec l&apos;IA comme copilote, jamais comme oracle.
         </p>
 
-        <div className="barre-formule mb-10 max-w-[36rem]">
+        <div className="barre-formule mb-10 max-w-[36rem] overflow-x-auto">
           <span className="ref">A1</span>
           <span className="fx">fx</span>
           <span className="val">
@@ -355,12 +356,29 @@ export default async function Accueil() {
           <InscriptionRapide />
         </section>
 
-        <p className="mb-10 max-w-[34rem] text-[0.95rem] text-texte-2">
+        <p className="mb-4 max-w-[34rem] text-[0.95rem] text-texte-2">
           Vous arrivez directement sur la première leçon.{" "}
           <strong className="font-semibold text-texte">
             Les quatre premiers modules sont gratuits
           </strong>{" "}
           — et ils le restent.
+        </p>
+
+        {/*  La seule preuve sociale de la page était une vidéo YouTube,
+            citée aux deux tiers du texte. Ces deux nombres sont vrais,
+            vérifiables, et se refont tout seuls. */}
+        <p className="mb-10 flex max-w-[34rem] flex-wrap items-center gap-x-5 gap-y-1 font-mono text-[11px] tracking-[0.1em] text-texte-3 uppercase">
+          <span>
+            <strong className="font-semibold text-texte-2">100 000+</strong>{" "}
+            formés sur YouTube
+          </span>
+          {inscrits && (
+            <span>
+              <strong className="font-semibold text-texte-2">{inscrits}+</strong>{" "}
+              inscrits ici
+            </span>
+          )}
+          <span>Certificat vérifiable publiquement</span>
         </p>
 
         {/* ── Comment ça marche ─────────────────────────────── */}
@@ -373,15 +391,15 @@ export default async function Accueil() {
             {[
               {
                 quand: "Maintenant",
-                quoi: "Votre prénom, votre adresse, et vous êtes sur la première leçon. Aucune carte bancaire.",
+                quoi: "Votre nom, votre adresse, et vous êtes sur la première leçon. Aucune carte bancaire.",
               },
               {
-                quand: "Du 21 au 23 septembre",
-                quoi: "Un module par soir, gratuit. Chacun s'ouvre à 21 h GMT, juste après le direct.",
+                quand: "Quatre modules, à votre rythme",
+                quoi: "Les modules 0 à 3, leurs travaux pratiques et leurs QCM. Rien n'expire, rien ne se ferme.",
               },
               {
-                quand: "À partir du 24",
-                quoi: "Vous décidez. 37 $ une fois pour les sept modules restants, le projet final et le certificat.",
+                quand: "Quand vous décidez",
+                quoi: "37 $ une fois pour les sept modules restants, le projet final et le certificat.",
               },
             ].map((e, i) => (
               <li
@@ -551,30 +569,19 @@ export default async function Accueil() {
             <span className="poignee" aria-hidden="true" />
           </div>
 
+          <div className="mt-9">
+            <ApercuCorrection />
+          </div>
+
           <div className="mt-9 rounded-[10px] border border-bord p-6">
-            <span className="etiquette mb-3 block">Les directs</span>
-            <p className="m-0 mb-4 max-w-[32rem] text-[1.02rem] leading-[1.5]">
-              Sur Microsoft Teams, de{" "}
-              <strong className="font-semibold">19 h à 21 h GMT</strong>. Vous
-              n&apos;êtes pas obligé d&apos;y être : tout le programme se suit en
-              autonomie.
+            <span className="etiquette mb-3 block">Les soirées enregistrées</span>
+            <p className="m-0 max-w-[34rem] text-[1.02rem] leading-[1.5]">
+              Les soirées d&apos;ouverture ont été filmées et sont{" "}
+              <strong className="font-semibold">dans la formation</strong>, au
+              même endroit que les leçons. Vous les regardez quand vous voulez,
+              en pause, en arrière, à deux heures du matin si ça vous arrange.
+              Rien à manquer, rien à rattraper.
             </p>
-            <ul className="m-0 flex list-none flex-col gap-0 border-t border-bord-2 p-0">
-              {FUSEAUX.map(([heure, villes, zone]) => (
-                <li
-                  key={zone}
-                  className="grid grid-cols-[92px_minmax(0,1fr)_auto] items-baseline gap-3 border-b border-bord-2 py-[11px]"
-                >
-                  <span className="font-mono text-[0.93rem] tabular-nums text-texte">
-                    {heure}
-                  </span>
-                  <span className="text-[0.93rem] text-texte-2">{villes}</span>
-                  <span className="font-mono text-[10px] tracking-[0.1em] text-texte-3 uppercase">
-                    {zone}
-                  </span>
-                </li>
-              ))}
-            </ul>
           </div>
         </section>
 
@@ -658,11 +665,13 @@ export default async function Accueil() {
               <p className="etiquette mb-3">La masterclass, accompagnée</p>
               <p className="titre-m m-0 text-[1.3rem] text-texte">Le cercle</p>
               <p className="mt-3 mb-0 text-[0.96rem] leading-[1.55] text-texte-2">
-                Tout ce que contient la masterclass, et quatre séances de
-                groupe de 90 minutes avec Oscar, une par semaine à partir du
-                28 septembre. On y corrige des copies réelles à l&apos;écran —
-                on apprend autant de celle des autres que de la sienne. Plus un
-                canal privé où il répond.
+                Tout ce que contient la masterclass, et{" "}
+                <strong className="font-semibold text-texte">
+                  un appel en tête à tête avec Oscar
+                </strong>{" "}
+                — trente minutes sur vos propres fichiers, pas sur un cas
+                d&apos;école. Vous réservez votre créneau quand vous voulez.
+                Plus un canal privé où il répond.
               </p>
             </div>
             <p className="titre-xl mt-5 mb-0 shrink-0 text-[2rem] sm:mt-0">
@@ -670,37 +679,39 @@ export default async function Accueil() {
             </p>
           </div>
 
-          {places && (
-            <div className="plage mt-8 px-6 py-5">
-              <span className="etiquette mb-2 block">
-                {places.restantes === 0
-                  ? "Les dix places sont prises"
-                  : places.prises === 0
-                    ? `Les ${places.total} premières places`
-                    : `Il reste ${places.restantes} place${places.restantes > 1 ? "s" : ""} sur ${places.total}`}
-              </span>
-              <p className="m-0 max-w-[33rem] text-[1.02rem] leading-[1.55]">
-                {places.restantes === 0 ? (
-                  <>
-                    Oscar a relu personnellement le projet final des dix
-                    premières personnes. Le reste de la masterclass est
-                    inchangé, et le prix aussi.
-                  </>
-                ) : (
-                  <>
-                    Oscar relit <strong className="font-semibold text-texte">
-                    personnellement</strong> le projet final des{" "}
-                    {places.total} premières personnes qui prennent la
-                    masterclass ou le cercle — un retour écrit, sur votre
-                    fichier, pas une note automatique. Elles passent aussi en
-                    premier dans les directs. Dix, parce qu&apos;il ne peut pas
-                    en faire onze.
-                  </>
-                )}
-              </p>
-              <span className="poignee" aria-hidden="true" />
-            </div>
-          )}
+          {/*  Sept des vingt premières ventes sont arrivées par mobile
+              money ou Western Union. La page n'en disait pas un mot :
+              quelqu'un sans carte bancaire lisait « 37 $ » et partait. */}
+          <div className="mt-8 rounded-[10px] border border-bord p-6">
+            <span className="etiquette mb-3 block">Payer sans carte bancaire</span>
+            <p className="m-0 mb-4 max-w-[34rem] text-[1.02rem] leading-[1.55]">
+              La page de paiement accepte la carte et affiche le prix dans
+              votre monnaie. Mais une bonne partie des gens paient autrement,
+              et c&apos;est prévu :{" "}
+              <strong className="font-semibold">
+                Airtel Money, Orange Money, M-Pesa, Wave, Western Union
+              </strong>{" "}
+              ou un virement.
+            </p>
+            <p className="m-0 max-w-[34rem] text-[0.95rem] leading-[1.55] text-texte-2">
+              Écrivez-moi sur WhatsApp au{" "}
+              <a
+                href="https://wa.me/243971601855"
+                className="text-texte underline decoration-[color:var(--voltage-2)] underline-offset-[3px]"
+              >
+                +243 971 601 855
+              </a>{" "}
+              ou à{" "}
+              <a
+                href="mailto:oscaraksanti@gmail.com"
+                className="text-texte underline decoration-[color:var(--voltage-2)] underline-offset-[3px]"
+              >
+                oscaraksanti@gmail.com
+              </a>{" "}
+              : je vous donne le numéro, et votre accès s&apos;ouvre dès que
+              l&apos;argent arrive.
+            </p>
+          </div>
 
           <p className="mt-6 max-w-[34rem] text-[0.93rem] text-texte-3">
             Vous décidez après avoir fait les quatre modules gratuits. C&apos;est
@@ -718,8 +729,8 @@ export default async function Accueil() {
             <div>
               <p className="etiquette mb-2">Fondations</p>
               <p className="m-0 text-[0.98rem] leading-[1.55] text-texte-2">
-                Les modules 1 à 3, leurs trois travaux pratiques rendus, et les
-                corrections faites.
+                Les modules gratuits, leurs trois travaux pratiques rendus, et
+                les corrections faites.
               </p>
             </div>
             <div>
@@ -749,12 +760,21 @@ export default async function Accueil() {
           <h2 className="titre-l m-0 text-[clamp(1.6rem,3.4vw,2.1rem)]">
             Qui vous forme
           </h2>
-          <p className="mt-6 max-w-[36rem] text-[1.06rem] leading-[1.6]">
+          <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-7">
+            <Image
+              src="/oscar-aksanti.jpg"
+              alt="Oscar Aksanti"
+              width={112}
+              height={112}
+              className="h-[96px] w-[96px] shrink-0 rounded-[10px] object-cover sm:h-[112px] sm:w-[112px]"
+            />
+            <div className="min-w-0">
+          <p className="mt-0 max-w-[36rem] text-[1.06rem] leading-[1.6]">
             <strong className="font-semibold">Oscar Aksanti</strong>, ingénieur
             en informatique, analyste de données et formateur, à Kinshasa. Ma
             formation Excel gratuite sur YouTube — dix heures, une seule vidéo —
             a servi à{" "}
-            <strong className="font-semibold">plus de 95 000 personnes</strong>.
+            <strong className="font-semibold">plus de 100 000 personnes</strong>.
             Elle est toujours en ligne, toujours gratuite, et elle le restera.
           </p>
           <p className="mt-4 max-w-[36rem] text-[1.02rem] leading-[1.6] text-texte-2">
@@ -763,6 +783,8 @@ export default async function Accueil() {
             <em>décider</em> avec Excel — et à travailler avec une IA sans lui
             faire confiance aveuglément.
           </p>
+            </div>
+          </div>
           <p className="mt-6">
             <a className="bouton-2" href={LIEN_TELEGRAM}>
               Rejoindre le groupe Telegram

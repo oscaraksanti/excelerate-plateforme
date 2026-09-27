@@ -21,6 +21,11 @@ function Bouton({ libelle }: { libelle: string }) {
  * Pas de mot de passe — un lien de connexion part par email et ouvre
  * directement la premiere lecon. Le nom sert deux fois : a dire bonjour,
  * et a figurer sur le certificat.
+ *
+ * On vouvoie ici, comme toute la page d'accueil. L'application, elle,
+ * tutoie — et c'est voulu : on passe au « tu » une fois entre. Mais ce
+ * formulaire-ci disait « ton nom » sous un titre qui disait « vous »,
+ * exactement au moment ou l'on demande de la confiance.
  */
 export function InscriptionRapide({
   suite = "/modules/0/1",
@@ -36,15 +41,17 @@ export function InscriptionRapide({
   if (etat.ok) {
     return (
       <div className="plage w-full max-w-[30rem] px-6 py-5">
-        <span className="etiquette mb-2 block">Regarde tes emails</span>
+        <span className="etiquette mb-2 block">Regardez vos emails</span>
         <p className="m-0 text-[1.02rem] leading-[1.5]">
           Un lien vient de partir vers{" "}
-          <strong className="font-semibold">{etat.email}</strong>. Clique
-          dessus et tu arrives directement sur la première leçon.
+          <strong className="font-semibold">{etat.email}</strong>. Cliquez
+          dessus et vous arrivez directement sur la première leçon.
         </p>
         <p className="mt-3 mb-0 text-[0.9rem] text-texte-2">
-          Rien au bout de deux minutes ? Regarde dans les courriers
-          indésirables ou l&apos;onglet Promotions.
+          Rien au bout de deux minutes ? Regardez dans les courriers
+          indésirables ou l&apos;onglet Promotions. Ouvrez le lien dans votre
+          navigateur habituel : vous n&apos;aurez plus jamais à vous
+          reconnecter sur cet appareil.
         </p>
         <span className="poignee" aria-hidden="true" />
       </div>
@@ -60,7 +67,7 @@ export function InscriptionRapide({
 
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="flex flex-col gap-[6px]">
-          <span className="etiquette">Ton nom complet</span>
+          <span className="etiquette">Votre nom complet</span>
           <input
             name="nom"
             type="text"
@@ -74,7 +81,7 @@ export function InscriptionRapide({
         </label>
 
         <label className="flex flex-col gap-[6px]">
-          <span className="etiquette">Ton email</span>
+          <span className="etiquette">Votre email</span>
           <input
             name="email"
             type="email"
@@ -97,9 +104,9 @@ export function InscriptionRapide({
 
       <p className="m-0 text-[0.88rem] leading-[1.5] text-texte-3">
         <strong className="text-texte-2">Prénom et nom</strong> : c&apos;est
-        exactement ce qui sera imprimé sur ton certificat. Pas de mot de passe
-        à retenir, tu reçois un lien de connexion. Aucune carte bancaire — les
-        quatre premiers modules sont gratuits.
+        exactement ce qui sera imprimé sur votre certificat. Pas de mot de
+        passe à retenir, vous recevez un lien de connexion. Aucune carte
+        bancaire — les quatre premiers modules sont gratuits.
       </p>
     </form>
   );
