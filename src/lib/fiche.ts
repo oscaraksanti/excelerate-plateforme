@@ -51,11 +51,19 @@ export type Certificat = {
   courriel_le: string | null;
 };
 
+export type Appareil = {
+  id: string;
+  agent: string | null;
+  cree_le: string;
+  vu_le: string;
+};
+
 export type Fiche = {
   id: string;
   nom: string;
   email: string | null;
   telephone: string | null;
+  avatar: string | null;
   role: string;
   origine: string;
   cree_le: string;
@@ -68,6 +76,7 @@ export type Fiche = {
   achats: Achat[];
   travaux: TravauxTp[];
   certificats: Certificat[];
+  appareils: Appareil[];
 };
 
 type Copie = {
@@ -93,7 +102,7 @@ export async function lireFiche(profilId: string): Promise<Fiche | null> {
 
   const { data: profil } = await admin
     .from("profils")
-    .select("id, nom, email, telephone, role, origine, cree_le, poids_correcteur")
+    .select("id, nom, email, telephone, avatar, role, origine, cree_le, poids_correcteur")
     .eq("id", profilId)
     .maybeSingle();
 
@@ -110,6 +119,7 @@ export async function lireFiche(profilId: string): Promise<Fiche | null> {
     { data: lecons },
     { count: messages },
     { data: certificats },
+    { data: appareils },
   ] = await Promise.all([
     admin.auth.admin.getUserById(profilId),
     admin
@@ -147,6 +157,12 @@ export async function lireFiche(profilId: string): Promise<Fiche | null> {
       )
       .eq("profil_id", profilId)
       .order("emis_le", { ascending: false }),
+    admin
+      .from("appareils")
+      .select("id, agent, cree_le, vu_le")
+      .eq("profil_id", profilId)
+      .is("revoque_le", null)
+      .order("vu_le", { ascending: false }),
   ]);
 
   const mesCopies = new Map<string, Copie>();
@@ -210,6 +226,7 @@ export async function lireFiche(profilId: string): Promise<Fiche | null> {
     nom: profil.nom ?? "",
     email: profil.email,
     telephone: profil.telephone,
+    avatar: profil.avatar ?? null,
     role: profil.role,
     origine: profil.origine,
     cree_le: profil.cree_le,
@@ -222,5 +239,6 @@ export async function lireFiche(profilId: string): Promise<Fiche | null> {
     achats: (achats as Achat[] | null) ?? [],
     travaux,
     certificats: (certificats as Certificat[] | null) ?? [],
+    appareils: (appareils as Appareil[] | null) ?? [],
   };
 }

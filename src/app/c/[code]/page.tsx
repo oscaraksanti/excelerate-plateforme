@@ -138,12 +138,12 @@ export default async function PageCertificat({ params }: Params) {
             Ce certificat s&apos;est mérité, pas acheté
           </h2>
           <p className="mt-0 mb-6 max-w-[36rem] text-[1.01rem] text-texte-2">
-            {c.nom_affiche.split(" ")[0]} a rendu {c.tps_rendus} travail
-            {c.tps_rendus > 1 ? "x" : ""} pratique{c.tps_rendus > 1 ? "s" : ""} sur
-            des fichiers réels, et corrigé {c.corrections} copie
-            {c.corrections > 1 ? "s" : ""} de {c.corrections > 1 ? "ses pairs" : "pair"}
-            {" "}— anonymement, comme on a corrigé la sienne. Les trois premiers
-            modules de la formation sont ouverts à tout le monde.
+            {c.nom_affiche.split(" ")[0]} a rendu {c.tps_rendus}{" "}
+            {c.tps_rendus > 1 ? "travaux pratiques" : "travail pratique"} sur des
+            fichiers réels, et corrigé {c.corrections} copie
+            {c.corrections > 1 ? "s" : ""} de ses pairs — anonymement, comme on a
+            corrigé la sienne. Les quatre premiers modules de la formation sont
+            ouverts à tout le monde.
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <Link href="/" className="bouton">

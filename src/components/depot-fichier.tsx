@@ -31,7 +31,7 @@ export function DepotFichier({
   discret = false,
   onDepose,
 }: {
-  espace: "ressources" | "depots" | "corriges";
+  espace: "ressources" | "depots" | "corriges" | "avatars";
   prefixe: string;
   accept?: string;
   tailleMaxMo?: number;

@@ -43,6 +43,8 @@ export type Message = {
   profil_id: string;
   /** Prénom et initiale, calculés par la base. Jamais l'identité complète. */
   auteur: string;
+  /** Sa photo, s'il en a mis une. Comme le nom : ce qu'il a choisi de montrer. */
+  avatar: string | null;
   est_instructeur: boolean;
   est_moi: boolean;
   utiles: number;

@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
+import { Avatar } from "@/components/avatar";
 import {
   accepterReponse,
   basculerUtile,
@@ -40,11 +41,6 @@ function quand(iso: string) {
   return d.toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
 }
 
-function initiales(nom: string) {
-  const p = nom.trim().split(/\s+/).filter(Boolean);
-  if (!p.length) return "?";
-  return (p[0][0] + (p[1]?.[0] ?? "")).toUpperCase();
-}
 
 function Signature({ m, petit }: { m: Message; petit?: boolean }) {
   return (
@@ -277,9 +273,7 @@ function Discussion({
   return (
     <li className="border-b border-bord-2 py-[20px]">
       <div className="grid grid-cols-[34px_minmax(0,1fr)] gap-3">
-        <span className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-fond-3 font-mono text-[11px] font-semibold text-texte-2">
-          {initiales(fil.auteur)}
-        </span>
+        <Avatar nom={fil.auteur} avatar={fil.avatar} taille={34} />
         <div className="min-w-0">
           <p className="m-0 mb-1 flex flex-wrap items-baseline gap-x-2 text-[0.88rem]">
             <span className="font-semibold text-texte">{fil.auteur}</span>
@@ -321,9 +315,7 @@ function Discussion({
                   : ""
               }`}
             >
-              <span className="flex h-[26px] w-[26px] items-center justify-center rounded-full bg-fond-3 font-mono text-[9.5px] font-semibold text-texte-2">
-                {initiales(r.auteur)}
-              </span>
+              <Avatar nom={r.auteur} avatar={r.avatar} taille={26} />
               <div className="min-w-0">
                 {r.est_acceptee && (
                   <p className="m-0 mb-[3px] font-mono text-[9px] font-semibold tracking-[0.12em] text-accent-texte uppercase">

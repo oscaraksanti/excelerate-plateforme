@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { oublierAppareil } from "@/app/profil/actions";
+import { Avatar } from "@/components/avatar";
+import { ChampPhoto } from "@/components/champ-photo";
 import { EnteteApp } from "@/components/entete-app";
+import { FormulaireProfil } from "@/app/profil/formulaire";
 import { Partage } from "@/components/partage";
 import { formaterDate, nomComplet } from "@/lib/formats";
 import { monParcours } from "@/lib/parcours";
@@ -20,6 +24,43 @@ const OFFRES: Record<string, string> = {
   coaching97: "Le cercle",
   equipe: "Équipe",
 };
+
+/**
+ * De quoi reconnaitre un navigateur sans lire une chaine de 200
+ * caracteres. On ne garde que ce qui aide : la machine et le
+ * navigateur.
+ */
+function nomDAppareil(agent: string | null) {
+  const a = agent ?? "";
+  if (!a) return "Un navigateur";
+  const machine = /iPhone/i.test(a)
+    ? "iPhone"
+    : /iPad/i.test(a)
+      ? "iPad"
+      : /Android/i.test(a)
+        ? "Android"
+        : /Macintosh|Mac OS/i.test(a)
+          ? "Mac"
+          : /Windows/i.test(a)
+            ? "Windows"
+            : /Linux/i.test(a)
+              ? "Linux"
+              : "Appareil";
+  const nav = /Edg\//i.test(a)
+    ? "Edge"
+    : /OPR\/|Opera/i.test(a)
+      ? "Opera"
+      : /SamsungBrowser/i.test(a)
+        ? "Samsung Internet"
+        : /Firefox/i.test(a)
+          ? "Firefox"
+          : /Chrome|CriOS/i.test(a)
+            ? "Chrome"
+            : /Safari/i.test(a)
+              ? "Safari"
+              : "navigateur";
+  return `${machine} · ${nav}`;
+}
 
 function note(n: number | null) {
   return n === null ? "—" : String(n).replace(".", ",");
@@ -54,13 +95,13 @@ export default async function MonParcours() {
     manques.push({
       quoi: "Ton nom complet — sans lui, aucun certificat ne peut être établi.",
       ou: "Compléter mon nom",
-      lien: "/profil",
+      lien: "#ma-fiche",
     });
   }
   const aDeposer = f.travaux.filter((t) => !t.copie_id);
   if (aDeposer.length > 0) {
     manques.push({
-      quoi: `${aDeposer.length} travail${aDeposer.length > 1 ? "x" : ""} pratique${aDeposer.length > 1 ? "s" : ""} à rendre — à commencer par « ${aDeposer[0].titre} ».`,
+      quoi: `${aDeposer.length} ${aDeposer.length > 1 ? "travaux pratiques" : "travail pratique"} à rendre — à commencer par « ${aDeposer[0].titre} ».`,
       ou: "Ouvrir ce travail",
       lien: `/modules/${aDeposer[0].module}/tp/1`,
     });
@@ -94,9 +135,12 @@ export default async function MonParcours() {
       <EnteteApp nom={profil.nom} admin={profil.role === "admin"} />
 
       <main className="relative z-1 mx-auto max-w-[1000px] px-6 pt-12 pb-24">
-        <h1 className="titre-xl m-0 mb-4 text-[clamp(1.9rem,4.6vw,2.7rem)]">
-          Mon parcours
-        </h1>
+        <div className="mb-4 flex items-center gap-4">
+          <Avatar nom={f.nom} avatar={f.avatar} taille={56} />
+          <h1 className="titre-xl m-0 text-[clamp(1.9rem,4.6vw,2.7rem)]">
+            Mon parcours
+          </h1>
+        </div>
         <p className="mb-10 max-w-[35rem] text-[1.04rem] text-texte-2">
           Tout ce que tu as rendu, tout ce qui te reste, et ton certificat quand
           il est là. Rien n&apos;est caché : ce que tu vois ici est ce que voit
@@ -222,7 +266,8 @@ export default async function MonParcours() {
                     Le certificat n&apos;est pas compris dans l&apos;accès gratuit
                   </span>
                   <p className="m-0 mb-5 max-w-[33rem] text-[1.02rem] leading-[1.5]">
-                    Les trois premiers modules restent ouverts à tout le monde.
+                    Les quatre premiers modules — 0 à 3 — restent ouverts à
+                    tout le monde.
                     Le certificat, lui, s&apos;obtient avec l&apos;une des
                     offres — et il se mérite quand même : les conditions
                     ci-dessus ne changent pas.
@@ -343,20 +388,84 @@ export default async function MonParcours() {
           </div>
         </section>
 
-        {/* ── Mes données ──────────────────────────────────── */}
+        {/* ── Ma fiche ─────────────────────────────────────── */}
+        <section id="ma-fiche" className="mb-14 scroll-mt-6 border-t-2 border-texte pt-6">
+          <h2 className="titre-l m-0 mb-1 text-[1.5rem]">Ma fiche</h2>
+          <p className="mt-2 mb-7 max-w-[35rem] text-[0.98rem] text-texte-2">
+            Ta photo apparaît dans l&apos;en-tête et à côté de tes messages
+            dans le fil. Ton nom, lui, part sur le certificat — c&apos;est le
+            seul endroit où il compte vraiment.
+          </p>
+
+          <div className="mb-9">
+            <ChampPhoto profilId={f.id} nom={f.nom} avatar={f.avatar} />
+          </div>
+
+          <FormulaireProfil
+            nom={f.nom}
+            telephone={f.telephone}
+            email={f.email}
+          />
+        </section>
+
+        {/* ── Mes appareils ────────────────────────────────── */}
+        {f.appareils.length > 0 && (
+          <section className="mb-14 border-t-2 border-texte pt-6">
+            <h2 className="titre-l m-0 mb-1 text-[1.5rem]">Mes appareils</h2>
+            <p className="mt-2 mb-6 max-w-[35rem] text-[0.98rem] text-texte-2">
+              Sur ces navigateurs, tu restes connecté sans avoir à redemander
+              un lien. Si tu en vois un que tu ne reconnais pas — un ordinateur
+              prêté, un cybercafé — retire-le : il redemandera un lien la
+              prochaine fois.
+            </p>
+            <ul className="m-0 flex max-w-[35rem] list-none flex-col gap-0 border-t border-bord p-0">
+              {f.appareils.map((a) => (
+                <li
+                  key={a.id}
+                  className="flex flex-wrap items-center justify-between gap-3 border-b border-bord-2 py-[13px]"
+                >
+                  <span className="min-w-0">
+                    <span className="block text-[0.96rem] text-texte">
+                      {nomDAppareil(a.agent)}
+                    </span>
+                    <span className="font-mono text-[10.5px] text-texte-3">
+                      reconnu {formaterDate(a.cree_le)} · vu{" "}
+                      {formaterDate(a.vu_le)}
+                    </span>
+                  </span>
+                  <form action={oublierAppareil}>
+                    <input type="hidden" name="id" value={a.id} />
+                    <button
+                      type="submit"
+                      className="cursor-pointer font-mono text-[10px] tracking-[0.12em] text-texte-3 uppercase hover:text-ko"
+                    >
+                      Retirer
+                    </button>
+                  </form>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* ── Mes accès ────────────────────────────────────── */}
         <section className="border-t-2 border-texte pt-6">
-          <h2 className="titre-l m-0 mb-1 text-[1.5rem]">Mes données</h2>
+          <h2 className="titre-l m-0 mb-1 text-[1.5rem]">Mes accès</h2>
           <p className="mt-2 mb-6 max-w-[35rem] text-[0.98rem] text-texte-2">
             Ce que la plateforme sait de toi, en entier.
           </p>
 
           <ul className="m-0 mb-7 flex max-w-[35rem] list-none flex-col gap-0 border-t border-bord p-0">
             {[
-              ["Nom sur le certificat", f.nom?.trim() || "—"],
               ["Adresse", f.email ?? "—"],
-              ["Téléphone", f.telephone ?? "—"],
               ["Inscrit le", formaterDate(f.cree_le)],
               ["Questions posées", String(f.messages)],
+              [
+                "Programme",
+                f.achats.length > 0
+                  ? "Tous les modules"
+                  : "Les modules 0 à 3",
+              ],
             ].map(([k, v]) => (
               <li
                 key={k}
@@ -369,29 +478,22 @@ export default async function MonParcours() {
           </ul>
 
           {f.achats.length > 0 && (
-            <>
-              <p className="etiquette mb-3">Mes accès</p>
-              <ul className="m-0 mb-7 flex max-w-[35rem] list-none flex-col gap-0 border-t border-bord p-0">
-                {f.achats.map((a) => (
-                  <li
-                    key={a.chariow_ref}
-                    className="flex flex-wrap items-baseline justify-between gap-3 border-b border-bord-2 py-[12px]"
-                  >
-                    <span className="text-[0.96rem] text-texte">
-                      {OFFRES[a.produit] ?? a.produit}
-                    </span>
-                    <span className="font-mono text-[12px] tabular-nums text-texte-2">
-                      {formaterDate(a.paye_le)}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </>
+            <ul className="m-0 flex max-w-[35rem] list-none flex-col gap-0 border-t border-bord p-0">
+              {f.achats.map((a) => (
+                <li
+                  key={a.chariow_ref}
+                  className="flex flex-wrap items-baseline justify-between gap-3 border-b border-bord-2 py-[12px]"
+                >
+                  <span className="text-[0.96rem] text-texte">
+                    {OFFRES[a.produit] ?? a.produit}
+                  </span>
+                  <span className="font-mono text-[12px] tabular-nums text-texte-2">
+                    {formaterDate(a.paye_le)}
+                  </span>
+                </li>
+              ))}
+            </ul>
           )}
-
-          <Link href="/profil" className="bouton-2">
-            Modifier mon nom ou mon téléphone
-          </Link>
         </section>
       </main>
     </>

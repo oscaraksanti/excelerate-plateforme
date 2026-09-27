@@ -193,7 +193,7 @@ export async function courrielCertificat(opts: {
       `<p style="margin:0 0 10px 0;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#57616d;">Ce qu'il atteste</p>`,
       LISTE(
         [
-          `${tps} travail${tps > 1 ? "x" : ""} pratique${tps > 1 ? "s" : ""} rendu${tps > 1 ? "s" : ""} et corrigé${tps > 1 ? "s" : ""}.`,
+          `${tps} ${tps > 1 ? "travaux pratiques rendus et corrigés" : "travail pratique rendu et corrigé"}.`,
           `${corrections} copie${corrections > 1 ? "s" : ""} de tes pairs corrigée${corrections > 1 ? "s" : ""}.`,
           note !== null
             ? `Une moyenne de ${String(note).replace(".", ",")} sur 20.`
@@ -225,7 +225,7 @@ export async function courrielCertificat(opts: {
 Felicitations. Tu as rempli les trois conditions sur ${portee} : les travaux rendus, les corrections de tes pairs effectuees, et la moyenne. Ton certificat « ${mention} » est etabli au nom de ${nomAffiche}.
 
 CE QU'IL ATTESTE
-- ${tps} travail(x) pratique(s) rendu(s) et corrige(s).
+- ${tps} ${tps > 1 ? "travaux pratiques rendus et corriges" : "travail pratique rendu et corrige"}.
 - ${corrections} copie(s) de tes pairs corrigee(s).
 ${note !== null ? `- Une moyenne de ${String(note).replace(".", ",")} sur 20.` : "- Les travaux valides du programme."}
 
