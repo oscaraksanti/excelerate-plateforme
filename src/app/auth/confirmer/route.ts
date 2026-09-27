@@ -1,6 +1,7 @@
 import type { EmailOtpType } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import { NextResponse, type NextRequest } from "next/server";
+import { reconnaitreAppareil } from "@/lib/appareil";
 import { clientServeur } from "@/lib/supabase/serveur";
 
 const TYPES_CONNUS: EmailOtpType[] = [
@@ -54,14 +55,23 @@ export async function GET(requete: NextRequest) {
       typeBrut && (TYPES_CONNUS as string[]).includes(typeBrut) ? typeBrut : "email"
     ) as EmailOtpType;
 
-    const { error } = await supabase.auth.verifyOtp({ type, token_hash: jeton });
+    const { data, error } = await supabase.auth.verifyOtp({ type, token_hash: jeton });
     if (error) return echec("lien-expire");
+
+    //  Ce navigateur est desormais connu : plus jamais de lien a
+    //  demander ici, sauf deconnexion volontaire.
+    if (data.user) {
+      await reconnaitreAppareil(data.user.id, requete.headers.get("user-agent"));
+    }
     return NextResponse.redirect(new URL(destination, requete.url));
   }
 
   if (code) {
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
     if (error) return echec("autre-appareil");
+    if (data.user) {
+      await reconnaitreAppareil(data.user.id, requete.headers.get("user-agent"));
+    }
     return NextResponse.redirect(new URL(destination, requete.url));
   }
 

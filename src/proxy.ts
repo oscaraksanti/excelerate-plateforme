@@ -1,6 +1,11 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+/**  Le nom du cookie, recopie ici : `@/lib/appareil` importe
+ *  `server-only` et le client d'administration, qui n'ont rien a
+ *  faire dans le proxy. */
+const COOKIE_APPAREIL = "appareil";
+
 /**
  * Chemins accessibles sans compte.
  *
@@ -14,6 +19,7 @@ const OUVERTS = [
   "/",
   "/connexion",
   "/auth",
+  "/lecons",
   "/c",
   "/api/chariow",
   "/mentions-legales",
@@ -51,16 +57,54 @@ export async function proxy(request: NextRequest) {
 
   // getClaims valide la session aupres de Supabase. Ne pas le remplacer
   // par getSession() : celui-la fait confiance au cookie sans verifier.
-  const { data } = await supabase.auth.getClaims();
-  const connecte = Boolean(data?.claims);
+  //
+  // L'appel peut echouer pour une raison qui n'a rien a voir avec la
+  // personne — reseau, Supabase qui tousse. Avant, ca la renvoyait a
+  // la page de connexion comme si elle n'existait pas. On distingue
+  // desormais « pas de session » de « on n'a pas pu savoir ».
+  let connecte = false;
+  let incertain = false;
+  try {
+    const { data, error } = await supabase.auth.getClaims();
+    connecte = Boolean(data?.claims);
+    incertain = Boolean(error) && !data;
+  } catch {
+    incertain = true;
+  }
 
   const chemin = request.nextUrl.pathname;
 
   if (!connecte && !estOuvert(chemin)) {
+    //  Un doute technique ne doit pas deconnecter quelqu'un : on laisse
+    //  passer, la page relira l'identite avec ses propres droits.
+    if (incertain) return reponse;
+
+    //  Ce navigateur a deja ete reconnu : on rouvre la session sans
+    //  courriel. C'est la raison d'etre de /auth/reprise.
+    if (request.cookies.get(COOKIE_APPAREIL)?.value) {
+      const versReprise = request.nextUrl.clone();
+      versReprise.pathname = "/auth/reprise";
+      versReprise.search = "";
+      versReprise.searchParams.set("suite", chemin);
+      return NextResponse.redirect(versReprise);
+    }
+
     const versConnexion = request.nextUrl.clone();
     versConnexion.pathname = "/connexion";
     versConnexion.searchParams.set("suite", chemin);
     return NextResponse.redirect(versConnexion);
+  }
+
+  if (!connecte && chemin === "/connexion"
+      && request.cookies.get(COOKIE_APPAREIL)?.value
+      && !request.nextUrl.searchParams.has("probleme")) {
+    //  Il a un appareil reconnu : inutile de lui montrer un formulaire.
+    const versReprise = request.nextUrl.clone();
+    versReprise.pathname = "/auth/reprise";
+    const suite = request.nextUrl.searchParams.get("suite") ?? "/tableau-de-bord";
+    versReprise.search = "";
+    versReprise.searchParams.set("suite", suite);
+    return NextResponse.redirect(versReprise);
   }
 
   if (connecte && chemin === "/connexion") {

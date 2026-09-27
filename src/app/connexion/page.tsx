@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FenetreIntegree } from "@/components/fenetre-integree";
 import { FormulaireConnexion } from "./formulaire";
 
 export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Connexion" };
@@ -32,6 +33,8 @@ export default async function PageConnexion({
           tout. Si tu t&apos;es déjà inscrit à l&apos;atelier, mets la même
           adresse : ton compte est déjà là et tu le retrouves.
         </p>
+
+        <FenetreIntegree />
 
         <FormulaireConnexion suite={destination} probleme={probleme} />
       </main>
