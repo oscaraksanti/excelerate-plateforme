@@ -161,7 +161,7 @@ export default async function LeconPublique({ params }: Params) {
               Cette leçon est en libre accès. Le reste demande un compte —
               gratuit, sans carte bancaire : les{" "}
               <strong className="font-semibold text-texte">
-                quatre premiers modules
+                deux premiers modules
               </strong>
               , leurs travaux pratiques corrigés automatiquement en quelques
               secondes, les QCM, et la correction entre pairs.

@@ -213,7 +213,7 @@ export default async function FicheApprenant({
         <h2 className="titre-l m-0 mb-5 text-[1.35rem]">Ce qu&apos;il a acheté</h2>
         {f.achats.length === 0 ? (
           <p className="m-0 text-[0.96rem] text-texte-2">
-            Aucun achat. Accès aux modules 0 à 3 seulement.
+            Aucun achat. Accès aux modules 0 et 1 seulement.
           </p>
         ) : (
           <ul className="m-0 flex max-w-[40rem] list-none flex-col gap-0 border-t border-bord p-0">

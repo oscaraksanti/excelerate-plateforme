@@ -22,7 +22,7 @@ export default function Cgv() {
       <h2>Ce qui est vendu</h2>
       <ul>
         <li>
-          <strong>La masterclass complète</strong> — les sept modules au-delà des
+          <strong>La masterclass complète</strong> — les neuf modules au-delà des
           trois soirées gratuites, leurs travaux pratiques, et le certificat
           avancé s&apos;il est obtenu.
         </li>
@@ -72,7 +72,7 @@ export default function Cgv() {
 
       <h2>Essayer avant de payer</h2>
       <p>
-        <strong>Les modules 0 à 3 sont gratuits et complets</strong> : vingt
+        <strong>Les modules 0 et 1 sont gratuits et complets</strong> : dix
         leçons, leurs travaux pratiques et leurs QCM, sans carte bancaire et
         sans limite de durée. Tu juges la formation sur un quart de son
         contenu avant de sortir un centime. L&apos;essai précède l&apos;achat,

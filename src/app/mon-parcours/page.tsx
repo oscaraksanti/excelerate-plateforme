@@ -266,8 +266,8 @@ export default async function MonParcours() {
                     Le certificat n&apos;est pas compris dans l&apos;accès gratuit
                   </span>
                   <p className="m-0 mb-5 max-w-[33rem] text-[1.02rem] leading-[1.5]">
-                    Les quatre premiers modules — 0 à 3 — restent ouverts à
-                    tout le monde.
+                    Les modules 0 et 1 restent ouverts à tout le monde, et se
+                    lisent même sans compte.
                     Le certificat, lui, s&apos;obtient avec l&apos;une des
                     offres — et il se mérite quand même : les conditions
                     ci-dessus ne changent pas.
@@ -464,7 +464,7 @@ export default async function MonParcours() {
                 "Programme",
                 f.achats.length > 0
                   ? "Tous les modules"
-                  : "Les modules 0 à 3",
+                  : "Les modules 0 et 1",
               ],
             ].map(([k, v]) => (
               <li

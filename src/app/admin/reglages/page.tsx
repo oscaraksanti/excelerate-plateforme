@@ -28,7 +28,7 @@ export default async function PageReglages() {
       <section className="mt-14 border-t-2 border-texte pt-6">
         <h2 className="titre-l m-0 mb-1 text-[1.35rem]">L&apos;appel du cercle</h2>
         <p className="mt-2 mb-6 max-w-[34rem] text-[0.96rem] text-texte-2">
-          Quelqu&apos;un qui règle 97 $ n&apos;achète pas sept modules de plus :
+          Quelqu&apos;un qui règle 97 $ n&apos;achète pas neuf modules de plus :
           il achète du temps avec toi. Sans ce lien, il n&apos;a aucun moyen de
           le prendre.
         </p>

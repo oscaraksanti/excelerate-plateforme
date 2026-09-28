@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description:
     "Onze modules, 55 leçons, 11 travaux pratiques corrigés automatiquement et un "
     + "certificat vérifiable. Tableaux croisés, Power Query, DAX, macros — et l'IA "
-    + "comme copilote. Les quatre premiers modules sont gratuits.",
+    + "comme copilote. Les deux premiers modules sont gratuits.",
   alternates: { canonical: "/" },
 };
 
@@ -67,8 +67,8 @@ const AVANT_APRES = [
 const MODULES = [
   [0, "Avant de commencer", "Votre version, le fil rouge, les réglages", true],
   [1, "Reprendre la main sur ses données", "Tableaux structurés, RECHERCHEX, FILTRE", true],
-  [2, "L'IA comme copilote, pas comme oracle", "Le protocole V4, et le total de contrôle", true],
-  [3, "Ce qui tourne tout seul", "Power Query, LET, le premier tableau de bord", true],
+  [2, "L'IA comme copilote, pas comme oracle", "Le protocole V4, et le total de contrôle", false],
+  [3, "Ce qui tourne tout seul", "Power Query, LET, le premier tableau de bord", false],
   [4, "Chercher, croiser, réconcilier", "Les quatre familles d'écarts", false],
   [5, "Six questions, cinq minutes", "Les tableaux croisés, vraiment", false],
   [6, "Huit secondes", "Le tableau de bord qu'on lit sans explication", false],
@@ -129,9 +129,17 @@ const QUESTIONS = [
   },
   {
     q: "C'est un abonnement ?",
-    r: "Non. Les quatre premiers modules sont gratuits et le restent. Les sept suivants, le projet "
+    r: "Non. Les deux premiers modules sont gratuits et le restent — on peut même les lire sans compte. Les neuf suivants, le projet "
       + "final et le certificat coûtent 37 $, une seule fois. Le prix ne monte jamais, et il n'y a "
       + "rien à reconduire.",
+  },
+  {
+    q: "Pourquoi 37 $, et pas tout gratuit ?",
+    r: "Parce que la formation gratuite existe déjà : dix heures sur YouTube, plus de 100 000 "
+      + "personnes l'ont suivie, et elle le restera. Ici, il y a onze travaux pratiques corrigés "
+      + "automatiquement, la correction entre pairs, un certificat vérifiable et des réponses à "
+      + "vos questions — ça demande du temps, des serveurs et de la relecture. 37 $ une fois, pour "
+      + "un accès à vie : c'est le prix qui permet que ça existe sans publicité ni abonnement.",
   },
   {
     q: "Je n'ai pas de carte bancaire. Je peux payer autrement ?",
@@ -230,7 +238,7 @@ function donneesStructurees() {
             priceCurrency: "USD",
             availability: "https://schema.org/InStock",
             url: SITE,
-            description: "Les modules 0 à 3, leurs travaux pratiques et leurs QCM.",
+            description: "Les modules 0 et 1, leur travail pratique et leurs QCM.",
           },
           {
             "@type": "Offer",
@@ -240,7 +248,7 @@ function donneesStructurees() {
             availability: "https://schema.org/InStock",
             url: SITE,
             description:
-              "Les modules 4 à 10, le projet final, la correction entre pairs et "
+              "Les modules 2 à 10, le projet final, la correction entre pairs et "
               + "le certificat vérifiable. Paiement unique.",
           },
           {
@@ -359,9 +367,12 @@ export default async function Accueil() {
         <p className="mb-4 max-w-[34rem] text-[0.95rem] text-texte-2">
           Vous arrivez directement sur la première leçon.{" "}
           <strong className="font-semibold text-texte">
-            Les quatre premiers modules sont gratuits
+            Les modules 0 et 1 sont gratuits
           </strong>{" "}
-          — et ils le restent.
+          — et ils le restent. Ensuite, la masterclass complète :{" "}
+          <strong className="font-semibold text-texte">37 $, une fois</strong>,
+          pour les neuf modules qui restent et le certificat. Pas
+          d&apos;abonnement, et le prix ne monte jamais.
         </p>
 
         {/*  La seule preuve sociale de la page était une vidéo YouTube,
@@ -385,7 +396,7 @@ export default async function Accueil() {
         {/*  Une chronologie, pas une liste de traits : l'ordre porte
             l'information. Dire le prix ici, tôt, le transforme en
             réassurance — c'est l'inverse de le cacher jusqu'au
-            module 4, qui se vit comme une embuscade. */}
+            module 2, qui se vit comme une embuscade. */}
         <section className="mb-16">
           <ol className="m-0 grid list-none gap-0 border-t border-bord p-0 sm:grid-cols-3">
             {[
@@ -395,11 +406,11 @@ export default async function Accueil() {
               },
               {
                 quand: "Quatre modules, à votre rythme",
-                quoi: "Les modules 0 à 3, leurs travaux pratiques et leurs QCM. Rien n'expire, rien ne se ferme.",
+                quoi: "Les modules 0 et 1, leur travail pratique et leurs QCM. Rien n'expire, rien ne se ferme.",
               },
               {
                 quand: "Quand vous décidez",
-                quoi: "37 $ une fois pour les sept modules restants, le projet final et le certificat.",
+                quoi: "37 $ une fois pour les neuf modules restants, le projet final et le certificat.",
               },
             ].map((e, i) => (
               <li
@@ -423,7 +434,7 @@ export default async function Accueil() {
             <strong className="font-semibold text-texte-2">
               le prix ne monte jamais
             </strong>
-            . Vous ne payez qu&apos;après avoir fait quatre modules entiers —
+            . Vous ne payez qu&apos;après avoir fait deux modules entiers —
             personne ne devrait payer pour une formation qu&apos;il n&apos;a
             pas essayée.
           </p>
@@ -615,16 +626,17 @@ export default async function Accueil() {
 
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
             <div className="rounded-[10px] border border-bord p-6">
-              <p className="etiquette mb-3">Modules 0 à 3</p>
+              <p className="etiquette mb-3">Modules 0 et 1</p>
               <p className="titre-xl m-0 text-[2.6rem]">Gratuit</p>
               <p className="mt-4 mb-0 text-[0.96rem] leading-[1.55] text-texte-2">
-                Vingt leçons, trois travaux pratiques corrigés, les QCM, et les
-                directs. Sans carte bancaire, et sans limite de durée.
+                Dix leçons, le premier travail pratique corrigé par la machine,
+                les QCM. Sans carte bancaire, sans limite de durée — et les
+                leçons se lisent même sans créer de compte.
               </p>
             </div>
 
             <div className="rounded-[10px] border-2 border-[color:var(--plage-bord)] bg-[color:var(--plage-fond)] p-6">
-              <p className="etiquette mb-3">Modules 4 à 10 + capstone</p>
+              <p className="etiquette mb-3">Modules 2 à 10 + capstone</p>
               <p className="titre-xl m-0 text-[2.6rem]">
                 37 $
                 <span className="ml-2 align-middle font-mono text-[11px] tracking-[0.1em] text-texte-2 uppercase">
@@ -632,7 +644,7 @@ export default async function Accueil() {
                 </span>
               </p>
               <p className="mt-4 mb-0 text-[0.96rem] leading-[1.55] text-texte-2">
-                Les sept modules restants, le projet final, la correction entre
+                Les neuf modules restants, le projet final, la correction entre
                 pairs, la soutenance et le certificat{" "}
                 <em>Avancé</em>. Pas d&apos;abonnement, rien à reconduire,{" "}
                 <strong className="font-semibold text-texte">
@@ -657,6 +669,48 @@ export default async function Accueil() {
                 ))}
               </ul>
             </div>
+          </div>
+
+          {/*  Le prix était annoncé sans jamais être défendu. Ces trois
+              lignes sont vérifiables et suffisent : on ne promet pas un
+              salaire, on compare une dépense à ce qu'elle remplace. */}
+          <div className="mt-8 border-t border-bord pt-7">
+            <p className="etiquette mb-4">Ce que 37 $ remplace</p>
+            <ul className="m-0 flex max-w-[36rem] list-none flex-col gap-0 p-0">
+              {[
+                [
+                  "Trois heures chaque lundi",
+                  "à refaire le même rapport, c'est plus de cent cinquante heures par an. Le module 10 les ramène à un clic.",
+                ],
+                [
+                  "Un abonnement à 10 $ par mois",
+                  "coûte davantage dès le quatrième mois, et ne s'arrête jamais. Ici : une fois, et l'accès reste à vie.",
+                ],
+                [
+                  "Un chiffre faux envoyé à la direction",
+                  "se paie autrement qu'en dollars. Le module 2 apprend le total de contrôle qui l'attrape avant l'envoi.",
+                ],
+              ].map(([titre, suite]) => (
+                <li
+                  key={titre}
+                  className="flex items-baseline gap-[10px] border-b border-bord-2 py-[13px] text-[0.98rem] leading-[1.55]"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="mt-[7px] h-[7px] w-[7px] shrink-0 rounded-[1px] bg-voltage"
+                  />
+                  <span className="text-texte-2">
+                    <strong className="font-semibold text-texte">{titre}</strong>{" "}
+                    {suite}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 mb-0 max-w-[34rem] text-[0.95rem] leading-[1.55] text-texte-2">
+              Et vous ne décidez qu&apos;après avoir fait deux modules entiers,
+              travaux pratiques compris. C&apos;est la seule garantie qui vaille
+              quelque chose : vous savez déjà ce que vous achetez.
+            </p>
           </div>
 
           {/* ── Le cercle ─────────────────────────────────── */}
@@ -713,11 +767,6 @@ export default async function Accueil() {
             </p>
           </div>
 
-          <p className="mt-6 max-w-[34rem] text-[0.93rem] text-texte-3">
-            Vous décidez après avoir fait les quatre modules gratuits. C&apos;est
-            le bon ordre : personne ne devrait payer pour une formation
-            qu&apos;il n&apos;a pas essayée.
-          </p>
         </section>
 
         {/* ── Le certificat ─────────────────────────────────── */}
@@ -729,8 +778,8 @@ export default async function Accueil() {
             <div>
               <p className="etiquette mb-2">Fondations</p>
               <p className="m-0 text-[0.98rem] leading-[1.55] text-texte-2">
-                Les modules gratuits, leurs trois travaux pratiques rendus, et
-                les corrections faites.
+                Le travail pratique du module 1, rendu, et les corrections
+                de vos pairs faites.
               </p>
             </div>
             <div>
@@ -815,10 +864,22 @@ export default async function Accueil() {
             La première leçon commence dans deux minutes.
           </h2>
           <p className="mb-8 max-w-[34rem] text-[1.04rem] text-texte-2">
-            Votre prénom, votre email, et un lien de connexion arrive. Pas de
-            mot de passe, pas de carte bancaire.
+            Votre nom, votre email, et un lien de connexion arrive. Pas de mot
+            de passe, pas de carte bancaire. Vous commencez par les modules 0
+            et 1 — et vous déciderez de la suite en connaissance de cause.
           </p>
           <InscriptionRapide compact />
+
+          <p className="mt-9 mb-0 max-w-[34rem] text-[0.95rem] leading-[1.6] text-texte-3">
+            Déjà décidé ? La masterclass s&apos;ouvre depuis votre compte, en
+            deux clics —{" "}
+            <strong className="font-semibold text-texte-2">
+              37 $, une seule fois, accès à vie
+            </strong>
+            . Et si vous payez par Airtel Money, Orange Money ou Western Union,
+            écrivez-moi : c&apos;est la voie qu&apos;emprunte une vente sur
+            trois.
+          </p>
         </section>
       </main>
 

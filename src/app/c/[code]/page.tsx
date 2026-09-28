@@ -142,7 +142,7 @@ export default async function PageCertificat({ params }: Params) {
             {c.tps_rendus > 1 ? "travaux pratiques" : "travail pratique"} sur des
             fichiers réels, et corrigé {c.corrections} copie
             {c.corrections > 1 ? "s" : ""} de ses pairs — anonymement, comme on a
-            corrigé la sienne. Les quatre premiers modules de la formation sont
+            corrigé la sienne. Les deux premiers modules de la formation sont
             ouverts à tout le monde.
           </p>
           <div className="flex flex-wrap items-center gap-4">

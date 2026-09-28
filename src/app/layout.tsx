@@ -51,7 +51,7 @@ export const SITE = "https://excelai.oscaraksanti.com";
 const DESCRIPTION =
   "Formation Excel + intelligence artificielle par Oscar Aksanti : onze modules, "
   + "cinquante-cinq leçons, onze travaux pratiques corrigés automatiquement et un "
-  + "certificat vérifiable. Les quatre premiers modules sont gratuits.";
+  + "certificat vérifiable. Les deux premiers modules sont gratuits.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),

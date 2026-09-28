@@ -106,7 +106,7 @@ export function InscriptionRapide({
         <strong className="text-texte-2">Prénom et nom</strong> : c&apos;est
         exactement ce qui sera imprimé sur votre certificat. Pas de mot de
         passe à retenir, vous recevez un lien de connexion. Aucune carte
-        bancaire — les quatre premiers modules sont gratuits.
+        bancaire — les deux premiers modules sont gratuits.
       </p>
     </form>
   );

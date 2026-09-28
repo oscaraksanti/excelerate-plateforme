@@ -397,7 +397,7 @@ const CE_QUI_OUVRE: Record<string, { ouvre: string[]; certificat: boolean }> = {
   },
   certificat27: {
     ouvre: [
-      "La validation des modules 0 à 3 et de leurs travaux pratiques.",
+      "La validation du module 1 et de son travail pratique.",
       "Ton certificat Fondations, vérifiable publiquement.",
     ],
     certificat: false,
@@ -437,7 +437,7 @@ export async function courrielAchat(opts: {
         + "à ta première connexion — avec une autre adresse, il ne se trouvera pas.",
       );
 
-  //  97 $, ce n'est pas sept modules de plus : c'est du temps avec
+  //  97 $, ce n'est pas neuf modules de plus : c'est du temps avec
   //  Oscar. Le lien de réservation passe donc AVANT la liste de ce qui
   //  s'ouvre — c'est la seule chose à faire aujourd'hui.
   const leRendezVous =
