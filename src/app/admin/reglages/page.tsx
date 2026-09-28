@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { lireAppel } from "@/lib/appel";
+import { lireAppel, lireGroupe } from "@/lib/appel";
 import { lireDirect } from "@/lib/direct";
 import { FormulaireAppel } from "./appel";
+import { FormulaireGroupe } from "./groupe";
 import { FormulaireDirect } from "./formulaire";
 
 export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Réglages" };
@@ -9,6 +10,7 @@ export const metadata: Metadata = { robots: { index: false, follow: false }, tit
 export default async function PageReglages() {
   const direct = await lireDirect();
   const appel = await lireAppel();
+  const groupe = await lireGroupe();
 
   return (
     <>
@@ -33,6 +35,16 @@ export default async function PageReglages() {
           le prendre.
         </p>
         <FormulaireAppel appel={appel} />
+      </section>
+
+      <section className="mt-14 border-t-2 border-texte pt-6">
+        <h2 className="titre-l m-0 mb-1 text-[1.35rem]">Le groupe privé</h2>
+        <p className="mt-2 mb-6 max-w-[34rem] text-[0.96rem] text-texte-2">
+          C&apos;est là que se poste le lien des directs et que tu réponds. Sans
+          ce réglage, il faudrait écrire à chaque nouvel acheteur à la main — et
+          le jour où tu oublies, il paie sans savoir que le groupe existe.
+        </p>
+        <FormulaireGroupe groupe={groupe} />
       </section>
     </>
   );

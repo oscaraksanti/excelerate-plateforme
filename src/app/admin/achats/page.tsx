@@ -5,6 +5,7 @@ import { clientAdmin } from "@/lib/supabase/admin";
 import { listerProduits } from "@/lib/offres";
 import { basculerProduit } from "./actions";
 import { PaiementDirect } from "./direct";
+import { NumerosWhatsApp, type Payeur } from "./numeros";
 
 export const metadata: Metadata = { robots: { index: false, follow: false }, title: "Les ventes" };
 
@@ -22,6 +23,34 @@ export default async function PageAchats() {
     .limit(200);
 
   const lignes = achats ?? [];
+
+  //  Une personne peut avoir payé deux fois : on ne la compte qu'une
+  //  fois dans le carnet, en gardant son achat le plus récent.
+  const { data: fiches } = await admin
+    .from("profils")
+    .select("id, nom, telephone")
+    .in("id", lignes.map((a) => a.profil_id).filter(Boolean) as string[]);
+
+  const parProfil = new Map(
+    ((fiches as { id: string; nom: string; telephone: string | null }[] | null) ?? [])
+      .map((f) => [f.id, f]),
+  );
+
+  const vus = new Set<string>();
+  const payeurs: Payeur[] = [];
+  for (const a of lignes) {
+    const cle = a.email.toLowerCase();
+    if (vus.has(cle)) continue;
+    vus.add(cle);
+    const f = a.profil_id ? parProfil.get(a.profil_id) : null;
+    payeurs.push({
+      profil_id: a.profil_id,
+      nom: f?.nom ?? "",
+      email: a.email,
+      telephone: f?.telephone ?? null,
+      produit: a.produit,
+    });
+  }
   const brut = lignes.reduce((s, a) => s + Number(a.montant ?? 0), 0);
   //  Une vente arrivée hors Chariow ne paie pas sa commission : la
   //  compter au net du Pulse sous-estimait l'encaissement réel.
@@ -52,6 +81,19 @@ export default async function PageAchats() {
             </span>
           ))}
         </div>
+
+        <section className="mb-14 border-t-2 border-texte pt-6">
+          <h2 className="titre-l m-0 mb-1 text-[1.4rem]">
+            Les numéros WhatsApp des acheteurs
+          </h2>
+          <p className="mt-2 mb-6 max-w-[36rem] text-[0.96rem] text-texte-2">
+            {payeurs.length} personne{payeurs.length > 1 ? "s" : ""} —
+            une seule ligne par adresse, même quand elle a payé deux fois. Un
+            clic sur un numéro ouvre la conversation ; le bouton copie la liste
+            entière pour l&apos;ajouter au groupe d&apos;un coup.
+          </p>
+          <NumerosWhatsApp payeurs={payeurs} />
+        </section>
 
         <section className="mb-14 border-t-2 border-texte pt-6">
           <h2 className="titre-l m-0 mb-1 text-[1.4rem]">

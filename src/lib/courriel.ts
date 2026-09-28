@@ -420,8 +420,10 @@ export async function courrielAchat(opts: {
   lien: string;
   /** Le rendez-vous privé du cercle. Ignoré pour les autres offres. */
   appel?: string | null;
+  /** Le groupe privé des acheteurs. Le même pour toutes les offres. */
+  groupe?: string | null;
 }) {
-  const { prenom, produit, offre, montant, reference, ouvert, lien, appel } = opts;
+  const { prenom, produit, offre, montant, reference, ouvert, lien, appel, groupe } = opts;
   const salut = prenom ? `Bonjour ${echapper(prenom)},` : "Bonjour,";
   const contenu = CE_QUI_OUVRE[produit] ?? CE_QUI_OUVRE.masterclass37;
 
@@ -459,6 +461,25 @@ export async function courrielAchat(opts: {
       ? `\nTON APPEL PRIVE\nTon accompagnement commence par trente minutes en tete a tete avec moi. Choisis ton creneau maintenant :\n${appel}\n`
       : "";
 
+  //  Le groupe passe après l'accès mais avant la liste : c'est le
+  //  premier geste utile après un paiement, et le seul endroit où
+  //  l'on continue à se parler.
+  const leGroupe = groupe
+    ? [
+        `<p style="margin:0 0 10px 0;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#57616d;">Le groupe privé</p>`,
+        P(
+          "La suite ne se passe pas seulement dans les leçons : les liens de "
+          + "direct y sont postés, j'y réponds aux questions, et les autres y "
+          + "montrent leurs fichiers. Il est réservé à ceux qui ont payé.",
+        ),
+        `<p style="margin:0 0 18px 0;padding:14px 16px;border:1px solid #d7dde3;border-radius:8px;font-size:15px;line-height:1.5;"><a href="${groupe}" style="color:#0b0e13;font-weight:700;text-decoration:none;">Rejoindre le groupe &rarr;</a></p>`,
+      ].join("")
+    : "";
+
+  const texteGroupe = groupe
+    ? `\nLE GROUPE PRIVE\nLa suite ne se passe pas seulement dans les lecons : les liens de direct y sont postes, et j'y reponds aux questions.\n${groupe}\n`
+    : "";
+
   const leCertificat = contenu.certificat
     ? [
         `<p style="margin:0 0 10px 0;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#57616d;">Le certificat</p>`,
@@ -487,6 +508,7 @@ export async function courrielAchat(opts: {
       P(salut),
       P(`Ton paiement de <b style="color:#0b0e13;">${echapper(montant)}</b> pour <b style="color:#0b0e13;">${echapper(offre)}</b> est bien arrivé.`),
       acces,
+      leGroupe,
       leRendezVous,
       `<p style="margin:0 0 10px 0;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#57616d;">Ce qui est à toi</p>`,
       LISTE(contenu.ouvre),
@@ -501,7 +523,7 @@ Ton paiement de ${montant} pour « ${offre} » est bien arrive.
 ${ouvert
   ? "Ton acces est deja ouvert. Connecte-toi, tout est deverrouille."
   : "Il ne te reste qu'a entrer sur la plateforme avec CETTE adresse : ton acces s'ouvrira tout seul a ta premiere connexion. Avec une autre, il ne se trouvera pas."}
-${texteRendezVous}
+${texteGroupe}${texteRendezVous}
 CE QUI EST A TOI
 ${contenu.ouvre.map((t) => `- ${t}`).join("\n")}
 ${texteCertificat}
@@ -679,6 +701,76 @@ Trente minutes en tete a tete. Viens avec un fichier reel — un vrai classeur d
 Le canal prive est ouvert en parallele : tu peux y poser une question a tout moment.
 
 ${appel}
+
+Eureka Services — Oscar Aksanti`,
+  });
+}
+
+/* ── Le groupe privé des acheteurs ───────────────────────────────── */
+
+/**
+ * Le canal ou se passe la suite.
+ *
+ * Envoye a tous ceux qui ont paye, quel que soit le montant : le
+ * groupe n'est pas une contrepartie proportionnelle au prix, c'est
+ * l'endroit ou l'on se parle.
+ *
+ * `direct` est facultatif : sans lui, le message reste valable
+ * n'importe quel jour — c'est ce qui permet de le renvoyer plus tard
+ * a quelqu'un qui arrive.
+ */
+export async function courrielGroupePrive(opts: {
+  a: string;
+  prenom: string;
+  lien: string;
+  direct?: { quand: string; quoi: string } | null;
+}) {
+  const { prenom, lien, direct } = opts;
+  const salut = prenom ? `Bonjour ${echapper(prenom)},` : "Bonjour,";
+
+  const leDirect = direct
+    ? [
+        `<p style="margin:0 0 10px 0;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#57616d;">Le direct</p>`,
+        `<p style="margin:0 0 18px 0;padding:14px 16px;border:1px solid #d7dde3;border-radius:8px;font-size:15px;line-height:1.6;"><b style="color:#0b0e13;">${echapper(direct.quoi)}</b><br><span style="color:#57616d;">${echapper(direct.quand)}</span><br><span style="font-size:13px;color:#8a96a4;">Le lien de connexion sera posté dans le groupe. C'est la seule raison pour laquelle il faut y être avant.</span></p>`,
+      ].join("")
+    : "";
+
+  const texteDirect = direct
+    ? `\nLE DIRECT\n${direct.quoi}\n${direct.quand}\nLe lien sera poste dans le groupe.\n`
+    : "";
+
+  return envoyer({
+    a: opts.a,
+    sujet: direct
+      ? "Le groupe privé, et le direct de ce soir"
+      : "Ton accès au groupe privé",
+    titre: "Rejoins le groupe privé",
+    corps: [
+      P(salut),
+      P(
+        "Tu as pris la masterclass, et la suite ne se passe pas seulement "
+        + "dans les leçons : elle se passe dans le groupe. C'est là que je "
+        + "réponds, que les liens de direct sont postés, et que les autres "
+        + "montrent leurs fichiers.",
+      ),
+      leDirect,
+      P(
+        "Le groupe est <b style=\"color:#0b0e13;\">réservé à ceux qui ont "
+        + "payé</b>. On y parle de fichiers réels, alors reste toi-même : ni "
+        + "publicité, ni messages en série.",
+      ),
+      P("À ce soir."),
+    ].join(""),
+    bouton: { texte: "Rejoindre le groupe", lien },
+    texte: `${prenom ? `Bonjour ${prenom},` : "Bonjour,"}
+
+Tu as pris la masterclass, et la suite ne se passe pas seulement dans les lecons : elle se passe dans le groupe. C'est la que je reponds, que les liens de direct sont postes, et que les autres montrent leurs fichiers.
+${texteDirect}
+Le groupe est reserve a ceux qui ont paye. On y parle de fichiers reels, alors reste toi-meme : ni publicite, ni messages en serie.
+
+${lien}
+
+A ce soir.
 
 Eureka Services — Oscar Aksanti`,
   });

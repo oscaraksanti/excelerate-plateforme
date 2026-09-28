@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { exigerAdmin } from "@/lib/admin";
-import { lienAppel } from "@/lib/appel";
+import { lienAppel, lienGroupe } from "@/lib/appel";
 import { courrielAchat } from "@/lib/courriel";
 import { nomComplet } from "@/lib/formats";
 import { clientAdmin } from "@/lib/supabase/admin";
@@ -145,6 +145,7 @@ export async function enregistrerPaiementDirect(
         reference: ref,
         ouvert: Boolean(profil),
         appel: produit === "coaching97" ? await lienAppel() : null,
+        groupe: await lienGroupe(),
         lien: profil
           ? `${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/modules`
           : `${process.env.NEXT_PUBLIC_SITE_URL ?? ""}/connexion`,

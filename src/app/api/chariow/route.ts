@@ -1,6 +1,6 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
-import { lienAppel } from "@/lib/appel";
+import { lienAppel, lienGroupe } from "@/lib/appel";
 import { courrielAchat } from "@/lib/courriel";
 import { nomComplet } from "@/lib/formats";
 import { clientAdmin } from "@/lib/supabase/admin";
@@ -284,6 +284,7 @@ export async function POST(requete: NextRequest) {
     await courrielAchat({
       a: email,
       appel: produit === "coaching97" ? await lienAppel() : null,
+      groupe: await lienGroupe(),
       prenom: (profil?.nom ?? nom ?? "").trim().split(/\s+/)[0] ?? "",
       produit,
       offre: titre,

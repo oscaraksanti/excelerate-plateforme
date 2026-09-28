@@ -105,3 +105,44 @@ export async function enregistrerAppel(_p: Etat, d: FormData): Promise<Etat> {
       : "Rendez-vous éteint. Plus aucun lien n'est envoyé.",
   };
 }
+
+/**
+ * Le groupe prive des acheteurs.
+ *
+ * Il part avec chaque courriel de confirmation, quelle que soit
+ * l'offre : le groupe n'est pas une contrepartie proportionnelle au
+ * prix, c'est l'endroit ou l'on se parle.
+ */
+export async function enregistrerGroupe(_p: Etat, d: FormData): Promise<Etat> {
+  await exigerAdmin();
+
+  const lien = String(d.get("lien") ?? "").trim();
+  const nom = String(d.get("nom") ?? "").trim() || "WhatsApp";
+  const actif = d.get("actif") === "on";
+
+  if (lien && !/^https:\/\//i.test(lien)) {
+    return { ok: false, message: "Le lien doit commencer par https://" };
+  }
+  if (actif && !lien) {
+    return {
+      ok: false,
+      message:
+        "Sans lien, l'acheteur lit qu'un groupe existe sans pouvoir y entrer. Colle le lien d'abord.",
+    };
+  }
+
+  const supabase = await clientServeur();
+  const { error } = await supabase.from("reglages").upsert(
+    { cle: "groupe_prive", valeur: { lien, actif, nom }, maj_le: new Date().toISOString() },
+    { onConflict: "cle" },
+  );
+
+  if (error) return { ok: false, message: `Échec : ${error.message}` };
+
+  return {
+    ok: true,
+    message: actif
+      ? "Lien enregistré. Il part désormais avec chaque confirmation d'achat."
+      : "Groupe éteint. Plus aucun lien n'est envoyé.",
+  };
+}
