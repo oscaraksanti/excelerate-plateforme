@@ -85,9 +85,19 @@ export default async function PageModuleAdmin({
                         >
                           {l.publie ? "Publiée" : "Brouillon"}
                         </span>
+                        {/*  « Sans vidéo » disait deux choses à la fois.
+                            Séparées, elles se lisent comme une liste de
+                            tâches : ce qui reste à tourner, et ce qui est
+                            fini. */}
                         {!l.video_id && (
-                          <span className="rounded-[3px] bg-fond-3 px-2 py-[2px] font-mono text-[9.5px] tracking-[0.12em] text-texte-2 uppercase">
-                            Sans vidéo
+                          <span
+                            className={`rounded-[3px] px-2 py-[2px] font-mono text-[9.5px] tracking-[0.12em] uppercase ${
+                              l.sans_video
+                                ? "bg-fond-3 text-texte-2"
+                                : "bg-fond-3 text-ambre-texte"
+                            }`}
+                          >
+                            {l.sans_video ? "Texte seul" : "Vidéo à venir"}
                           </span>
                         )}
                       </span>

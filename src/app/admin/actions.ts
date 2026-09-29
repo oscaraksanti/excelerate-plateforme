@@ -128,6 +128,10 @@ export async function enregistrerLecon(_p: Etat, d: FormData): Promise<Etat> {
     numero,
     video_source: videoId ? "youtube" : null,
     video_id: videoId,
+    //  Un lien l'emporte toujours : si Oscar colle une vidéo en
+    //  oubliant de décocher, la leçon redevient une leçon vidéo
+    //  plutôt que de garder un drapeau qui la contredit.
+    sans_video: videoId ? false : d.get("sans_video") === "on",
     duree_min: entier(d, "duree_min"),
     corps_md: String(d.get("corps_md") ?? ""),
     accroche: texte(d, "accroche").slice(0, 300),

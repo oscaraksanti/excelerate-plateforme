@@ -140,8 +140,13 @@ export default async function LeconPublique({ params }: Params) {
             {courante.titre}
           </h1>
 
-          {courante.video_source === "youtube" && courante.video_id && (
+          {courante.video_source === "youtube" && courante.video_id ? (
             <LecteurVideo videoId={courante.video_id} titre={courante.titre} />
+          ) : courante.sans_video ? null : (
+            <div className="rounded-[6px] border border-dashed border-bord bg-fond-2 px-6 py-10 text-center text-[0.95rem] text-texte-3">
+              La vidéo de cette leçon arrive bientôt. Le cours ci-dessous est
+              complet en attendant.
+            </div>
           )}
 
           {corps && (

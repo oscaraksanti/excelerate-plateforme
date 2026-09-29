@@ -84,8 +84,25 @@ export function FormulaireLecon({ lecon }: { lecon: Lecon }) {
         />
         <p className={AIDE}>
           Colle le lien complet — l&apos;identifiant est extrait tout seul.
-          Laisse vide tant que le replay n&apos;est pas prêt.
         </p>
+
+        <label className="mt-2 flex items-start gap-3">
+          <input
+            name="sans_video"
+            type="checkbox"
+            defaultChecked={lecon.sans_video}
+            className="mt-[3px] h-[16px] w-[16px] shrink-0 accent-[color:var(--voltage-2)]"
+          />
+          <span className="text-[0.95rem] leading-[1.45]">
+            Cette leçon est en <strong className="font-semibold">texte seul</strong>
+            <span className="block text-[0.86rem] text-texte-3">
+              L&apos;apprenant voit le cours directement, sans lecteur ni
+              message d&apos;attente. Décochée et sans lien, la leçon annonce
+              « la vidéo arrive bientôt ». Coller un lien décoche la case tout
+              seul.
+            </span>
+          </span>
+        </label>
       </div>
 
       <div className="flex flex-col gap-2">

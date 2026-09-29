@@ -18,6 +18,8 @@ export type Lecon = {
   titre: string;
   video_source: "youtube" | "stream" | null;
   video_id: string | null;
+  /** Leçon en texte seul : ne rien afficher à la place du lecteur. */
+  sans_video: boolean;
   duree_min: number | null;
   corps_md: string;
   accroche: string;
@@ -64,7 +66,7 @@ export type Fil = Message & { reponses: Message[] };
 
 const CHAMPS_MODULE = "id, numero, titre, resume, acces, publie, publie_le";
 const CHAMPS_LECON =
-  "id, module_id, numero, titre, video_source, video_id, duree_min, corps_md, accroche, acces, publie_le, publie";
+  "id, module_id, numero, titre, video_source, video_id, sans_video, duree_min, corps_md, accroche, acces, publie_le, publie";
 
 /**
  * Les modules visibles par la personne connectee.
